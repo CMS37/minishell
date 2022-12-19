@@ -1,5 +1,5 @@
 # minishell
-#### As beautiful as a shell
+### As beautiful as a shell
 <br/><br/>
 
 ## Summary
@@ -8,6 +8,7 @@
 
 ## Install
 	$ make (all)
+<br/><br/><br/>
 
 ## Usage
 	$ ./minishell
