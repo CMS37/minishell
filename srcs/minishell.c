@@ -1,26 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/19 19:03:06 by min-cho           #+#    #+#             */
-/*   Updated: 2022/12/19 19:55:10 by min-cho          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../incs/minishell.h"
+#include "../libs/libft/incs/libft.h"
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <stdlib.h>
+#include <signal.h>
 
-static void	sig_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		write(1, "\n", 2);
-		rl_on_new_line();
-		rl_replace_line("minishell-1.0$ ", 0);
-	}
-}
+static void sig_handler(int sig);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -36,9 +21,9 @@ int	main(int argc, char **argv, char **envp)
 		add_history(line);
 		if (ft_strncmp(line, "exit", 4) == 0)
 		{
-			write(1, "exit\n", 6);
+			ft_putstr_fd("exit\n", 1);
 			break ;
-		
+		}
 		free(line);
 	}
 	free(line);
@@ -47,4 +32,15 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	(void) envp;
 	return (0);
+}
+
+static void sig_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_putchar_fd('\n', 1);
+		rl_on_new_line();
+		rl_replace_line("minishell-1.0$ ", 0);
+	}
+	return ;
 }

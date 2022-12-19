@@ -4,8 +4,10 @@ IDX		= 0
 
 NAME	= minishell
 
+READLINE_DIR	= /opt/homebrew/opt/readline/include/readline
+
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror 
 LDFLAGS	= -L/opt/homebrew/opt/readline/lib -lreadline
 AR		= ar rcs
 RM		= rm -f
@@ -49,7 +51,7 @@ ${LIBFT}:
 ${NAME}: ${LIBFT} ${OBJS}
 	@printf "\bdone\n"
 	${eval IDX = 0}
-	@${CC} ${LDFLAGS} -g -o ${NAME} ${OBJS} ${LIBS} -I ${INCS_DIR}
+	@${CC} ${LDFLAGS} -g -o ${NAME} ${OBJS} ${LIBS}
 	@echo "Build ${NAME}: done"
 
 
@@ -62,7 +64,7 @@ ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
 		echo -n "Build dependencies in ${NAME} ...  ";\
 	fi
 	@printf "\b${CHR}"
-	@${CC} ${CFLAGS} -g -c $< -o $@ -I ${INCS_DIR}
+	@${CC} ${CFLAGS} -g -c $< -o $@ -I${INCS_DIR} -I${READLINE_DIR}
 
 
 clean:

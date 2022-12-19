@@ -1,7 +1,7 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include "stddef.h"
+# include <stddef.h>
 
 // Part 1 - Libc functions
 int				ft_isalpha(int c);
