@@ -1,11 +1,9 @@
 #include "../incs/minishell.h"
 #include "../libs/libft/incs/libft.h"
+#include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdlib.h>
-#include <signal.h>
-
-static void sig_handler(int sig);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -34,13 +32,3 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-static void sig_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		ft_putchar_fd('\n', 1);
-		rl_on_new_line();
-		rl_replace_line("minishell-1.0$ ", 0);
-	}
-	return ;
-}

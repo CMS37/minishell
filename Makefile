@@ -27,7 +27,8 @@ SRCS = 	minishell.c \
 		lexer/lexer.c \
 		lexer/tokenizer.c \
 		parser/parser.c \
-		subsystem/subsystem.c
+		subsystem/subsystem.c \
+		subsystem/signal.c
 		
 SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
