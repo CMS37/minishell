@@ -5,18 +5,18 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*cmd;
+	char	*line;
 
 	while (TRUE)
 	{
-		cmd = readline("minishell-1.0$ ");
-		if (cmd == NULL)
+		line = readline("minishell-1.0$ ");
+		if (line == NULL)
 			exit(EXIT_FAILURE);
-		if (ft_strncmp(cmd, "exit", 4) == 0)
+		if (ft_strncmp(line, "exit", 4) == 0)
 			break ;
-		free(cmd);
+		free(line);
 	}
-	free(cmd);
+	free(line);
 	
 	(void) argc;
 	(void) argv;
