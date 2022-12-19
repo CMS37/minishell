@@ -21,10 +21,10 @@ SRCS_DIR	= ./srcs
 OBJS_DIR	= ./objs
 
 SRCS = 	minishell.c\
-		execute/execute.c
-		lexer/lexer.c\
-		lexer/tokenizer.c\
-		parser/parser.c\
+		execute/execute.c \
+		lexer/lexer.c \
+		lexer/tokenizer.c \
+		parser/parser.c \
 		subsystem/subsystem.c
 		
 SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
@@ -51,10 +51,8 @@ ${GNL}:
 	@make -C ${GNL_DIR}
 
 
-${NAME}: ${OBJS}
+${NAME}: ${FT_PRINTF} ${GNL} ${OBJS}
 	@printf "\bdone\n"
-	@make -C ${FT_PRINTF_DIR}
-	@make -C ${GNL_DIR}
 	${eval IDX = 0}
 	@${CC} ${LDFLAGS} -g -o ${NAME} ${OBJS} ${LIBS} -I ${INCS_DIR}
 	@echo "Build ${NAME}: done"
