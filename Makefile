@@ -42,8 +42,10 @@ ${GNL}:
 	@make -C ${GNL_DIR}
 
 
-${NAME}: ${OBJS} ${FT_PRINTF} ${GNL}
+${NAME}: ${OBJS}
 	@printf "\bdone\n"
+	@make -C ${FT_PRINTF_DIR}
+	@make -C ${GNL_DIR}
 	${eval IDX = 0}
 	@${CC} ${LDFLAGS} -g -o ${NAME} ${OBJS} ${LIBS} -I ${INCS_DIR}
 	@echo "Build ${NAME}: done"
