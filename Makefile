@@ -9,7 +9,7 @@ READLINE_INCS	= ${READLINE_DIR}/include
 
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
-LDFLAGS	= -L${READLINE_DIR}/lib
+LDFLAGS	= -L${READLINE_DIR}/lib -lreadline
 AR		= ar rcs
 RM		= rm -f
 
