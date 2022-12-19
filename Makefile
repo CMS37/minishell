@@ -22,7 +22,7 @@ INCS_DIR	= ./incs
 SRCS_DIR	= ./srcs
 OBJS_DIR	= ./objs
 
-SRCS = 	minishell.c\
+SRCS = 	minishell.c \
 		execute/execute.c \
 		lexer/lexer.c \
 		lexer/tokenizer.c \
