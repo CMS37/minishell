@@ -6,6 +6,6 @@ int	main(int argc, char **argv, char **envp)
 	(void) argc;
 	(void) argv;
 	(void) envp;
-	ft_printf("Hello World!\n");
+	ft_printf("minishell-1.0$ ");
 	return (0);
 }
