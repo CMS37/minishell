@@ -1,7 +1,7 @@
 #include "../incs/minishell.h"
-#include "../libs/ft_printf/includes/ft_printf.h"
-#include "../libs/get_next_line/includes/get_next_line.h"
-#include <unistd.h>
+#include "../libs/libft/incs/libft.h"
+#include <stdlib.h>
+#include <readline/readline.h>
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -9,8 +9,7 @@ int	main(int argc, char **argv, char **envp)
 
 	while (TRUE)
 	{
-		ft_putstr_fd("minishell-1.0$ ", STDOUT_FILENO);
-		cmd = get_next_line(STDIN_FILENO);
+		cmd = readline("minishell-1.0$ ");
 		if (cmd == NULL)
 			exit(EXIT_FAILURE);
 		if (ft_strncmp(cmd, "exit", 4) == 0)

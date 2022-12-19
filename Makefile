@@ -10,11 +10,10 @@ LDFLAGS	=
 AR		= ar rcs
 RM		= rm -f
 
-FT_PRINTF_DIR	= ./libs/ft_printf
-GNL_DIR			= ./libs/get_next_line
-FT_PRINTF	:= ${FT_PRINTF_DIR}/libftprintf.a
-GNL			:= ${GNL_DIR}/libgnl.a
-LIBS		= ${FT_PRINTF} ${GNL}
+LIBS_DIR	= ./libs
+LIBFT_DIR	:= ${LIBS_DIR}/libft
+LIBFT		:= ${LIBFT_DIR}/libft.a
+LIBS		:= ${LIBFT}
 
 INCS_DIR	= ./incs
 SRCS_DIR	= ./srcs
@@ -43,15 +42,11 @@ ${OBJS_DIR}:
 	@mkdir -p ${OBJS_DIR}/subsystem
 
 
-${FT_PRINTF}:
-	@make -C ${FT_PRINTF_DIR}
+${LIBFT}:
+	@make -C ${LIBFT_DIR}
 
 
-${GNL}:
-	@make -C ${GNL_DIR}
-
-
-${NAME}: ${FT_PRINTF} ${GNL} ${OBJS}
+${NAME}: ${LIBFT} ${OBJS}
 	@printf "\bdone\n"
 	${eval IDX = 0}
 	@${CC} ${LDFLAGS} -g -o ${NAME} ${OBJS} ${LIBS} -I ${INCS_DIR}
@@ -72,15 +67,13 @@ ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
 
 clean:
 	@echo "Remove dependencies in ${NAME}"
-	@make -C ${FT_PRINTF_DIR} clean
-	@make -C ${GNL_DIR} clean
+	@make -C ${LIBFT_DIR} clean
 	@rm -rf ${OBJS_DIR}
 
 
 fclean:
 	@echo "Remove dependencies in ${NAME}"
-	@make -C ${FT_PRINTF_DIR} fclean
-	@make -C ${GNL_DIR} fclean
+	@make -C ${LIBFT_DIR} fclean
 	@echo "Remove ${NAME}"
 	@rm -rf ${OBJS_DIR}
 	@${RM} ${NAME}
