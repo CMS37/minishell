@@ -5,16 +5,16 @@
 #include <readline/history.h>
 #include <stdlib.h>
 
-t_var	*var;
+t_var	*g_var;
 
-static t_bool	init_minishell();
-static t_bool	init_var();
+static t_bool	init_minishell(void);
+static t_bool	init_var(void);
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 
-	var = NULL;
+	g_var = NULL;
 	init_minishell();
 	while (TRUE)
 	{
@@ -22,9 +22,9 @@ int	main(int argc, char **argv, char **envp)
 		if (line == NULL)
 		{
 			printf("\033[1A");
-            printf("\033[14C");
-            printf(" exit\n");
-            exit(-1);
+			printf("\033[14C");
+			printf(" exit\n");
+			exit(-1);
 		}
 		add_history(line);
 		if (ft_strncmp(line, "exit", 4) == 0)
@@ -42,18 +42,18 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-static t_bool	init_minishell()
+static t_bool	init_minishell(void)
 {
 	init_var();
-	init_termios(var);
-	signal(SIGINT, sig_handler);
+	init_termios(g_var);
+	init_signal();
 	return (TRUE);
 }
 
-static t_bool	init_var()
+static t_bool	init_var(void)
 {
-	var = ft_calloc(sizeof(t_var), 1, "Failed to malloc at var");
-	if (var == NULL)
+	g_var = ft_calloc(sizeof(t_var), 1, "Failed to malloc at g_var");
+	if (g_var == NULL)
 		return (FALSE);
 	return (TRUE);
 }

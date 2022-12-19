@@ -32,7 +32,7 @@ compound_command : brace_group
 
 */
 
-void    parsing(void)
+void	parsing(void)
 {
-    
+	return ;
 }

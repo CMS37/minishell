@@ -5,7 +5,8 @@
 # include "structs.h"
 
 // signal.c
-void	sig_handler(int sig);
+t_bool	init_signal(void);
+void	signal_handler(int sig);
 
 // termios.c
 t_bool	init_termios(t_var *var);
