@@ -21,6 +21,11 @@ SRCS_DIR	= ./srcs
 OBJS_DIR	= ./objs
 
 SRCS = 	minishell.c\
+		execute/execute.c
+		lexer/lexer.c\
+		lexer/tokenizer.c\
+		parser/parser.c\
+		subsystem/subsystem.c
 		
 SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
@@ -32,6 +37,10 @@ all: ${NAME}
 ${OBJS_DIR}:
 	@echo "Build ${NAME}"
 	@mkdir -p ${OBJS_DIR}
+	@mkdir -p ${OBJS_DIR}/execute
+	@mkdir -p ${OBJS_DIR}/lexer
+	@mkdir -p ${OBJS_DIR}/parser
+	@mkdir -p ${OBJS_DIR}/subsystem
 
 
 ${FT_PRINTF}:
