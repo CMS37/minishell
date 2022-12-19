@@ -4,7 +4,7 @@
 void			*ft_calloc(size_t sz_, size_t count, const char *error_msg);
 static t_bool	is_invalid_input(size_t sz_, size_t count);
 
-void		*ft_calloc(size_t sz_, size_t count, const char *error_msg)
+void	*ft_calloc(size_t sz_, size_t count, const char *error_msg)
 {
 	void	*res;
 
