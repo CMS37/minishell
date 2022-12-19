@@ -10,11 +10,16 @@ void sig_handler(int sig);
 
 void sig_handler(int sig)
 {
-	if (sig == SIGINT)
+	if (sig == SIGINT) // Ctrl + C
 	{
-		ft_putchar_fd('\n', STDOUT_FILENO);
+		ft_putstr_fd("minishell-1.0$ \n", STDOUT_FILENO);
 		rl_on_new_line();
-		rl_replace_line("minishell-1.0$ ", STDOUT_FILENO);
+		rl_replace_line("", STDOUT_FILENO);
+		rl_redisplay();
+	}
+	else if (sig == SIGQUIT) // Ctrl + '\'
+	{
+		;
 	}
 	return ;
 }

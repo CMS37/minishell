@@ -5,17 +5,27 @@
 #include <readline/history.h>
 #include <stdlib.h>
 
+t_var	*var;
+
+static t_bool	init_minishell();
+static t_bool	init_var();
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 
-	signal(SIGINT, sig_handler); //ctrl+C 시그널 처리
-	signal(SIGQUIT, SIG_IGN); // ctrl+\ 시그널 무시
+	var = NULL;
+	init_minishell();
 	while (TRUE)
 	{
 		line = readline("minishell-1.0$ ");
 		if (line == NULL)
-			exit(EXIT_FAILURE);
+		{
+			printf("\033[1A");
+            printf("\033[14C");
+            printf(" exit\n");
+            exit(-1);
+		}
 		add_history(line);
 		if (ft_strncmp(line, "exit", 4) == 0)
 		{
@@ -32,3 +42,18 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
+static t_bool	init_minishell()
+{
+	init_var();
+	init_termios(var);
+	signal(SIGINT, sig_handler);
+	return (TRUE);
+}
+
+static t_bool	init_var()
+{
+	var = ft_calloc(sizeof(t_var), 1, "Failed to malloc at var");
+	if (var == NULL)
+		return (FALSE);
+	return (TRUE);
+}
