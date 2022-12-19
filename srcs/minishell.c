@@ -6,7 +6,7 @@
 /*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 19:03:06 by min-cho           #+#    #+#             */
-/*   Updated: 2022/12/19 19:55:10 by min-cho          ###   ########.fr       */
+/*   Updated: 2022/12/19 20:00:28 by min-cho          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			write(1, "exit\n", 6);
 			break ;
-		
+		}
 		free(line);
 	}
 	free(line);
