@@ -19,9 +19,13 @@ t_bool	init_signal(void)
 
 void	signal_handler(int sig)
 {
+	if (sig == SIGQUIT)
+	{
+		return ;
+	}
 	if (sig == SIGINT) // Ctrl + C
 	{
-		ft_putstr_fd("minishell-1.0$ \n", STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_on_new_line();
 		rl_replace_line("", STDOUT_FILENO);
 		rl_redisplay();
