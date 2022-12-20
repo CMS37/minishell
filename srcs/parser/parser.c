@@ -74,11 +74,15 @@ void	set_cmd(t_list *list)
 	t_list	*tmp;
 
 	i = all_pipe(list);
-	tmp = g_var->cmd_list;
 	tmp = (t_list *) malloc(sizeof(t_list) * (i + 1));
+	if (!tmp)
+		return ;
+	g_var->cmd_list = tmp;
 	while(i--)
 	{
 		tmp->content = find_cmd(list);
+		//test
+		printf("%s", tmp->content);
 		if (tmp->content == NULL)
 			break ;
 		tmp = tmp->next;
