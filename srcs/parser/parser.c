@@ -1,4 +1,5 @@
-#include "../../incs/minishell.h"
+#include "../../incs/parser.h"
+#include "../../incs/structs.h"
 
 /*
 lexer 에서 들어온 문자열 토큰화 후 전달 -> 구조체로 리턴받을듯?
@@ -11,35 +12,38 @@ rule 1. 맨처음 토큰에 해당문자는 올수없음 {"|", "||", ...};
 #include <stdio.h>
 #include <string.h>
 #include <err.h>
+
 void	error(char	*str)
 {
 	//$? = 258
 	printf("minishell: syntax error near unexpected token `%s\'\n", str);
 }
 
-void check_syntax(t_list *list)
+void check_unexpected_token(t_list *list)
 {
-	t_token	*token;
 	t_list	*tmp;
+	t_token	*token;
 
 	tmp = list;
-	token = (t_token *)tmp->content;
-	if (!ft_strcmp(token->value, "|")|| !ft_strcmp(token->value, "&")|| \
-		!ft_strcmp(token->value, ";"))
+	token = (t_token *) tmp->content;
+	if (token == NULL)
+		return ;
+	if (is_unexpected_token(token->value))
 		error(token->value);
-	while (tmp && (ft_strcmp(token->value, "<") == 0|| ft_strcmp(token->value, ">") == 0))
+	while (tmp && (ft_strcmp(token->value, "<") == 0 || ft_strcmp(token->value, ">") == 0))
 	{
 		tmp = tmp->next;
 		token = (t_token *)tmp->content;
-		if (!ft_strcmp(token->value, "|") || ft_strcmp(token->value, "&") || \
-			!ft_strcmp(token->value, ";"))
+		if (is_unexpected_token(token->value))
 			error(token->value);
 	}
 }
 
 void	parsing(t_list *list)
 {
-	check_syntax(list);
+	if (list == NULL)
+		return ;
+	check_unexpected_token(list);
 	return ;
 }
 

@@ -68,5 +68,6 @@ typedef enum e_bool
 // Custom functions to use
 void			ft_exit_with_error(const char *str, int exit_flag);
 t_bool			ft_is_space(const int c);
+int				ft_strcmp(const char *s1, const char *s2);
 
 #endif

@@ -57,7 +57,8 @@ SRCS =  ft_atoi.c \
 		ft_lstnew.c \
 		ft_lstsize.c \
 		ft_exit_with_error.c \
-		ft_is_space.c
+		ft_is_space.c \
+		ft_strcmp.c
 
 SRCS := ${SRCS:%.c=${SRCS_DIR}/%.c}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}

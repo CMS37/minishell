@@ -41,6 +41,13 @@ static t_bool	init_minishell(int argc, char **argv, char **envp)
 	init_signal();
 	init_env_list(envp);
 
+	ft_putstr_fd("builtin_env\n", 1);
+	builtin_env(1);
+	ft_putstr_fd("\n", 1);
+
+	ft_putstr_fd("builtin_pwd\n>> ", 1);
+	builtin_pwd(1);
+	ft_putstr_fd("\n", 1);
 	(void) argc;
 	(void) argv;
 	(void) envp;

@@ -29,7 +29,22 @@ typedef struct	s_var
 	t_list		*token_list;
 	t_list		*env_list;
 	int			exit_status;
+	t_list		*cmd_list;
 }	t_var;
+
+// (char **) cmd_list->value[0] == (char *) "ls"
+// (char **) cmd_list->value[1] == (char *) "-a"
+// (char **) cmd_list->value[2] == (char *) "-l"
+
+// cmd_list = (cmd_list->next != NULL)
+// (char **) cmd_list->value[0] == (char *) "wc"
+// (char **) cmd_list->value[1] == (char *) "-l"
+
+// cmd_list = (cmd_list->next != NULL)
+// (char **) cmd_list->value[0] == (char *) "echo"
+// (char **) cmd_list->value[1] == (char *) "a"
+// (char **) cmd_list->value[2] == (char *) ">"
+// (char **) cmd_list->value[3] == (char *) "b"
 
 t_var	*g_var;
 
