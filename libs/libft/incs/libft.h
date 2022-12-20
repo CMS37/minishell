@@ -42,22 +42,21 @@ int				ft_putendl_fd(const char *s, int fd);
 int				ft_putnbr_fd(int n, int fd);
 
 // Bonus
-typedef struct s_list_libft
+typedef struct s_list
 {
-	void				*content;
-	struct s_list_libft	*next;
-}	t_list_libft;
+	void			*content;
+	struct s_list	*next;
+}	t_list;
 
-t_list_libft	*ft_lstnew(void *content);
-void			ft_lstadd_front(t_list_libft **lst, t_list_libft *new);
-int				ft_lstsize(t_list_libft *lst);
-t_list_libft	*ft_lstlast(t_list_libft *lst);
-void			ft_lstadd_back(t_list_libft **lst, t_list_libft *new);
-void			ft_lstdelone(t_list_libft *lst, void (*del)(void *));
-void			ft_lstclear(t_list_libft **lst, void (*del)(void *));
-void			ft_lstiter(t_list_libft *lst, void (*f)(void *));
-t_list_libft	*ft_lstmap(t_list_libft *lst, \
-							void *(*f)(void *), void (*del)(void *));
+t_list	*ft_lstnew(void *content);
+void	ft_lstadd_front(t_list **lst, t_list *new);
+int		ft_lstsize(t_list *lst);
+t_list	*ft_lstlast(t_list *lst);
+void	ft_lstadd_back(t_list **lst, t_list *new);
+void	ft_lstdelone(t_list *lst, void (*del)(void *));
+void	ft_lstclear(t_list **lst, void (*del)(void *));
+void	ft_lstiter(t_list *lst, void (*f)(void *));
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 // Custom types
 typedef enum e_bool

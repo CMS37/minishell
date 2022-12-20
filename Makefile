@@ -25,6 +25,7 @@ OBJS_DIR	= ./objs
 SRCS = 	minishell.c \
 		execute/execute.c \
 		lexer/lexer.c \
+		lexer/token.c \
 		lexer/tokenizer.c \
 		parser/parser.c \
 		subsystem/signal.c \

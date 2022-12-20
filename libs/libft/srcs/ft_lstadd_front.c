@@ -1,6 +1,6 @@
 #include "../incs/libft.h"
 
-void	ft_lstadd_front(t_list_libft **lst, t_list_libft *new)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
 	if (!lst || !new)
 		return ;

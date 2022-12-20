@@ -13,9 +13,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (s_len - start < len)
 		len = s_len - start;
-	res = (char *) malloc(sizeof(char) * (len + 1));
-	if (!res)
-		return (0);
+	res = ft_calloc(len + 1, sizeof(char), "Error: ft_substr");
 	ft_strlcpy(res, &s[start], len + 1);
 	return (res);
 }

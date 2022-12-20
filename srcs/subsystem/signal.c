@@ -12,17 +12,12 @@ void	signal_handler(int sig);
 t_bool	init_signal(void)
 {
 	signal(SIGINT, signal_handler);
-	// signal(SIGQUIT, signal_handler);
-	signal(SIGQUIT, (void(*)(int))1);
+	signal(SIGQUIT, SIG_IGN);
 	return (TRUE);
 }
 
 void	signal_handler(int sig)
 {
-	if (sig == SIGQUIT)
-	{
-		return ;
-	}
 	if (sig == SIGINT) // Ctrl + C
 	{
 		ft_putchar_fd('\n', STDOUT_FILENO);

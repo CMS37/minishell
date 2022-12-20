@@ -1,9 +1,9 @@
 #include "../incs/libft.h"
 
-void	ft_lstclear(t_list_libft **lst, void (*del)(void *))
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_list_libft	*tmp;
-	t_list_libft	*to_del;
+	t_list	*tmp;
+	t_list	*to_del;
 
 	tmp = *lst;
 	while (tmp)

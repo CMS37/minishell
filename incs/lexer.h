@@ -4,19 +4,14 @@
 # include "../libs/libft/incs/libft.h"
 # include "structs.h"
 
-static const char	*meta[] = {
-	">",
-	"<",
-	">>",
-	"<<",
-	"|",
-	"$",
-	"\'",
-	"\""
-};
+# define TOKEN_ERR_MSG "Error: Fail to tokenize"
 
 // tokenizer.c
-t_bool		is_ifs(int c);
-t_bool		is_meta(int c);
+t_list	*tokenize(const char *line);
+
+// token.c
+t_token	*init_token(void);
+t_token	*init_meta_token(const char *line, size_t *idx);
+void	del_token(void *content);
 
 #endif

@@ -1,10 +1,9 @@
 #include "../incs/libft.h"
 
-t_list_libft	*ft_lstmap(t_list_libft *lst, \
-							void *(*f)(void *), void (*del)(void *))
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list_libft	*res;
-	t_list_libft	*tmp;
+	t_list	*res;
+	t_list	*tmp;
 
 	if (!lst || !f)
 		return (0);
