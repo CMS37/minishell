@@ -23,6 +23,8 @@ SRCS_DIR	= ./srcs
 OBJS_DIR	= ./objs
 
 SRCS = 	minishell.c \
+		builtin/env.c \
+		builtin/pwd.c \
 		execute/execute.c \
 		lexer/lexer.c \
 		lexer/token.c \
@@ -43,6 +45,7 @@ all: ${NAME}
 ${OBJS_DIR}:
 	@echo "Build ${NAME}"
 	@mkdir -p ${OBJS_DIR}
+	@mkdir -p ${OBJS_DIR}/builtin
 	@mkdir -p ${OBJS_DIR}/execute
 	@mkdir -p ${OBJS_DIR}/lexer
 	@mkdir -p ${OBJS_DIR}/parser
