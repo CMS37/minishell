@@ -23,6 +23,42 @@ t_bool	is_unexpected_token(const char *token)
 	return (FALSE);
 }
 
+int	next_pipe(t_list *list)
+{
+	int		i;
+	t_list	*tmp;
+	t_token	*token;
+
+	tmp = list;
+	i = 0;
+	while (tmp)
+	{
+		token = (t_token *)tmp->content;
+		if (!ft_strcmp(token->value, "|"))
+			break ;
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
+
+int	all_pipe(t_list *list)
+{
+	int i;
+	t_list	*tmp;
+	t_token	*token;
+
+	tmp = list;
+	i = 0;
+	while (tmp)
+	{
+		token = (t_token *)tmp->content;
+		if (!ft_strcmp(token->value, "|"))
+			i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
 /*
 int	near_token(const char *s1)
 {
