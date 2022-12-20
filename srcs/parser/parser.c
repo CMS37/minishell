@@ -12,6 +12,7 @@ rule 1. 맨처음 토큰에 해당문자는 올수없음 {"|", "||", ...};
 #include <stdio.h>
 #include <string.h>
 #include <err.h>
+#include <stdlib.h>
 
 void	error(char	*str)
 {
@@ -39,11 +40,53 @@ void check_unexpected_token(t_list *list)
 	}
 }
 
+char	**find_cmd(t_list *list)
+{
+	t_list	*tmp;
+	t_token	*token;
+	char	**cmd;
+	int		i;
+	
+	i = next_pipe(list);
+	tmp = list;
+	cmd = (char **)malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	while(tmp)
+	{
+		token = (t_token *)tmp->content;
+		cmd[i] = token->value;
+		if (cmd[i] == NULL)
+			return (NULL);
+		tmp = tmp->next;
+		i++;
+	}
+	cmd[i] = "\0";
+	return (cmd);
+}
+
+void	set_cmd(t_list *list)
+{
+	int		i;
+	t_list	*tmp;
+
+	i = all_pipe(list);
+	tmp = g_var->cmd_list;
+	tmp = (t_list *)malloc(sizeof(t_list) * (i + 1));
+	while(i--)
+	{
+		tmp->content = find_cmd(list);
+		if (tmp->content == NULL)
+			break ;
+		tmp = tmp->next;
+	}
+}
+
 void	parsing(t_list *list)
 {
 	if (list == NULL)
 		return ;
 	check_unexpected_token(list);
+	set_cmd(list);
 	return ;
 }
 
