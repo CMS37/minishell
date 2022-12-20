@@ -28,6 +28,7 @@ SRCS = 	minishell.c \
 		lexer/token.c \
 		lexer/tokenizer.c \
 		parser/parser.c \
+		parser/parser_utils.c \
 		subsystem/signal.c \
 		subsystem/subsystem.c \
 		subsystem/termios.c
