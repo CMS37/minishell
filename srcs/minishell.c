@@ -24,6 +24,7 @@ int	main(int argc, char **argv, char **envp)
 			ft_lstclear(&g_var->token_list, del_token);
 		g_var->token_list = tokenize(line);
 		print_token_list();
+		parsing(g_var->token_list);
 		add_history(line);
 		if (ft_strncmp(line, "exit", 4) == 0 && ft_putstr_fd("exit\n", 1))
 			break ;

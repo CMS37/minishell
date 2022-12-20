@@ -5,34 +5,53 @@ lexer 에서 들어온 문자열 토큰화 후 전달 -> 구조체로 리턴받�
 
 구조체 받아서 오류 검사 후 파싱트리?
 
-<cmd>
-<option>
-<argv>
-<pipe>
-
-pipeline         :      pipe_sequence
-                 | Bang pipe_sequence
-                 ;
-pipe_sequence    :                             command
-                 | pipe_sequence '|' linebreak command
-                 ;
-command          : simple_command
-                 | compound_command
-                 | compound_command redirect_list
-                 | function_definition
-                 ;
-compound_command : brace_group
-                 | subshell
-                 | for_clause
-                 | case_clause
-                 | if_clause
-                 | while_clause
-                 | until_clause
-                 ;
-
+rule 1. 맨처음 토큰에 해당문자는 올수없음 {"|", "||", ...};
 */
 
-void	parsing(void)
+#include <stdio.h>
+#include <string.h>
+#include <err.h>
+void	error(char	*str)
 {
+	//$? = 258
+	printf("minishell: syntax error near unexpected token `%s\'\n", str);
+}
+
+void check_syntax(t_list *list)
+{
+	t_token	*token;
+	t_list	*tmp;
+
+	tmp = list;
+	token = (t_token *)tmp->content;
+	if (!ft_strcmp(token->value, "|")|| !ft_strcmp(token->value, "&")|| \
+		!ft_strcmp(token->value, ";"))
+		error(token->value);
+	while (tmp && (ft_strcmp(token->value, "<") == 0|| ft_strcmp(token->value, ">") == 0))
+	{
+		tmp = tmp->next;
+		token = (t_token *)tmp->content;
+		if (!ft_strcmp(token->value, "|") || ft_strcmp(token->value, "&") || \
+			!ft_strcmp(token->value, ";"))
+			error(token->value);
+	}
+}
+
+void	parsing(t_list *list)
+{
+	check_syntax(list);
 	return ;
 }
+
+/*
+int	main(void)
+{
+	t_list	*head;
+	t_list	*list;
+	t_token	*token;
+	
+	parsing()
+
+	return (1);
+}
+*/
