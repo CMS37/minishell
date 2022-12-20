@@ -38,6 +38,7 @@ void check_unexpected_token(t_list *list)
 		if (is_unexpected_token(token->value))
 			error(token->value);
 	}
+	return ;
 }
 
 char	**find_cmd(t_list *list)
@@ -49,14 +50,17 @@ char	**find_cmd(t_list *list)
 	
 	i = next_pipe(list);
 	tmp = list;
-	cmd = (char **)malloc(sizeof(char *) * (i + 1));
+	cmd = (char **) malloc(sizeof(char *) * (i + 1));
 	i = 0;
-	while(tmp)
+	while (tmp)
 	{
-		token = (t_token *)tmp->content;
-		cmd[i] = token->value;
+		token = (t_token *) tmp->content;
+		cmd[i] = ft_strdup(token->value);
 		if (cmd[i] == NULL)
+		{
+			// TODO: free cmds
 			return (NULL);
+		}
 		tmp = tmp->next;
 		i++;
 	}
@@ -71,7 +75,7 @@ void	set_cmd(t_list *list)
 
 	i = all_pipe(list);
 	tmp = g_var->cmd_list;
-	tmp = (t_list *)malloc(sizeof(t_list) * (i + 1));
+	tmp = (t_list *) malloc(sizeof(t_list) * (i + 1));
 	while(i--)
 	{
 		tmp->content = find_cmd(list);
@@ -86,7 +90,7 @@ void	parsing(t_list *list)
 	if (list == NULL)
 		return ;
 	check_unexpected_token(list);
-	set_cmd(list);
+	// set_cmd(list);
 	return ;
 }
 

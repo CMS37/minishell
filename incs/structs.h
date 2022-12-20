@@ -28,8 +28,8 @@ typedef struct	s_var
 	t_termios	new_term;
 	t_list		*token_list;
 	t_list		*env_list;
-	int			exit_status;
 	t_list		*cmd_list;
+	int			exit_status;
 }	t_var;
 
 // (char **) cmd_list->value[0] == (char *) "ls"

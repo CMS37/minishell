@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 t_list			*tokenize(const char *line);
+static t_list	*get_ifs(void);
 static t_bool	is_ifs(int c);
 static t_bool	is_meta(int c);
 
@@ -36,9 +37,50 @@ t_list	*tokenize(const char *line)
 	return (ret);
 }
 
+static t_list	*get_ifs(void)
+{
+	t_list	*ret;
+	t_list	*tmp;
+	char	*env;
+
+	ret = NULL;
+	ft_lstadd_back(&ret, ft_lstnew(ft_strdup(ft_itoa(9))));
+	ft_lstadd_back(&ret, ft_lstnew(ft_strdup(ft_itoa(10))));
+	ft_lstadd_back(&ret, ft_lstnew(ft_strdup(ft_itoa(32))));
+	tmp = g_var->env_list;
+	while (tmp)
+	{
+		env = (char *) tmp->content;
+		if (ft_strncmp(env, "IFS=", 4) == 0)
+		{
+			ft_lstclear(&ret, free);
+			ret = NULL;
+			env += 4;
+			while (*env)
+				ft_lstadd_back(&ret, ft_lstnew(ft_strdup(ft_itoa(*env++))));
+		}
+		tmp = tmp->next;
+	}
+	return (ret);
+}
+
 static t_bool	is_ifs(int c)
 {
-	return ((9 <= c && c <= 13) || c == 32);
+	t_list *const	ifs = get_ifs();
+	t_list			*tmp;
+
+	tmp = ifs;
+	while (tmp)
+	{
+		if (c == ft_atoi((char *) tmp->content))
+		{
+			ft_lstclear(&ifs, free);
+			return (TRUE);
+		}
+		tmp = tmp->next;
+	}
+	ft_lstclear(&ifs, free);
+	return (FALSE);
 }
 
 static t_bool	is_meta(int c)

@@ -9,6 +9,8 @@
 */
 
 t_bool	is_unexpected_token(const char *token);
+int		next_pipe(t_list *list);
+int		all_pipe(t_list *list);
 
 t_bool	is_unexpected_token(const char *token)
 {
@@ -25,40 +27,41 @@ t_bool	is_unexpected_token(const char *token)
 
 int	next_pipe(t_list *list)
 {
-	int		i;
+	int		pipe_idx;
 	t_list	*tmp;
 	t_token	*token;
 
 	tmp = list;
-	i = 0;
+	pipe_idx = 0;
 	while (tmp)
 	{
-		token = (t_token *)tmp->content;
+		token = (t_token *) tmp->content;
 		if (!ft_strcmp(token->value, "|"))
 			break ;
-		i++;
+		pipe_idx++;
 		tmp = tmp->next;
 	}
-	return (i);
+	return (pipe_idx);
 }
 
 int	all_pipe(t_list *list)
 {
-	int i;
+	int		num_of_pipe;
 	t_list	*tmp;
 	t_token	*token;
 
 	tmp = list;
-	i = 0;
+	num_of_pipe = 0;
 	while (tmp)
 	{
-		token = (t_token *)tmp->content;
+		token = (t_token *) tmp->content;
 		if (!ft_strcmp(token->value, "|"))
-			i++;
+			num_of_pipe++;
 		tmp = tmp->next;
 	}
-	return (i);
+	return (num_of_pipe);
 }
+
 /*
 int	near_token(const char *s1)
 {
