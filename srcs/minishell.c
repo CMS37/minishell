@@ -5,9 +5,7 @@
 #include <readline/history.h>
 #include <stdlib.h>
 
-t_var	*g_var;
-
-static t_bool	init_minishell(void);
+static t_bool	init_minishell(int argc, char **argv, char **envp);
 static t_bool	init_var(void);
 static t_bool	print_token_list(void);
 
@@ -15,7 +13,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 
-	init_minishell();
+	init_minishell(argc, argv, envp);
 	while (TRUE)
 	{
 		line = readline("minishell-1.0$ ");
@@ -32,18 +30,19 @@ int	main(int argc, char **argv, char **envp)
 		free(line);
 	}
 	free(line);
-	
-	(void) argc;
-	(void) argv;
-	(void) envp;
 	return (0);
 }
 
-static t_bool	init_minishell(void)
+static t_bool	init_minishell(int argc, char **argv, char **envp)
 {
 	init_var();
-	init_termios(g_var);
+	init_termios();
 	init_signal();
+	init_env_list(envp);
+
+	(void) argc;
+	(void) argv;
+	(void) envp;
 	return (TRUE);
 }
 
