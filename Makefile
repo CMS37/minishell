@@ -26,13 +26,17 @@ SRCS = 	minishell.c \
 		builtin/env.c \
 		builtin/pwd.c \
 		execute/execute.c \
+		execute/exec_builtin.c \
+		execute/exec_extern.c \
 		execute/here_docs.c \
+		execute/list_to_arr.c \
 		execute/redirection.c \
 		lexer/lexer.c \
 		lexer/token.c \
 		lexer/tokenizer.c \
 		parser/parser.c \
-		parser/parser_utils.c \
+		parser/check_unexpected_token.c \
+		parser/create_cmd_list.c \
 		subsystem/signal.c \
 		subsystem/subsystem.c \
 		subsystem/termios.c

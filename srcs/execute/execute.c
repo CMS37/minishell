@@ -5,48 +5,44 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int		execute(void);
-t_bool	is_builtin(t_list *cmd_list);
-t_bool	execute_builtin(t_list *cmd_list);
+int				execute(void);
+static t_bool	child_process(t_list *cmd_list);
 
 int	execute(void)
 {
 	here_docs();
 	if (g_var->cmd_list->next == NULL && is_builtin(g_var->cmd_list))
 		return (execute_builtin(g_var->cmd_list));
+	child_process(g_var->cmd_list);
 	return (0);
 }
 
-t_bool	is_builtin(t_list *cmd_list)
+static t_bool	child_process(t_list *cmd_list)
 {
-	char	**tokens;
+	pid_t	pid;
+	int		fd[2];
 
-	tokens = cmd_list->content;
-	while (*tokens)
+	if (pipe(fd) == -1)
+		return (FALSE);
+	pid = fork();
+	if (pid == -1)
+		return (FALSE);
+	if (pid == 0)
 	{
-		if (ft_strcmp(*tokens, "env") == 0)
-			return (TRUE);
-		else if (ft_strcmp(*tokens, "pwd") == 0)
-			return (TRUE);
-		tokens++;
+		close(fd[0]);
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+		set_file_descriptors(cmd_list);
+		if (is_builtin(cmd_list) && execute_builtin(cmd_list))
+			exit(0);
+		else
+			execute_extern(cmd_list);
 	}
-	return (FALSE);
-}
-
-t_bool	execute_builtin(t_list *cmd_list)
-{
-	char	**tokens;
-
-	set_file_descriptors(cmd_list);	
-	tokens = cmd_list->content;
-	while (*tokens)
-	{
-		if (ft_strcmp(*tokens, "env") == 0)
-			builtin_env(STDOUT_FILENO);
-		else if (ft_strcmp(*tokens, "pwd") == 0)
-			builtin_pwd(STDOUT_FILENO);
-		tokens++;
-	}
-	
+	close(fd[1]);
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
+	if (cmd_list->next != NULL)
+		child_process(cmd_list->next);
+	waitpid(pid, NULL, 0);
 	return (TRUE);
 }

@@ -7,56 +7,55 @@
 #include <readline/readline.h>
 
 t_bool			here_docs(void);
-static t_bool	here_doc(char **token);
+static t_bool	here_doc(t_list *cmd);
 static char		*generate_file_name(void);
 static char		*tmp_directory_path(void);
 
 t_bool	here_docs(void)
 {
-	t_list	*cur;
-	char	**tokens;
+	t_list	*cmd_list_tmp;
+	t_list	*cur_cmd;
 
-	cur = g_var->cmd_list;
-	while (cur)
+	cmd_list_tmp = g_var->cmd_list;
+	while (cmd_list_tmp)
 	{
-		tokens = cur->content;
-		while (*tokens)
+		cur_cmd = cmd_list_tmp->content;
+		while (cur_cmd)
 		{
-			if (ft_strcmp(*tokens, "<<") == 0)
+			if (ft_strcmp(((t_token *) cur_cmd->content)->value, "<<"))
 			{
-				g_var->here_doc_cnt++;
-				if (here_doc(tokens++) == FALSE)
+				if (!here_doc(cur_cmd))
 					return (FALSE);
 			}
-			tokens++;
+			cur_cmd = cur_cmd->next;
 		}
-		cur = cur->next;
+		cmd_list_tmp = cmd_list_tmp->next;
 	}
 	return (TRUE);
 }
 
-static t_bool	here_doc(char **token)
+static t_bool	here_doc(t_list *cmd)
 {
 	int			fd;
 	char		*line;
 	char *const	file_name = generate_file_name();
 
-	free(*token);
-	*token = ft_strdup("<");
+	free(((t_token *) cmd->content)->value);
+	((t_token *) cmd->content)->value = ft_strdup("<");
 	fd = open_file(file_name, HERE_DOC);
 	while (TRUE)
 	{
 		line = readline("heredoc> ");
 		if (line == NULL)
 			return (FALSE);
-		if (ft_strcmp(line, *(token + 1)) == 0)
+		if (ft_strcmp(line, ((t_token *) cmd->next->content)->value) == 0)
 			break ;
 		ft_putstr_fd(line, fd);
 		free(line);
 	}
 	free(line);
-	free(*(token + 1));
-	*(token + 1) = file_name;
+	free(((t_token *) cmd->next->content)->value);
+	((t_token *) cmd->next->content)->value = file_name;
 	close(fd);
 	return (TRUE);
 }
