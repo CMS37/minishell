@@ -25,9 +25,9 @@ t_bool	set_file_descriptors(t_list *cmd_list)
 			fd = open_file(*(tokens + 1), FILE_OUT_APPEND);
 		if (fd != -1)
 		{
-			if (ft_strcmp(*tokens, "<") == 0)
+			if (ft_strcmp(*tokens, "<") == 0 && close(STDIN_FILENO))
 				dup2(fd, STDIN_FILENO);
-			else
+			else if (close(STDOUT_FILENO))
 				dup2(fd, STDOUT_FILENO);
 			close(fd);
 		}

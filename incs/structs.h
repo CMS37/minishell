@@ -39,6 +39,7 @@ typedef struct	s_var
 	t_list		*cmd_list;
 	size_t		here_doc_cnt;
 	int			exit_status;
+	int			old_stdout;
 }	t_var;
 
 // (char **) cmd_list->value[0] == (char *) "ls"
