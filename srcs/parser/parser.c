@@ -2,16 +2,19 @@
 #include "../../incs/structs.h"
 
 /*
-lexer 에서 들어온 문자열 토큰화 후 전달 -> 구조체로 리턴받을듯?
+처리한문법
+  1.파이프만 있거나 다음입력값이 인자가아닐경우
+	-> ("|", "| <", "| ||", "| pwd")등
+  2.리다이렉션다음에 입력값이있을떄 
+  	인자가아닌 명렁어나 파이프가오면 에러
+	-> ("< |", "pwd > a", )근데 이건되나...? 배쉬테스트필요
+  3. 그 외 처리할거?
 
-구조체 받아서 오류 검사 후 파싱트리?
+	아직 코드 최적화 및 디버깅x 테스트필
 
-rule 1. 맨처음 토큰에 해당문자는 올수없음 {"|", "||", ...};
+	할거
+	디버깅/최적화/ 토큰타입에 값안들어가는거 확인
 */
-
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 
 void	check_syntax_err(t_list *list)
 {
@@ -30,7 +33,10 @@ void	check_syntax_err(t_list *list)
 		if (token->type == T_PIPE && (prev == NULL || \
 			next == NULL || prev->type != T_ARGV || \
 			next->type == T_PIPE))
-			token->type = SYNTAX_ERR;
+			token->type = 1;
+		if (token->type >= T_RED_R && token->type <= T_RED_LL && \
+			(next != NULL && next->type != T_ARGV))
+			token->type = 1;
 		prev = token;
 	}
 }
@@ -62,6 +68,23 @@ void check_unexpected_token(t_list *list)
 	return ;
 }
 
+void	parsing(t_list *list)
+{
+	t_list	*tmp;
+	t_token	*token;
+
+	if (list == NULL)
+		return ;
+	tmp = check_word_type(list);
+	token = (t_token *) tmp->content;
+	if (token->type == 1)
+		//문법검사에러
+	//check_unexpected_token(list);
+	create_cmd_list();
+	return ;
+}
+
+/*
 char	**find_cmd(t_list *list)
 {
 	t_list	*tmp;
@@ -102,20 +125,10 @@ void	set_cmd(t_list *list)
 	while(i--)
 	{
 		tmp->content = find_cmd(list);
-		//test
 		if (tmp->content == NULL)
 			break ;
-		char	*cur = tmp->content;
+		char	*cur = tmp->content; //test
 		printf("%s", cur);
 		tmp = tmp->next;
 	}
-}
-
-void	parsing(t_list *list)
-{
-	if (list == NULL)
-		return ;
-	check_unexpected_token(list);
-	create_cmd_list();
-	return ;
-}
+}*/

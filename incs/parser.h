@@ -2,11 +2,15 @@
 # define PARSER_H
 
 #include "../libs/libft/incs/libft.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
-
-# define SYNTAX_ERR 258;
 // parser.c
 void	parsing(t_list *list);
+
+//check_word.c
+t_list *check_word_type(t_list *list);
 
 // check_unexpected_token.c
 void	check_unexpected_token(t_list *list);
