@@ -9,31 +9,29 @@ static t_bool	is_meta(int c);
 t_list	*tokenize(const char *line)
 {
 	t_list	*ret;
-	t_token	*cur_token;
+	t_token	*cur;
 	size_t	i;
 
 	ret = NULL;
-	cur_token = NULL;
+	cur = init_token();
 	i = 0;
 	while (i < ft_strlen(line))
 	{
-		if ((is_ifs(line[i]) || is_meta(line[i])) && cur_token != NULL)
+		if ((is_ifs(line[i]) || is_meta(line[i])) && *(cur->value) != 0)
 		{
-			ft_lstadd_back(&ret, ft_lstnew(cur_token));
-			cur_token = NULL;
+			ft_lstadd_back(&ret, ft_lstnew(cur));
+			cur = init_token();
 		}
 		if (is_meta(line[i]))
 			ft_lstadd_back(&ret, ft_lstnew(init_meta_token(line, &i)));
 		if (is_ifs(line[i]) == FALSE && is_meta(line[i]) == FALSE)
-		{
-			if (cur_token == NULL)
-				cur_token = init_token();
-			cur_token->value = ft_strjoin(cur_token->value, ft_substr(line, i, 1));
-		}
+			cur->value = ft_strjoin(cur->value, ft_substr(line, i, 1));
 		i++;
 	}
-	if (cur_token != NULL)
-		ft_lstadd_back(&ret, ft_lstnew(cur_token));
+	if (*(cur->value) != 0)
+		ft_lstadd_back(&ret, ft_lstnew(cur));
+	else
+		free(cur);
 	return (ret);
 }
 
@@ -66,9 +64,10 @@ static t_list	*get_ifs(void)
 
 static t_bool	is_ifs(int c)
 {
-	t_list *const	ifs = get_ifs();
-	t_list			*tmp;
+	t_list	*ifs;
+	t_list	*tmp;
 
+	ifs = get_ifs();
 	tmp = ifs;
 	while (tmp)
 	{

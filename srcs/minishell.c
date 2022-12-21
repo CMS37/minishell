@@ -7,27 +7,27 @@
 
 static t_bool	init_minishell(int argc, char **argv, char **envp);
 static t_bool	init_var(void);
+static t_bool	execute_cmd_line(const char *line);
+void			exit_minishell(void);
+
+void			del_cmd(void *cmd);
+
 static t_bool	print_token_list(void);
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
-
+	
 	init_minishell(argc, argv, envp);
 	while (TRUE)
 	{
 		line = readline("minishell-1.0$ ");
-		if (line == NULL && \
-			printf("\033[1A") && printf("\033[14C") && printf(" exit\n"))
-			exit(-1);
-		if (g_var->token_list != NULL)
-			ft_lstclear(&g_var->token_list, del_token);
-		g_var->token_list = tokenize(line);
-		print_token_list();
-		parsing(g_var->token_list);
-		add_history(line);
+		if (line == NULL)
+			exit_minishell();
 		if (ft_strncmp(line, "exit", 4) == 0 && ft_putstr_fd("exit\n", 1))
 			break ;
+		add_history(line);
+		execute_cmd_line(line);
 		free(line);
 	}
 	free(line);
@@ -41,13 +41,6 @@ static t_bool	init_minishell(int argc, char **argv, char **envp)
 	init_signal();
 	init_env_list(envp);
 
-	ft_putstr_fd("builtin_env\n", 1);
-	builtin_env(1);
-	ft_putstr_fd("\n", 1);
-
-	ft_putstr_fd("builtin_pwd\n>> ", 1);
-	builtin_pwd(1);
-	ft_putstr_fd("\n", 1);
 	(void) argc;
 	(void) argv;
 	(void) envp;
@@ -60,6 +53,36 @@ static t_bool	init_var(void)
 	if (g_var == NULL)
 		return (FALSE);
 	return (TRUE);
+}
+
+static t_bool	execute_cmd_line(const char *line)
+{
+	ft_lstclear(&g_var->token_list, del_token);
+	g_var->token_list = tokenize(line);
+	print_token_list();
+
+	ft_lstclear(&g_var->cmd_list, del_cmd);
+	g_var->cmd_list = (t_list *) ft_calloc(sizeof(t_list), 1, "");
+	char	**tokens = (char **) ft_calloc(sizeof(char *), 100, "");
+	g_var->cmd_list->content = tokens;
+	t_list	*token_list_tmp = g_var->token_list;
+	while (token_list_tmp) {
+		t_token	*token = token_list_tmp->content;
+		*tokens++ = ft_strdup(token->value);
+		token_list_tmp = token_list_tmp->next;
+	}
+
+	// parsing(g_var->token_list);
+	execute();
+	return (TRUE);
+}
+
+void	exit_minishell(void)
+{
+	printf("\033[1A");
+	printf("\033[14C");
+	printf(" exit\n");
+	exit(0);
 }
 
 static t_bool	print_token_list(void)
@@ -98,4 +121,15 @@ static t_bool	print_token_list(void)
 		cur_list = cur_list->next;
 	}
 	return (TRUE);
+}
+
+void	del_cmd(void *cmd)
+{
+	char	**tokens = (char **) cmd;
+
+	if (tokens == NULL)
+		return ;
+	while (*tokens)
+		free(*tokens++);
+	return ;
 }

@@ -26,6 +26,8 @@ SRCS = 	minishell.c \
 		builtin/env.c \
 		builtin/pwd.c \
 		execute/execute.c \
+		execute/here_docs.c \
+		execute/redirection.c \
 		lexer/lexer.c \
 		lexer/token.c \
 		lexer/tokenizer.c \
