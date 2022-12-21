@@ -3,6 +3,8 @@
 
 #include "../libs/libft/incs/libft.h"
 
+
+# define SYNTAX_ERR 258;
 // parser.c
 void	parsing(t_list *list);
 

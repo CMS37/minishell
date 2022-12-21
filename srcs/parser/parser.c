@@ -6,13 +6,37 @@ lexer 에서 들어온 문자열 토큰화 후 전달 -> 구조체로 리턴받�
 
 구조체 받아서 오류 검사 후 파싱트리?
 
-rule 1. 맨처음 토큰에 해당문자는 올수없음 {"|", "||", ...};
+
+구문 검사 정리
+1. pipe 앞 뒤에 일반 word가 아닌게 올 경우
+2. 
 */
 
 #include <stdio.h>
 #include <string.h>
-#include <err.h>
 #include <stdlib.h>
+
+void	check_syntax_err(t_list *list)
+{
+	t_list	*tmp;
+	t_token	*token;
+	t_token	*prev;
+	t_token *next;
+
+	tmp = list;
+	prev = NULL;
+	while (tmp)
+	{
+		token = (t_token *) tmp->content;
+		tmp = tmp->next;
+		next = (t_token *) tmp->content;
+		if (token->type == T_PIPE && (prev == NULL || \
+			next == NULL || prev->type != T_ARGV || \
+			next->type == T_PIPE))
+			token->type = SYNTAX_ERR;
+		prev = token;
+	}
+}
 
 void	error(char	*str)
 {
@@ -81,11 +105,10 @@ void	set_cmd(t_list *list)
 	while(i--)
 	{
 		tmp->content = find_cmd(list);
-		//test
 		if (tmp->content == NULL)
 			break ;
 		char	*cur = tmp->content;
-		printf("%s", cur);
+		printf("%s\n", cur);
 		tmp = tmp->next;
 	}
 }
