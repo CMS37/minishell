@@ -11,6 +11,7 @@
 t_bool	is_unexpected_token(const char *token);
 int		next_pipe(t_list *list);
 int		all_pipe(t_list *list);
+void	free_cmd(char **cmd);
 
 t_bool	is_unexpected_token(const char *token)
 {
@@ -66,8 +67,8 @@ void	free_cmd(char **cmd)
 {
 	int	i;
 
-	i = -1
+	i = -1;
 	while(cmd[++i])
 		free(cmd[i]);
-
+	return;
 }

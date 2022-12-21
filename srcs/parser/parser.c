@@ -82,9 +82,10 @@ void	set_cmd(t_list *list)
 	{
 		tmp->content = find_cmd(list);
 		//test
-		printf("%s", tmp->content);
 		if (tmp->content == NULL)
 			break ;
+		char	*cur = tmp->content;
+		printf("%s", cur);
 		tmp = tmp->next;
 	}
 }
