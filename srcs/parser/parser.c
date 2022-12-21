@@ -58,7 +58,7 @@ char	**find_cmd(t_list *list)
 		cmd[i] = ft_strdup(token->value);
 		if (cmd[i] == NULL)
 		{
-			// TODO: free cmds
+			free_cmd(cmd);
 			return (NULL);
 		}
 		tmp = tmp->next;
