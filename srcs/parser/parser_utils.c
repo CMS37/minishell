@@ -62,37 +62,12 @@ int	all_pipe(t_list *list)
 	return (num_of_pipe);
 }
 
-/*
-int	near_token(const char *s1)
+void	free_cmd(char **cmd)
 {
-	unsigned char	*us1;
-	unsigned char	**us2;
+	int	i;
 
-	us2 = (unsigned char **)malloc(sizeof(unsigned char *) * 4);
-	us2[0] = (unsigned char *)"|";
-	us2[1] = (unsigned char *)"&";
-	us2[2] = (unsigned char *)";";
-	us2[3] = (unsigned char *)"\0";
-	us1 = (unsigned char *) s1;
-	while ((*us2) != "\-")
-	{
-		if (us1 == (*us2))
-			return (1);
-		(*us2)++;
-	}
-	return (0);
+	i = -1
+	while(cmd[++i])
+		free(cmd[i]);
+
 }
-
-int	near_red(const char *s1)
-{
-	unsigned char	*us1;
-	unsigned char	*us2;
-
-	if (!s1)
-		return (0);
-	us1 = (unsigned char *) s1;
-	if (us1 == "<" || us1 == "<<" || us1 == ">" || us1 == ">>")
-		return (1);
-	return (0);
-}
-*/
