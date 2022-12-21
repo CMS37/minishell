@@ -1,5 +1,6 @@
 #include "../../incs/execute.h"
 #include <unistd.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 void			execute_extern(t_list *cur_cmd);
@@ -9,7 +10,7 @@ static char		**envp_list_to_arr(void);
 
 void	execute_extern(t_list *cur_cmd)
 {
-	char **const	cmd = get_cmd(cur_cmd);
+	char **const	cmd = list_to_arr(cur_cmd);
 	char *const		path = find_path(cmd[0]);
 
 	if (path == NULL)
@@ -20,6 +21,7 @@ void	execute_extern(t_list *cur_cmd)
 	}
 	if (execve(path, cmd, envp_list_to_arr()) == -1)
 	{
+		ft_putendl_fd("minishell: execve failed", STDERR_FILENO);
 		perror("Error");
 		exit(1);
 	}
@@ -61,7 +63,7 @@ static t_bool	free_paths(char **paths)
 static char		**envp_list_to_arr(void)
 {
 	char **const	ret = \
-		(char **) ft_calloc(sizeof(char), ft_lstsize(g_var->env_list) + 1, "");
+		(char **) ft_calloc(sizeof(char *), ft_lstsize(g_var->env_list) + 1, "");
 	char 			**ret_tmp;
 	t_list			*env_list_tmp;
 
@@ -69,8 +71,7 @@ static char		**envp_list_to_arr(void)
 	env_list_tmp = g_var->env_list;
 	while (env_list_tmp)
 	{
-		*ret_tmp = ft_strdup(env_list_tmp->content);
-		ret_tmp++;
+		*ret_tmp++ = ft_strdup(env_list_tmp->content);
 		env_list_tmp = env_list_tmp->next;
 	}
 	return (ret);

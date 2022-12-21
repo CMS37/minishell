@@ -22,7 +22,7 @@ t_bool	here_docs(void)
 		cur_cmd = cmd_list_tmp->content;
 		while (cur_cmd)
 		{
-			if (ft_strcmp(((t_token *) cur_cmd->content)->value, "<<"))
+			if (ft_strcmp(((t_token *) cur_cmd->content)->value, "<<") == 0)
 			{
 				if (!here_doc(cur_cmd))
 					return (FALSE);

@@ -5,33 +5,31 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-t_bool	set_file_descriptors(t_list *cmd_list);
+t_bool	set_fd_in_redir(t_list *cmd);
 int		open_file(const char *file, t_open_flag flag);
 
-t_bool	set_file_descriptors(t_list *cmd_list)
+t_bool	set_fd_in_redir(t_list *cmd)
 {
 	int		fd;
-	char	**tokens;
 
-	tokens = cmd_list->content;
-	while (*tokens)
+	while (cmd)
 	{
 		fd = -1;
-		if (ft_strcmp(*tokens, "<") == 0)
-			fd = open_file(*(tokens + 1), FILE_IN);
-		else if (ft_strcmp(*tokens, ">") == 0)
-			fd = open_file(*(tokens + 1), FILE_OUT_TRUNC);
-		else if (ft_strcmp(*tokens, ">>") == 0)
-			fd = open_file(*(tokens + 1), FILE_OUT_APPEND);
+		if (ft_strcmp(((t_token *) cmd->content)->value, "<") == 0)
+			fd = open_file(((t_token *) cmd->next->content)->value, FILE_IN);
+		else if (ft_strcmp(((t_token *) cmd->content)->value, ">") == 0)
+			fd = open_file(((t_token *) cmd->next->content)->value, FILE_OUT_TRUNC);
+		else if (ft_strcmp(((t_token *) cmd->content)->value, ">>") == 0)
+			fd = open_file(((t_token *) cmd->next->content)->value, FILE_OUT_APPEND);
 		if (fd != -1)
 		{
-			if (ft_strcmp(*tokens, "<") == 0 && close(STDIN_FILENO))
+			if (ft_strcmp(((t_token *) cmd->content)->value, "<") == 0 && close(STDIN_FILENO))
 				dup2(fd, STDIN_FILENO);
 			else if (close(STDOUT_FILENO))
 				dup2(fd, STDOUT_FILENO);
 			close(fd);
 		}
-		tokens++;
+		cmd = cmd->next;
 	}
 	return (TRUE);
 }

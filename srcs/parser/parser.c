@@ -5,13 +5,11 @@
 #include <err.h>
 #include <stdlib.h>
 
-void	parsing(t_list *list);
+void	parsing(void);
 
-void	parsing(t_list *list)
+void	parsing(void)
 {
-	if (list == NULL)
-		return ;
-	check_unexpected_token(list);
+	check_unexpected_token();
 	create_cmd_list();
 	return ;
 }
