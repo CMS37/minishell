@@ -21,7 +21,7 @@ char	**list_to_arr(t_list *cmd);
 t_bool	here_docs(void);
 
 // redirections.c
-t_bool	set_file_descriptors(t_list *cmd);
+t_bool	set_fd_in_redir(t_list *cmd);
 int		open_file(const char *file, t_open_flag flag);
 
 #endif

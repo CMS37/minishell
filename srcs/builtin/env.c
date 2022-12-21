@@ -1,19 +1,14 @@
 #include "../../incs/builtin.h"
 #include "../../incs/structs.h"
+#include <unistd.h>
 
 t_bool	init_env_list(char **envp);
 int		builtin_env(int fd);
 
 t_bool	init_env_list(char **envp)
 {
-	size_t	i;
-
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strdup(envp[i])));
-		i++;
-	}
+	while (*envp != NULL)
+		ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strdup(*envp++)));
 	return (TRUE);
 }
 

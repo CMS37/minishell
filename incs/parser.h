@@ -7,13 +7,13 @@
 #include <stdlib.h>
 
 // parser.c
-void	parsing(t_list *list);
+void	parsing(void);
 
 //check_word.c
 t_list *check_word_type(t_list *list);
 
 // check_unexpected_token.c
-void	check_unexpected_token(t_list *list);
+void	check_unexpected_token(void);
 
 // create_cmd_list.c
 t_bool	create_cmd_list(void);

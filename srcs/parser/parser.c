@@ -52,34 +52,13 @@ void check_unexpected_token(t_list *list)
 	t_list	*tmp;
 	t_token	*token;
 
-	tmp = list;
-	token = (t_token *) tmp->content;
-	if (token == NULL)
-		return ;
-	if (is_unexpected_token(token->value))
-		error(token->value);
-	while (tmp && (ft_strcmp(token->value, "<") == 0 || ft_strcmp(token->value, ">") == 0))
-	{
-		tmp = tmp->next;
-		token = (t_token *)tmp->content;
-		if (is_unexpected_token(token->value))
-			error(token->value);
-	}
-	return ;
-}
+void	parsing(t_list *list);
 
-void	parsing(t_list *list)
+void	parsing(void)
 {
-	t_list	*tmp;
-	t_token	*token;
-
 	if (list == NULL)
 		return ;
-	tmp = check_word_type(list);
-	token = (t_token *) tmp->content;
-	if (token->type == 1)
-		//문법검사에러
-	//check_unexpected_token(list);
+	check_unexpected_token(list);
 	create_cmd_list();
 	return ;
 }

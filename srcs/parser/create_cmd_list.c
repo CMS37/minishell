@@ -22,6 +22,8 @@ t_bool	create_cmd_list(void)
 			ft_lstadd_back(&cmd, ft_lstnew(clone_token(tmp->content)));
 		tmp = tmp->next;
 	}
+	if (cmd != NULL)
+		ft_lstadd_back(&g_var->cmd_list, ft_lstnew(cmd));
 	return (TRUE);
 }
 

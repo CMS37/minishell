@@ -63,18 +63,7 @@ static t_bool	execute_cmd_line(const char *line)
 	g_var->token_list = tokenize(line);
 	print_token_list();
 
-	ft_lstclear(&g_var->cmd_list, del_cmd);
-	g_var->cmd_list = (t_list *) ft_calloc(sizeof(t_list), 1, "");
-	char	**tokens = (char **) ft_calloc(sizeof(char *), 100, "");
-	g_var->cmd_list->content = tokens;
-	t_list	*token_list_tmp = g_var->token_list;
-	while (token_list_tmp) {
-		t_token	*token = token_list_tmp->content;
-		*tokens++ = ft_strdup(token->value);
-		token_list_tmp = token_list_tmp->next;
-	}
-
-	// parsing(g_var->token_list);
+	parsing();
 	execute();
 	close(STDOUT_FILENO);
 	dup2(g_var->old_stdout, STDOUT_FILENO);

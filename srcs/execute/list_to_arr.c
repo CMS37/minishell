@@ -1,4 +1,5 @@
 #include "../../incs/execute.h"
+#include <unistd.h>
 
 char			**list_to_arr(t_list *cmd);
 static size_t	num_of_token(t_list *cmd);
@@ -47,5 +48,14 @@ static size_t	num_of_token(t_list *cmd)
 	return (ret);
 }
 
-static t_bool	handle_single_quote(t_list *cmd);
-static t_bool	handle_double_quote(t_list *cmd);
+static t_bool	handle_single_quote(t_list *cmd)
+{
+	(void) cmd;
+	return (TRUE);
+}
+
+static t_bool	handle_double_quote(t_list *cmd)
+{
+	(void) cmd;
+	return (TRUE);
+}
