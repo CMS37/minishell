@@ -3,6 +3,7 @@
 #include "../../incs/builtin.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 int		execute(void);
 t_bool	is_builtin(t_list *cmd_list);
@@ -41,10 +42,11 @@ t_bool	execute_builtin(t_list *cmd_list)
 	while (*tokens)
 	{
 		if (ft_strcmp(*tokens, "env") == 0)
-			return (builtin_env(STDOUT_FILENO));
+			builtin_env(STDOUT_FILENO);
 		else if (ft_strcmp(*tokens, "pwd") == 0)
-			return (builtin_pwd(STDOUT_FILENO));
+			builtin_pwd(STDOUT_FILENO);
 		tokens++;
 	}
+	
 	return (TRUE);
 }

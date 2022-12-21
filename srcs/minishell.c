@@ -1,9 +1,10 @@
 #include "../incs/minishell.h"
 #include "../libs/libft/incs/libft.h"
+#include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <stdlib.h>
 
 static t_bool	init_minishell(int argc, char **argv, char **envp);
 static t_bool	init_var(void);
@@ -40,7 +41,8 @@ static t_bool	init_minishell(int argc, char **argv, char **envp)
 	init_termios();
 	init_signal();
 	init_env_list(envp);
-
+	g_var->old_stdout = dup(STDOUT_FILENO);
+	
 	(void) argc;
 	(void) argv;
 	(void) envp;
@@ -74,6 +76,8 @@ static t_bool	execute_cmd_line(const char *line)
 
 	// parsing(g_var->token_list);
 	execute();
+	close(STDOUT_FILENO);
+	dup2(g_var->old_stdout, STDOUT_FILENO);
 	return (TRUE);
 }
 
