@@ -33,6 +33,7 @@ SRCS = 	minishell.c \
 		execute/list_to_arr.c \
 		execute/redirection.c \
 		lexer/lexer.c \
+		lexer/handle_quote.c \
 		lexer/token.c \
 		lexer/tokenizer.c \
 		parser/parser.c \

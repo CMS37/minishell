@@ -15,18 +15,21 @@ t_list	*tokenize(const char *line)
 	cur = init_token();
 	while (*line)
 	{
-		if ((is_ifs(*line) || is_meta(*line)) && *(cur->value) != 0)
+		if ((is_ifs(*line) || is_meta(*line)) && cur->value != NULL)
 		{
 			ft_lstadd_back(&ret, ft_lstnew(cur));
 			cur = init_token();
 		}
 		if (is_meta(*line))
-			ft_lstadd_back(&ret, ft_lstnew(init_meta_token(line, &i)));
-		if (is_ifs(*line) == FALSE && is_meta(*line) == FALSE)
-			cur->value = ft_strjoin(cur->value, ft_substr(line, i, 1));
+			ft_lstadd_back(&ret, ft_lstnew(init_meta_token(&line)));
+		if (*line == '\'' || *line == '\"')
+			handle_quote(cur, &line);
+		else if (is_ifs(*line) == FALSE && is_meta(*line) == FALSE && \
+				(*line != '\'' && *line != '\"'))
+			cur->value = ft_strjoin(cur->value, ft_substr(line, 0, 1));
 		line++;
 	}
-	if (*(cur->value) != 0)
+	if (cur->value != NULL)
 		ft_lstadd_back(&ret, ft_lstnew(cur));
 	else
 		free(cur);
@@ -82,7 +85,7 @@ static t_bool	is_ifs(int c)
 
 static t_bool	is_meta(int c)
 {
-	const char	*meta = "><\'\"|";
+	const char	meta[3] = {'|', '>', '<'};
 	size_t		i;
 
 	i = 0;

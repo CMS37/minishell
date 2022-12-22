@@ -57,15 +57,15 @@ static t_bool	init_var(void)
 
 static t_bool	execute_cmd_line(const char *line)
 {
-	ft_lstclear(&g_var->token_list, del_token);
-	g_var->token_list = tokenize(line);
+	if (lexer(line) == FALSE)
+		return (FALSE);
 	print_token_list();
 
 	parsing();
 	
 	if (g_var->exit_status != 0)
 		return (FALSE);
-		
+
 	execute();
 
 	close(STDERR_FILENO);
@@ -102,12 +102,6 @@ static t_bool	print_token_list(void)
 				break ;
 			case T_REDIRECT:
 				printf("Token_type: T_REDIRECT, ");
-				break ;
-			case T_SINGLE_QUOTE:
-				printf("Token_type: T_SINGLE_QUOTE, ");
-				break ;
-			case T_DOUBLE_QUOTE:
-				printf("Token_type: T_DOUBLE_QUOTE, ");
 				break ;
 			default:
 				printf("Token_type: Unknown, ");
