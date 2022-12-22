@@ -21,7 +21,6 @@ void	execute_extern(t_list *cur_cmd)
 	}
 	if (execve(path, cmd, envp_list_to_arr()) == -1)
 	{
-		ft_putendl_fd("minishell: execve failed", STDERR_FILENO);
 		perror("Error");
 		exit(1);
 	}
