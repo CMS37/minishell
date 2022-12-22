@@ -14,6 +14,8 @@ typedef enum e_token_type
 	T_REDIRECT = 3,
 	T_SINGLE_QUOTE = 4,
 	T_DOUBLE_QUOTE = 5,
+	T_ARGV = 6,
+	T_CMD = 7
 }	t_token_type;
 
 typedef struct s_token

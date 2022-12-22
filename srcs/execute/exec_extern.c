@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 void			execute_extern(t_list *cur_cmd);
-static char		*find_path(const char *cmd);
+char			*find_path(const char *cmd);
 static t_bool	free_paths(char **paths);
 static char		**envp_list_to_arr(void);
 
@@ -26,7 +26,7 @@ void	execute_extern(t_list *cur_cmd)
 	}
 }
 
-static char	*find_path(const char *cmd)
+char	*find_path(const char *cmd)
 {
 	char	*ret;
 	char	**paths;
