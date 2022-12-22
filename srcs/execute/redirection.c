@@ -18,10 +18,9 @@ t_bool	set_fd_in_redir(t_list *cmd)
 		fd = get_fd(cmd);
 		if (fd != -1)
 		{
-			if (ft_strcmp(((t_token *) cmd->content)->value, "<") == 0 && \
-				close(STDIN_FILENO))
+			if (ft_strcmp(((t_token *) cmd->content)->value, "<") == 0)
 				dup2(fd, STDIN_FILENO);
-			else if (close(STDOUT_FILENO))
+			else
 				dup2(fd, STDOUT_FILENO);
 			close(fd);
 		}

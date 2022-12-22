@@ -64,10 +64,6 @@ static t_bool	execute_cmd_line(const char *line)
 	parsing();
 	execute();
 
-	close(STDIN_FILENO);
-	dup2(g_var->old_fd[0], STDIN_FILENO);
-	close(STDOUT_FILENO);
-	dup2(g_var->old_fd[1], STDOUT_FILENO);
 	close(STDERR_FILENO);
 	dup2(g_var->old_fd[2], STDERR_FILENO);
 	return (TRUE);
