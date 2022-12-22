@@ -23,42 +23,6 @@ void	del_cmd(void *cmd)
 }
 
 /*
-int	operation_word(t_cmd **cmd, char *line, int *index)
-{
-	if (!ft_strncmp(&line[*index], "<", 1))
-		parsing_left(line, cmd, index);
-	else if (!ft_strncmp(&line[*index], ">", 1))
-		parsing_right(line, cmd, index);
-	else if (!ft_strncmp(&line[*index], "|", 1))
-	{
-		if (line[(*index) + 1] == '|')
-			return (1);
-		else
-			insert_node(cmd, PIPE, ft_strdup("|"));
-	}
-	else if (!ft_strncmp(&line[*index], "$", 1))
-		insert_node(cmd, DOLR, ft_strdup("$"));
-	return (0);
-}
-void	argument_word(t_cmd **cmd, char *line, int *index)
-{
-	int		tmp;
-	char	*str;
-
-	tmp = *index;
-	while (line[*index] && line[*index] != ' ' && line[*index] != '<' \
-		&& line[*index] != '>' && line[*index] != '|' && line[*index] != ';' \
-		&& line[*index] != '\"' && line[*index] != '\'' \
-		&& line[*index] != '\\' && line[*index] != '$')
-		(*index)++;
-	if (*index - tmp)
-	{
-		str = ft_substr(line, tmp, *index - tmp);
-		insert_node(cmd, ARG, str);
-	}
-	(*index)--;
-}
-
 void	error(char	*str)
 {
 	// TODO: set exit_status: 258
