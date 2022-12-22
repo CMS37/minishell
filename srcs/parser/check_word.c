@@ -7,7 +7,7 @@ t_list *check_word_type(t_list *list)
 {
 	t_list	*tmp;
 	t_token	*token;
-	int		i;
+	// int		i;
 	
 	tmp = list;
 	while (tmp)

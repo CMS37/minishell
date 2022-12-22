@@ -84,7 +84,7 @@ static t_bool	is_ifs(int c)
 
 static t_bool	is_meta(int c)
 {
-	const char	*meta = "><$|\'\"";
+	const char	*meta = "><\'\"|";
 	size_t		i;
 
 	i = 0;
