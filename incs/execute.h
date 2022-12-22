@@ -6,6 +6,7 @@
 
 // execute.c
 int		execute(void);
+char	*find_path(const char *cmd);
 
 // execute_builtin.c
 t_bool	is_builtin(t_list *cmd);

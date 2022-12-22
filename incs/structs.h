@@ -14,12 +14,8 @@ typedef enum e_token_type
 	T_REDIRECT = 3,
 	T_SINGLE_QUOTE = 4,
 	T_DOUBLE_QUOTE = 5,
-	T_ARGV = 6;
-	T_CMD = 7;
-	T_RED_R = 8; // ">"
-	T_RED_RR = 9; // ">>"
-	T_RED_L = 10; // "<"
-	T_RED_LL = 11; // "<<"
+	T_ARGV = 6,
+	T_CMD = 7
 }	t_token_type;
 
 typedef struct s_token
@@ -45,7 +41,7 @@ typedef struct	s_var
 	t_list		*cmd_list;
 	size_t		here_doc_cnt;
 	int			exit_status;
-	int			old_stdout;
+	int			old_fd[3];
 }	t_var;
 
 // (char **) cmd_list->value[0] == (char *) "ls"

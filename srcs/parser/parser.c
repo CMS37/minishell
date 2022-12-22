@@ -1,6 +1,3 @@
-#include "../../incs/parser.h"
-#include "../../incs/structs.h"
-
 /*
 처리한문법
   1.파이프만 있거나 다음입력값이 인자가아닐경우
@@ -15,6 +12,33 @@
 	할거
 	디버깅/최적화/ 토큰타입에 값안들어가는거 확인
 */
+
+#include "../../incs/parser.h"
+#include "../../incs/lexer.h"
+#include "../../incs/structs.h"
+#include <stdio.h>
+#include <string.h>
+#include <err.h>
+#include <stdlib.h>
+
+void	parsing(void);
+void	del_cmd(void *cmd);
+
+void	parsing(void)
+{
+	check_unexpected_token();
+	ft_lstclear(&g_var->cmd_list, del_cmd);
+	create_cmd_list();
+	return ;
+}
+
+void	del_cmd(void *cmd)
+{
+	t_list	*t_cmd;
+
+	t_cmd = (t_list *) cmd;
+	ft_lstclear(&t_cmd, del_token);
+}
 
 void	check_syntax_err(t_list *list)
 {
@@ -34,80 +58,15 @@ void	check_syntax_err(t_list *list)
 			next == NULL || prev->type != T_ARGV || \
 			next->type == T_PIPE))
 			token->type = 1;
-		if (token->type >= T_RED_R && token->type <= T_RED_LL && \
+		if (token->type >= T_REDIRECT && \
 			(next != NULL && next->type != T_ARGV))
 			token->type = 1;
 		prev = token;
 	}
 }
 
-void	error(char	*str)
-{
-	//$? = 258
-	printf("minishell: syntax error near unexpected token `%s\'\n", str);
-}
-
-void check_unexpected_token(t_list *list)
-{
-	t_list	*tmp;
-	t_token	*token;
-
-void	parsing(t_list *list);
-
-void	parsing(void)
-{
-	if (list == NULL)
-		return ;
-	check_unexpected_token(list);
-	create_cmd_list();
-	return ;
-}
-
-/*
-char	**find_cmd(t_list *list)
-{
-	t_list	*tmp;
-	t_token	*token;
-	char	**cmd;
-	int		i;
-	
-	i = next_pipe(list);
-	tmp = list;
-	cmd = (char **) malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	while (tmp)
-	{
-		token = (t_token *) tmp->content;
-		cmd[i] = ft_strdup(token->value);
-		if (cmd[i] == NULL)
-		{
-			free_cmd(cmd);
-			return (NULL);
-		}
-		tmp = tmp->next;
-		i++;
-	}
-	cmd[i] = "\0";
-	return (cmd);
-}
-
-void	set_cmd(t_list *list)
-{
-	int		i;
-	t_list	*tmp;
-
-	i = all_pipe(list);
-	tmp = (t_list *) malloc(sizeof(t_list) * (i + 1));
-	if (!tmp)
-		return ;
-	g_var->cmd_list = tmp;
-	while(i--)
-	{
-		tmp->content = find_cmd(list);
-		if (tmp->content == NULL)
-			break ;
-		char	*cur = tmp->content; //test
-		printf("%s", cur);
-		tmp = tmp->next;
-	}
-}*/
+// void	error(char	*str)
+// {
+//	// TODO: set exit_status: 258
+// 	printf("minishell: syntax error near unexpected token `%s\'\n", str);
+// }

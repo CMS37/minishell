@@ -5,8 +5,9 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-t_bool	set_fd_in_redir(t_list *cmd);
-int		open_file(const char *file, t_open_flag flag);
+t_bool		set_fd_in_redir(t_list *cmd);
+static int	get_fd(t_list *cmd);
+int			open_file(const char *file, t_open_flag flag);
 
 t_bool	set_fd_in_redir(t_list *cmd)
 {
@@ -14,16 +15,11 @@ t_bool	set_fd_in_redir(t_list *cmd)
 
 	while (cmd)
 	{
-		fd = -1;
-		if (ft_strcmp(((t_token *) cmd->content)->value, "<") == 0)
-			fd = open_file(((t_token *) cmd->next->content)->value, FILE_IN);
-		else if (ft_strcmp(((t_token *) cmd->content)->value, ">") == 0)
-			fd = open_file(((t_token *) cmd->next->content)->value, FILE_OUT_TRUNC);
-		else if (ft_strcmp(((t_token *) cmd->content)->value, ">>") == 0)
-			fd = open_file(((t_token *) cmd->next->content)->value, FILE_OUT_APPEND);
+		fd = get_fd(cmd);
 		if (fd != -1)
 		{
-			if (ft_strcmp(((t_token *) cmd->content)->value, "<") == 0 && close(STDIN_FILENO))
+			if (ft_strcmp(((t_token *) cmd->content)->value, "<") == 0 && \
+				close(STDIN_FILENO))
 				dup2(fd, STDIN_FILENO);
 			else if (close(STDOUT_FILENO))
 				dup2(fd, STDOUT_FILENO);
@@ -32,6 +28,26 @@ t_bool	set_fd_in_redir(t_list *cmd)
 		cmd = cmd->next;
 	}
 	return (TRUE);
+}
+
+static int	get_fd(t_list *cmd)
+{
+	int		ret;
+	t_token	*cur;
+	t_token	*next;
+
+	ret = -1;
+	cur = cmd->content;
+	next = NULL;
+	if (cmd->next != NULL)
+		next = cmd->next->content;
+	if (ft_strcmp(cur->value, "<") == 0)
+		ret = open_file(next->value, FILE_IN);
+	else if (ft_strcmp(cur->value, ">") == 0)
+		ret = open_file(next->value, FILE_OUT_TRUNC);
+	else if (ft_strcmp(cur->value, ">>") == 0)
+		ret = open_file(next->value, FILE_OUT_APPEND);
+	return (ret);
 }
 
 int	open_file(const char *file, t_open_flag flag)

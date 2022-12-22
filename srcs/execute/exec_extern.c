@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 void			execute_extern(t_list *cur_cmd);
-static char		*find_path(const char *cmd);
+char			*find_path(const char *cmd);
 static t_bool	free_paths(char **paths);
 static char		**envp_list_to_arr(void);
 
@@ -21,13 +21,12 @@ void	execute_extern(t_list *cur_cmd)
 	}
 	if (execve(path, cmd, envp_list_to_arr()) == -1)
 	{
-		ft_putendl_fd("minishell: execve failed", STDERR_FILENO);
 		perror("Error");
 		exit(1);
 	}
 }
 
-static char	*find_path(const char *cmd)
+char	*find_path(const char *cmd)
 {
 	char	*ret;
 	char	**paths;
