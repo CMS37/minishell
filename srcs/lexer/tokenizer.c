@@ -10,23 +10,21 @@ t_list	*tokenize(const char *line)
 {
 	t_list	*ret;
 	t_token	*cur;
-	size_t	i;
 
 	ret = NULL;
 	cur = init_token();
-	i = 0;
-	while (i < ft_strlen(line))
+	while (*line)
 	{
-		if ((is_ifs(line[i]) || is_meta(line[i])) && *(cur->value) != 0)
+		if ((is_ifs(*line) || is_meta(*line)) && *(cur->value) != 0)
 		{
 			ft_lstadd_back(&ret, ft_lstnew(cur));
 			cur = init_token();
 		}
-		if (is_meta(line[i]))
+		if (is_meta(*line))
 			ft_lstadd_back(&ret, ft_lstnew(init_meta_token(line, &i)));
-		if (is_ifs(line[i]) == FALSE && is_meta(line[i]) == FALSE)
+		if (is_ifs(*line) == FALSE && is_meta(*line) == FALSE)
 			cur->value = ft_strjoin(cur->value, ft_substr(line, i, 1));
-		i++;
+		line++;
 	}
 	if (*(cur->value) != 0)
 		ft_lstadd_back(&ret, ft_lstnew(cur));

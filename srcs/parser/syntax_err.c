@@ -1,7 +1,4 @@
 #include "../../incs/parser.h"
-
-
-
 #define SYNTAX_ERR 1
 #define QUOTES_ERR 2
 
@@ -39,7 +36,7 @@ int	syntax_err(void)
 }
 */
 
-int	check_syntax_err(void)
+t_bool	check_syntax_err(void)
 {
 	t_list	*tmp;
 
@@ -47,8 +44,10 @@ int	check_syntax_err(void)
 	if (!check_quotes(tmp))
 	{
 		printf("TESTMESSAGE \"QUOTES_NOT_PAIR\"\n");
+		g_var->exit_status = 2;
+		return (TRUE);
 	}
-	return (0);
+	return (FALSE);
 //	if (!syntax_err())
 //		return (SYNTAX_ERR);
 }

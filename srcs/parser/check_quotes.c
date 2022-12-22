@@ -1,10 +1,10 @@
 #include "../../incs/parser.h"
 
 static void	del_node(t_list **list);
-static void	remove_quote(t_list *list, int i);
+static void	remove_quote(t_list *list);
 static void	remove_quotes(int squte, int dqute);
 
-int	check_quotes(t_list *tmp)
+t_bool	check_quotes(t_list *tmp)
 {
 	t_token	*token;
 	int		squte;
@@ -44,22 +44,21 @@ static void	remove_quotes(int squte, int dqute)
 		token = (t_token *) tmp->content;
 		if (token->type == T_SINGLE_QUOTE && squte > 0)
 		{
-			remove_quote(tmp, 1);
+			remove_quote(tmp);
 			squte -= 2;
 		}
 		else if (token->type == T_DOUBLE_QUOTE && dqute > 0)
 		{
-			remove_quote(tmp, 2);
+			remove_quote(tmp);
 			dqute -= 2;
 		}
 		tmp = tmp->next;
 	}
 }
 
-static void	remove_quote(t_list *list, int i)
+static void	remove_quote(t_list *list)
 {
 	t_list	*tmp;
-	t_token	*token;
 	t_token	*new_token;
 	char	*str;
 	int		cnt;
@@ -69,21 +68,18 @@ static void	remove_quote(t_list *list, int i)
 	tmp = list;
 	while (tmp)
 	{
-		token = (t_token *)tmp->content;
-		if ((token->type == T_SINGLE_QUOTE && i == 1) || \
-			(token->type == T_DOUBLE_QUOTE && i == 2))
+		if ((((t_token *)tmp->content)->type == T_SINGLE_QUOTE) || \
+			(((t_token *)tmp->content)->type == T_DOUBLE_QUOTE))
 		{
 			cnt++;
-			free(token->value);
 			del_node(&tmp);
+			if (tmp == NULL)
+				break ;
 			if (cnt == 2)
 				break ;
 		}
-		else if (token != NULL)
-		{
-			str = ft_strjoin(str, token->value);
-			tmp = tmp->next;
-		}
+		str = ft_strjoin(str, ((t_token *) tmp->content)->value);
+		tmp = tmp->next;
 	}
 	new_token = (t_token *) ft_calloc(sizeof(t_token), 1, "");
 	new_token->value = str;
@@ -97,6 +93,7 @@ static void	del_node(t_list **list)
 {
 	t_list	*tmp;
 
+	free(((t_token *) (*list)->content)->value);
 	free((*list)->content);
 	tmp = (*list)->next;
 	free ((*list));

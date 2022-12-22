@@ -62,6 +62,10 @@ static t_bool	execute_cmd_line(const char *line)
 	print_token_list();
 
 	parsing();
+	
+	if (g_var->exit_status != 0)
+		return (FALSE);
+		
 	execute();
 
 	close(STDERR_FILENO);

@@ -6,7 +6,7 @@ void	del_cmd(void *cmd);
 void	parsing(void)
 {
 	// TODO: handle quotes
-	if (check_syntax_err())
+	if (check_syntax_err() == TRUE)
 		return ;
 	check_unexpected_token();
 	ft_lstclear(&g_var->cmd_list, del_cmd);
