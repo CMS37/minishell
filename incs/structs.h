@@ -12,8 +12,6 @@ typedef enum e_token_type
 	T_WORD = 1,
 	T_PIPE = 2,
 	T_REDIRECT = 3,
-	T_SINGLE_QUOTE = 4,
-	T_DOUBLE_QUOTE = 5,
 	T_ARGV = 6,
 	T_CMD = 7
 }	t_token_type;

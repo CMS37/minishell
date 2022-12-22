@@ -3,8 +3,6 @@
 
 char			**list_to_arr(t_list *cmd);
 static size_t	num_of_token(t_list *cmd);
-static t_bool	handle_single_quote(t_list *cmd);
-static t_bool	handle_double_quote(t_list *cmd);
 
 char		**list_to_arr(t_list *cmd)
 {
@@ -21,10 +19,6 @@ char		**list_to_arr(t_list *cmd)
 			*tmp++ = ft_strdup(token->value);
 		else if (token->type == T_REDIRECT)
 			cmd = cmd->next;
-		else if (token->type == T_SINGLE_QUOTE)
-			handle_single_quote(cmd);
-		else if (token->type == T_DOUBLE_QUOTE)
-			handle_double_quote(cmd);
 		cmd = cmd->next;
 	}
 	return (ret);
@@ -45,17 +39,6 @@ static size_t	num_of_token(t_list *cmd)
 			cmd = cmd->next;
 		cmd = cmd->next;
 	}
+	ft_putendl_fd(ft_itoa(ret), 1);
 	return (ret);
-}
-
-static t_bool	handle_single_quote(t_list *cmd)
-{
-	(void) cmd;
-	return (TRUE);
-}
-
-static t_bool	handle_double_quote(t_list *cmd)
-{
-	(void) cmd;
-	return (TRUE);
 }
