@@ -6,12 +6,10 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-static t_bool	init_minishell(int argc, char **argv, char **envp);
+static t_bool	init_minishell(char **envp);
 static t_bool	init_var(void);
 static t_bool	execute_cmd_line(const char *line);
 void			exit_minishell(void);
-
-void			del_cmd(void *cmd);
 
 static t_bool	print_token_list(void);
 
@@ -19,7 +17,9 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	
-	init_minishell(argc, argv, envp);
+	(void) argc;
+	(void) argv;
+	init_minishell(envp);
 	while (TRUE)
 	{
 		line = readline("minishell-1.0$ ");
@@ -35,17 +35,15 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-static t_bool	init_minishell(int argc, char **argv, char **envp)
+static t_bool	init_minishell(char **envp)
 {
 	init_var();
 	init_termios();
 	init_signal();
 	init_env_list(envp);
-	g_var->old_stdout = dup(STDOUT_FILENO);
-	
-	(void) argc;
-	(void) argv;
-	(void) envp;
+	g_var->old_fd[0] = dup(STDIN_FILENO);
+	g_var->old_fd[1] = dup(STDOUT_FILENO);
+	g_var->old_fd[2] = dup(STDERR_FILENO);
 	return (TRUE);
 }
 
@@ -65,8 +63,13 @@ static t_bool	execute_cmd_line(const char *line)
 
 	parsing();
 	execute();
+
+	close(STDIN_FILENO);
+	dup2(g_var->old_fd[0], STDIN_FILENO);
 	close(STDOUT_FILENO);
-	dup2(g_var->old_stdout, STDOUT_FILENO);
+	dup2(g_var->old_fd[1], STDOUT_FILENO);
+	close(STDERR_FILENO);
+	dup2(g_var->old_fd[2], STDERR_FILENO);
 	return (TRUE);
 }
 
@@ -114,15 +117,4 @@ static t_bool	print_token_list(void)
 		cur_list = cur_list->next;
 	}
 	return (TRUE);
-}
-
-void	del_cmd(void *cmd)
-{
-	char	**tokens = (char **) cmd;
-
-	if (tokens == NULL)
-		return ;
-	while (*tokens)
-		free(*tokens++);
-	return ;
 }

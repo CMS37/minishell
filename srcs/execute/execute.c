@@ -51,14 +51,14 @@ static t_bool	set_fd_in_pipe(t_list *cmd_list, int *fd, t_bool is_child)
 	if (is_child)
 	{
 		close(fd[0]);
-		if (cmd_list != g_var->cmd_list)
+		if (cmd_list->next != NULL)
 			dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
 	else
 	{
 		close(fd[1]);
-		if (cmd_list->next != NULL)
+		if (cmd_list != g_var->cmd_list)
 			dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 	}
