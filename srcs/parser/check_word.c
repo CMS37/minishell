@@ -2,7 +2,7 @@
 #include "../../incs/structs.h"
 #include "../../incs/execute.h"
 
-
+/*
 t_list *check_word_type(t_list *list)
 {
 	t_list	*tmp;
@@ -22,3 +22,4 @@ t_list *check_word_type(t_list *list)
 	}
 	return (list);
 }
+*/
