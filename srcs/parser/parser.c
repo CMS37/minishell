@@ -11,6 +11,7 @@ void	del_cmd(void *cmd);
 
 void	parsing(void)
 {
+	// TODO: handle quotes
 	check_unexpected_token();
 	ft_lstclear(&g_var->cmd_list, del_cmd);
 	create_cmd_list();
