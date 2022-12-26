@@ -92,8 +92,8 @@ static t_bool	is_meta(int c)
 	while (meta[i])
 	{
 		if (c == meta[i])
-			return (TRUE);
+			return (FALSE);
 		i++;
 	}
-	return (FALSE);
+	return (TRUE);
 }
