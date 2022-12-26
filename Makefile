@@ -26,6 +26,7 @@ SRCS = 	minishell.c \
 		builtin/env.c \
 		builtin/export.c \
 		builtin/pwd.c \
+		builtin/unset.c \
 		execute/execute.c \
 		execute/exec_builtin.c \
 		execute/exec_extern.c \

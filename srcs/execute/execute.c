@@ -8,7 +8,6 @@
 int				execute(void);
 static t_bool	child_process(t_list *cmd_list);
 static t_bool	set_fd_in_pipe(t_list *cmd_list, int *fd, t_bool is_child);
-static t_bool	print_cmd(t_list *token_list);
 
 int	execute(void)
 {
@@ -35,7 +34,6 @@ static t_bool	child_process(t_list *cmd_list)
 	{
 		set_fd_in_pipe(cmd_list, fd, TRUE);
 		set_fd_in_redir(cmd_list->content);
-		print_cmd(cmd_list->content);
 		if (is_builtin(cmd_list->content) && execute_builtin(cmd_list->content))
 			exit(0);
 		else
@@ -67,19 +65,6 @@ static t_bool	set_fd_in_pipe(t_list *cmd_list, int *fd, t_bool is_child)
 		else
 			dup2(g_var->old_fd[0], STDIN_FILENO);
 		close(fd[0]);
-	}
-	return (TRUE);
-}
-
-static t_bool	print_cmd(t_list *token_list)
-{
-	t_token	*token;
-
-	while (token_list)
-	{
-		token = token_list->content;
-		ft_putendl_fd(token->value, STDERR_FILENO);
-		token_list = token_list->next;
 	}
 	return (TRUE);
 }

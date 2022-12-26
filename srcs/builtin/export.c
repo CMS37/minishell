@@ -5,32 +5,29 @@
 
 int		builtin_export(t_list *token_list);
 t_list	*get_env(const char *key);
-t_bool	replace_value(t_list *envp, const char *value);
+t_bool	replace_value(t_list *env, const char *envp);
+t_bool	key_is_not_valid(const char *key);
 
-int		builtin_export(t_list *token_list)
+int	builtin_export(t_list *token_list)
 {
 	t_list	*env;
 	t_token	*token;
 	char	*key;
-	char	*value;
 
 	if (ft_lstsize(token_list) == 1)
 		builtin_env(STDOUT_FILENO);
 	else
 	{
 		token = token_list->next->content;
-		key = NULL;
-		value = ft_strchr(token->value, '=');
-		if (token->type == T_WORD && token->value != value)
-		{
-			key = ft_substr(token->value, 0, value - token->value + 1);
-			value = ft_strdup(value + 1);
-			env = get_env(key);
-			if (env == NULL)
-				ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strjoin(key, value)));
-			else
-				replace_value(env, value);
-		}
+		key = ft_substr(token->value, 0,
+				ft_strchr(token->value, '=') - token->value);
+		if (key_is_not_valid(key))
+			return (1);
+		env = get_env(key);
+		if (env == NULL)
+			ft_lstadd_back(&g_var->env_list, ft_lstnew(token->value));
+		else
+			replace_value(env, token->value);
 	}
 	return (0);
 }
@@ -51,15 +48,25 @@ t_list	*get_env(const char *key)
 	return (NULL);
 }
 
-t_bool	replace_value(t_list *envp, const char *value)
+t_bool	replace_value(t_list *env, const char *envp)
 {
-	char	*env;
-	char	*key;
-
-	env = envp->content;
-	key = ft_substr(env, 0, ft_strchr(env, '=') - env + 1);
-	env = ft_strjoin(key, value);
-	free(envp->content);
-	envp->content = env;
+	free(env->content);
+	env->content = ft_strdup(envp);
 	return (TRUE);
+}
+
+t_bool	key_is_not_valid(const char *key)
+{
+	ft_putendl_fd(key, 2);
+	if (*key == 0)
+		return (TRUE);
+	if (ft_isalpha(*key) == 0 && *key != '_')
+		return (TRUE);
+	while (*key)
+	{
+		if (ft_isalnum(*key) == 0 && *key != '_')
+			return (TRUE);
+		key++;
+	}
+	return (FALSE);
 }

@@ -4,7 +4,7 @@
 char			**list_to_arr(t_list *token_list);
 static size_t	num_of_token(t_list *token_list);
 
-char		**list_to_arr(t_list *token_list)
+char	**list_to_arr(t_list *token_list)
 {
 	char	**ret;
 	char	**tmp;
