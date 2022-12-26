@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <string.h>
 
 int	builtin_pwd(int fd)
 {
