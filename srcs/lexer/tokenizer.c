@@ -89,7 +89,7 @@ static t_bool	is_meta(int c)
 	size_t		i;
 
 	i = 0;
-	while (meta[i])
+	while (i < 3)
 	{
 		if (c == meta[i])
 			return (TRUE);
