@@ -18,6 +18,10 @@ t_bool	is_builtin(t_list *token_list)
 		return (TRUE);
 	else if (ft_strcmp(token->value, "unset") == 0)
 		return (TRUE);
+	else if (ft_strcmp(token->value, "exit") == 0)
+		return (TRUE);
+	else if (ft_strcmp(token->value, "$?") == 0)
+		return (TRUE);
 	return (FALSE);
 }
 
@@ -34,5 +38,9 @@ t_bool	execute_builtin(t_list *token_list)
 		builtin_pwd(STDOUT_FILENO);
 	else if (ft_strcmp(token->value, "unset") == 0)
 		builtin_unset(token_list);
+	else if (ft_strcmp(token->value, "exit") == 0)
+		builtin_exit(token_list);
+	else if (ft_strcmp(token->value, "$?") == 0)
+		builtin_exit_status();
 	return (TRUE);
 }

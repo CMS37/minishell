@@ -1,4 +1,4 @@
- #include "../../incs/parser.h"
+#include "../../incs/parser.h"
 
 /*
 규칙 생각나는대로 추가
@@ -7,6 +7,7 @@
 3. "", '' err 처리는 토큰화할때 우선처리
 */
 
+t_bool			check_syntax_err(void);
 static t_bool	check_syntax(void);
 
 t_bool	check_syntax_err(void)
@@ -36,7 +37,8 @@ static t_bool	check_syntax(void)
 			next = (t_token *) tmp->next->content;
 		else
 			next = NULL;
-		if (token->type == T_PIPE && (tmp->next == NULL || next->type == T_PIPE))
+		if (token->type == T_PIPE && \
+			(tmp->next == NULL || next->type == T_PIPE))
 			return (TRUE);
 		if (token->type == T_REDIRECT && (next == NULL || \
 			next->type != T_WORD))

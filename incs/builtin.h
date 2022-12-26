@@ -16,4 +16,8 @@ int		builtin_pwd(int fd);
 // unset.c
 int		builtin_unset(t_list *token_list);
 
+// exit.c
+int		builtin_exit(t_list *token_list);
+int		builtin_exit_status(void);
+
 #endif
