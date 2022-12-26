@@ -82,7 +82,7 @@ int	open_file(const char *file, t_open_flag flag)
 	return (fd);
 }
 
-t_bool		rm_tokens(t_list *token_list)
+t_bool	rm_tokens(t_list *token_list)
 {
 	t_list	*prev;
 	t_list	*cur;
@@ -91,8 +91,8 @@ t_bool		rm_tokens(t_list *token_list)
 	cur = token_list;
 	while (cur)
 	{
-		if (ft_strcmp(((t_token *) cur->content)->value, "<") == 0 ||
-			ft_strcmp(((t_token *) cur->content)->value, ">") == 0 ||
+		if (ft_strcmp(((t_token *) cur->content)->value, "<") == 0 || \
+			ft_strcmp(((t_token *) cur->content)->value, ">") == 0 || \
 			ft_strcmp(((t_token *) cur->content)->value, ">>") == 0)
 		{
 			prev->next = cur->next->next;

@@ -33,7 +33,7 @@ char	*find_path(const char *cmd)
 	t_list	*tmp;
 
 	tmp = g_var->env_list;
-	while(ft_strnstr(tmp->content, "PATH=", 5) == NULL)
+	while (ft_strnstr(tmp->content, "PATH=", 5) == NULL)
 		tmp = tmp->next;
 	if (tmp == NULL)
 		return (NULL);
@@ -59,11 +59,11 @@ static t_bool	free_paths(char **paths)
 	return (TRUE);
 }
 
-static char		**envp_list_to_arr(void)
+static char	**envp_list_to_arr(void)
 {
-	char **const	ret = \
-		(char **) ft_calloc(sizeof(char *), ft_lstsize(g_var->env_list) + 1, "");
-	char 			**ret_tmp;
+	char **const	ret = (char **) ft_calloc(sizeof(char *),
+			ft_lstsize(g_var->env_list) + 1, "");
+	char			**ret_tmp;
 	t_list			*env_list_tmp;
 
 	ret_tmp = ret;

@@ -48,7 +48,7 @@ static t_bool	here_doc(t_list *token_list)
 		line = readline("heredoc> ");
 		if (line == NULL)
 			return (FALSE);
-		if (ft_strcmp(line, ((t_token *) token_list->next->content)->value) == 0)
+		if (!ft_strcmp(line, ((t_token *) token_list->next->content)->value))
 			break ;
 		ft_putstr_fd(line, fd);
 		free(line);
