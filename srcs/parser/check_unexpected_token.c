@@ -2,10 +2,11 @@
 #include "../../incs/structs.h"
 #include <stdio.h>
 #include <stdlib.h>
-
+/*
 void			check_unexpected_token(void);
 static t_bool	is_unexpected_token(const char *token);
 static void		print_unexpected_token_error(char *str);
+
 
 void	check_unexpected_token(void)
 {
@@ -48,3 +49,4 @@ void	print_unexpected_token_error(char *str)
 	printf("minishell: syntax error near unexpected token `%s\'\n", str);
 	exit(258);
 }
+*/

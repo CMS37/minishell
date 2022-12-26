@@ -12,6 +12,9 @@
 // parser.c
 void	parsing(void);
 
+// parser_utils.c
+void	syntax_error(void);
+
 //check_quotes.c
 t_bool	check_quotes(t_list *tmp);
 
