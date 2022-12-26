@@ -16,11 +16,11 @@ t_bool	tokenize(const char *line)
 	{
 		if ((is_ifs(*line) || is_meta(*line)) && cur->value != NULL)
 		{
-			ft_lstadd_back(g_var->token_list, ft_lstnew(cur));
+			ft_lstadd_back(&g_var->token_list, ft_lstnew(cur));
 			cur = init_token();
 		}
 		if (is_meta(*line))
-			ft_lstadd_back(g_var->token_list,
+			ft_lstadd_back(&g_var->token_list,
 				ft_lstnew(init_meta_token(&line)));
 		if (is_quote(*line))
 			handle_quote(cur, &line);
@@ -29,7 +29,7 @@ t_bool	tokenize(const char *line)
 		line++;
 	}
 	if (cur->value != NULL)
-		ft_lstadd_back(g_var->token_list, ft_lstnew(cur));
+		ft_lstadd_back(&g_var->token_list, ft_lstnew(cur));
 	else
 		free(cur);
 	return (TRUE);
@@ -42,7 +42,7 @@ static t_list	*get_ifs(void)
 	char	*env;
 
 	ret = NULL;
-	ft_lstadd_back(&ret, ft_lstnew(ft_strdup(ft_itoa(9))));
+	ft_lstadd_back(&ret, ft_lstnew(ft_strdup(ft_itoa(9))));  //요기서 leak나요!
 	ft_lstadd_back(&ret, ft_lstnew(ft_strdup(ft_itoa(10))));
 	ft_lstadd_back(&ret, ft_lstnew(ft_strdup(ft_itoa(32))));
 	tmp = g_var->env_list;

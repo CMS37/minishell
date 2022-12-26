@@ -25,11 +25,12 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("minishell-1.0$ ");
 		if (line == NULL)
 			exit_minishell();
-		if (ft_strncmp(line, "exit", 4) == 0 && ft_putstr_fd("exit\n", 1))
-			break ;
+//		if (ft_strncmp(line, "exit", 4) == 0 && ft_putstr_fd("exit\n", 1))
+//			break ;
 		add_history(line);
 		execute_cmd_line(line);
 		free(line);
+		printf("ERR_CODE : %d\n", g_var->exit_status); //test
 	}
 	free(line);
 	return (0);
@@ -61,8 +62,8 @@ static t_bool	execute_cmd_line(const char *line)
 		return (FALSE);
 	print_token_list();
 	parsing();
-	if (g_var->exit_status != 0)
-		return (FALSE);
+//	if (g_var->exit_status != 0)
+//		return (FALSE);
 	execute();
 	close(STDERR_FILENO);
 	dup2(g_var->old_fd[2], STDERR_FILENO);

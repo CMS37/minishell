@@ -1,9 +1,6 @@
 #include "../../incs/subsystem.h"
 
 /*
-strerror에 에러넘버에따라 정의가되지만 위에 4가지는 따로 핸들링 해줘야함
-strerror은 0~107까지 에러넘버에따라 메세지 내장되있음
-----
 exit_status(cmd, token->value, strerror(errno));
 ->strerror에 정의된 에러코드면 일케
 
@@ -29,4 +26,9 @@ void	exit_status(char *cmd, char *value, char *err_str)
 127	명령어의 경로($PATH) 문제 혹은 명령어 오타	“Command not found”, “No such file or directory”
 130	치명적 에러 발생으로 인한 종료 (Ctrl+C)	"Script terminated by Ctrl+C”
 255	exit 에 정수(0~255)가 아닌 인자 넘김	"numeric argument required"
+->근데 bash에선 255넘을때마다 다시 0부터 카운트하고 최대 LLONG사이즈까지 반복
+->그 이상이오면 그떄서야 에러
+
+strerror에 에러넘버에따라 정의가되지만 107이상의 에러넘버는 따로 핸들링 해줘야함
+strerror은 0~107까지 에러넘버에따라 메세지 내장되있음
 */

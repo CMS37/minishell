@@ -27,6 +27,7 @@ SRCS = 	minishell.c \
 		builtin/export.c \
 		builtin/pwd.c \
 		builtin/unset.c \
+		builtin/exit.c \
 		execute/execute.c \
 		execute/exec_builtin.c \
 		execute/exec_extern.c \
@@ -38,10 +39,7 @@ SRCS = 	minishell.c \
 		lexer/token.c \
 		lexer/tokenizer.c \
 		parser/parser.c \
-		parser/check_quotes.c \
 		parser/syntax_err.c \
-		parser/check_word.c \
-		parser/check_unexpected_token.c \
 		parser/create_cmd_list.c \
 		subsystem/signal.c \
 		subsystem/subsystem.c \
