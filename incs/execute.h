@@ -22,7 +22,7 @@ char	**list_to_arr(t_list *token_list);
 t_bool	here_docs(void);
 
 // redirections.c
-t_bool	set_fd_in_redir(t_list **token_list);
+t_bool	set_fd_in_redir(t_list *token_list);
 int		open_file(const char *file, t_open_flag flag);
 
 #endif

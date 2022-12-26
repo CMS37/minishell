@@ -34,7 +34,7 @@ static t_bool	child_process(t_list *cmd_list)
 	if (pid == 0)
 	{
 		set_fd_in_pipe(cmd_list, fd, TRUE);
-		set_fd_in_redir((t_list **) &cmd_list->content);
+		set_fd_in_redir(cmd_list->content);
 		print_cmd(cmd_list->content);
 		if (is_builtin(cmd_list->content) && execute_builtin(cmd_list->content))
 			exit(0);
@@ -78,7 +78,7 @@ static t_bool	print_cmd(t_list *token_list)
 	while (token_list)
 	{
 		token = token_list->content;
-		ft_putstr_fd(token->value, STDERR_FILENO);
+		ft_putendl_fd(token->value, STDERR_FILENO);
 		token_list = token_list->next;
 	}
 	return (TRUE);

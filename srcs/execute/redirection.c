@@ -6,19 +6,17 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-t_bool		set_fd_in_redir(t_list **token_list);
+t_bool		set_fd_in_redir(t_list *token_list);
 static int	get_fd(t_list *token_list);
 int			open_file(const char *file, t_open_flag flag);
-t_bool		rm_tokens(t_list *prev, t_list *cur, t_list **token_list);
+t_bool		rm_tokens(t_list *token_list);
 
-t_bool	set_fd_in_redir(t_list **token_list)
+t_bool	set_fd_in_redir(t_list *token_list)
 {
 	int		fd;
-	t_list	*prev;
 	t_list	*cur;
 
-	prev = NULL;
-	cur = (*token_list);
+	cur = token_list;
 	while (cur)
 	{
 		fd = get_fd(cur);
@@ -29,12 +27,11 @@ t_bool	set_fd_in_redir(t_list **token_list)
 			else
 				dup2(fd, STDOUT_FILENO);
 			close(fd);
-			rm_tokens(prev, cur, token_list);
-		}
-		else
 			cur = cur->next;
-		prev = cur;
+		}
+		cur = cur->next;
 	}
+	rm_tokens(token_list);
 	return (TRUE);
 }
 
@@ -45,6 +42,8 @@ static int	get_fd(t_list *token_list)
 	t_token	*next;
 
 	ret = -1;
+	if (token_list->next == NULL)
+		return (ret);
 	cur = token_list->content;
 	next = token_list->next->content;
 	if (ft_strcmp(cur->value, "<") == 0)
@@ -83,15 +82,31 @@ int	open_file(const char *file, t_open_flag flag)
 	return (fd);
 }
 
-t_bool		rm_tokens(t_list *prev, t_list *cur, t_list **token_list)
+t_bool		rm_tokens(t_list *token_list)
 {
-	if (cur != (*token_list))
-		prev->next = cur->next->next;
-	else
-		*token_list = cur->next->next;
-	del_token(cur->next->content);
-	free(cur->next);
-	del_token(cur->content);
-	free(cur);
+	t_list	*prev;
+	t_list	*cur;
+
+	prev = NULL;
+	cur = token_list;
+	while (cur)
+	{
+		if (ft_strcmp(((t_token *) cur->content)->value, "<") == 0 ||
+			ft_strcmp(((t_token *) cur->content)->value, ">") == 0 ||
+			ft_strcmp(((t_token *) cur->content)->value, ">>") == 0)
+		{
+			prev->next = cur->next->next;
+			del_token(cur->next->content);
+			free(cur->next);
+			del_token(cur->content);
+			free(cur);
+			cur = prev->next;
+		}
+		else
+		{
+			prev = cur;
+			cur = cur->next;
+		}
+	}
 	return (TRUE);
 }
