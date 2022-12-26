@@ -37,7 +37,6 @@ SRCS = 	minishell.c \
 		lexer/token.c \
 		lexer/tokenizer.c \
 		parser/parser.c \
-		parser/parser_utils.c \
 		parser/check_quotes.c \
 		parser/syntax_err.c \
 		parser/check_word.c \
@@ -45,7 +44,8 @@ SRCS = 	minishell.c \
 		parser/create_cmd_list.c \
 		subsystem/signal.c \
 		subsystem/subsystem.c \
-		subsystem/termios.c
+		subsystem/termios.c \
+		subsystem/exit_status.c
 		
 SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
