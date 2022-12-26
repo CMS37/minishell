@@ -24,7 +24,7 @@ int	builtin_exit(t_list *token_list)
 		token = (t_token *) tmp->content;
 		if (tmp->next != NULL)
 			return (exit_err());
-		i = ft_atoi(token->value); // ft_atoi에서 범위값 long long 으로 수정필요
+		i = ft_atoi(token->value); // ft_atoi에서 범위값 long long 으로 수정필요 ->libft..수정해도될까유
 		if (i > LLONG_MAX || i < LLONG_MIN)
 			return (exit_err2(token->value));
 		else if (i < 0)
