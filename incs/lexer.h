@@ -20,6 +20,6 @@ t_token	*init_meta_token(const char **line);
 void	del_token(void *content);
 
 // tokenizer.c
-t_list	*tokenize(const char *line);
+t_bool	tokenize(const char *line);
 
 #endif

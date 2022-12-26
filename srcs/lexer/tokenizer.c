@@ -1,39 +1,38 @@
 #include "../../incs/lexer.h"
 #include <stdlib.h>
 
-t_list			*tokenize(const char *line);
+t_bool			tokenize(const char *line);
 static t_list	*get_ifs(void);
 static t_bool	is_ifs(int c);
 static t_bool	is_meta(int c);
+static t_bool	is_quote(int c);
 
-t_list	*tokenize(const char *line)
+t_bool	tokenize(const char *line)
 {
-	t_list	*ret;
 	t_token	*cur;
 
-	ret = NULL;
 	cur = init_token();
 	while (*line)
 	{
 		if ((is_ifs(*line) || is_meta(*line)) && cur->value != NULL)
 		{
-			ft_lstadd_back(&ret, ft_lstnew(cur));
+			ft_lstadd_back(g_var->token_list, ft_lstnew(cur));
 			cur = init_token();
 		}
 		if (is_meta(*line))
-			ft_lstadd_back(&ret, ft_lstnew(init_meta_token(&line)));
-		if (*line == '\'' || *line == '\"')
+			ft_lstadd_back(g_var->token_list,
+				ft_lstnew(init_meta_token(&line)));
+		if (is_quote(*line))
 			handle_quote(cur, &line);
-		else if (is_ifs(*line) == FALSE && is_meta(*line) == FALSE && \
-				(*line != '\'' && *line != '\"'))
+		else if (!is_ifs(*line) && !is_meta(*line) && !is_quote(*line))
 			cur->value = ft_strjoin(cur->value, ft_substr(line, 0, 1));
 		line++;
 	}
 	if (cur->value != NULL)
-		ft_lstadd_back(&ret, ft_lstnew(cur));
+		ft_lstadd_back(g_var->token_list, ft_lstnew(cur));
 	else
 		free(cur);
-	return (ret);
+	return (TRUE);
 }
 
 static t_list	*get_ifs(void)
@@ -85,15 +84,20 @@ static t_bool	is_ifs(int c)
 
 static t_bool	is_meta(int c)
 {
-	const char	meta[3] = {'|', '>', '<'};
+	const char	meta[4] = {'|', '>', '<', '\0'};
 	size_t		i;
 
 	i = 0;
-	while (i < 3)
+	while (meta[i])
 	{
 		if (c == meta[i])
 			return (TRUE);
 		i++;
 	}
 	return (FALSE);
+}
+
+static t_bool	is_quote(int c)
+{
+	return (c == '\'' || c == '\"');
 }
