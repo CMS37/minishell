@@ -6,7 +6,7 @@ void	syntax_error(void);
 
 void	parsing(void)
 {
-	check_syntax_err();
+	// check_syntax_err();
 	if (g_var->exit_status == 258)
 		return ; // free필요할듯
 	ft_lstclear(&g_var->cmd_list, del_cmd);
