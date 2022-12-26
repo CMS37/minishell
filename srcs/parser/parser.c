@@ -2,13 +2,12 @@
 
 void	parsing(void);
 void	del_cmd(void *cmd);
-void	syntax_error(void);
 
 void	parsing(void)
 {
 	check_syntax_err();
-	if (g_var->exit_status == 258)
-		return ; // free필요할듯
+	if (g_var->exit_status != 0)
+		return ;
 	ft_lstclear(&g_var->cmd_list, del_cmd);
 	create_cmd_list();
 	return ;

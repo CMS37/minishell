@@ -61,14 +61,10 @@ static t_bool	execute_cmd_line(const char *line)
 		return (FALSE);
 
 	print_token_list();
-
 	parsing();
-	
 	if (g_var->exit_status != 0)
 		return (FALSE);
-
 	execute();
-
 	close(STDERR_FILENO);
 	dup2(g_var->old_fd[2], STDERR_FILENO);
 	return (TRUE);

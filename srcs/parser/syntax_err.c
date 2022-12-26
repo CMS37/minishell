@@ -6,7 +6,7 @@
 2. 첫문자에 파이프가 오거나 마지막이 파이프로 끝나면 err
 3. "", '' err 처리는 토큰화할때 우선처리
 */
-
+t_bool	check_syntax_err(void);
 static t_bool	check_syntax(void);
 
 t_bool	check_syntax_err(void)
