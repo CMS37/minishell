@@ -85,11 +85,11 @@ static t_bool	is_ifs(int c)
 
 static t_bool	is_meta(int c)
 {
-	const char	meta[3] = {'|', '>', '<'};
+	const char	meta[4] = {'|', '>', '<', '\0'};
 	size_t		i;
 
 	i = 0;
-	while (i < 3)
+	while (meta[i])
 	{
 		if (c == meta[i])
 			return (TRUE);

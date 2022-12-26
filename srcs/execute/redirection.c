@@ -96,10 +96,8 @@ t_bool		rm_tokens(t_list *token_list)
 			ft_strcmp(((t_token *) cur->content)->value, ">>") == 0)
 		{
 			prev->next = cur->next->next;
-			del_token(cur->next->content);
-			free(cur->next);
-			del_token(cur->content);
-			free(cur);
+			ft_lstdelone(cur->next, del_token);
+			ft_lstdelone(cur, del_token);
 			cur = prev->next;
 		}
 		else
