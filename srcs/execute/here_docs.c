@@ -7,7 +7,7 @@
 #include <readline/readline.h>
 
 t_bool			here_docs(void);
-static t_bool	here_doc(t_list *cmd);
+static t_bool	here_doc(t_list *token_list);
 static char		*generate_file_name(void);
 static char		*tmp_directory_path(void);
 
@@ -34,28 +34,28 @@ t_bool	here_docs(void)
 	return (TRUE);
 }
 
-static t_bool	here_doc(t_list *cmd)
+static t_bool	here_doc(t_list *token_list)
 {
 	int			fd;
 	char		*line;
 	char *const	file_name = generate_file_name();
 
-	free(((t_token *) cmd->content)->value);
-	((t_token *) cmd->content)->value = ft_strdup("<");
+	free(((t_token *) token_list->content)->value);
+	((t_token *) token_list->content)->value = ft_strdup("<");
 	fd = open_file(file_name, HERE_DOC);
 	while (TRUE)
 	{
 		line = readline("heredoc> ");
 		if (line == NULL)
 			return (FALSE);
-		if (ft_strcmp(line, ((t_token *) cmd->next->content)->value) == 0)
+		if (ft_strcmp(line, ((t_token *) token_list->next->content)->value) == 0)
 			break ;
 		ft_putstr_fd(line, fd);
 		free(line);
 	}
 	free(line);
-	free(((t_token *) cmd->next->content)->value);
-	((t_token *) cmd->next->content)->value = file_name;
+	free(((t_token *) token_list->next->content)->value);
+	((t_token *) token_list->next->content)->value = file_name;
 	close(fd);
 	return (TRUE);
 }

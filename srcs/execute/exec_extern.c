@@ -3,14 +3,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void			execute_extern(t_list *cur_cmd);
+void			execute_extern(t_list *token_list);
 char			*find_path(const char *cmd);
 static t_bool	free_paths(char **paths);
 static char		**envp_list_to_arr(void);
 
-void	execute_extern(t_list *cur_cmd)
+void	execute_extern(t_list *token_list)
 {
-	char **const	cmd = list_to_arr(cur_cmd);
+	char **const	cmd = list_to_arr(token_list);
 	char *const		path = find_path(cmd[0]);
 
 	if (path == NULL)

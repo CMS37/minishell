@@ -1,45 +1,52 @@
 #include "../../incs/execute.h"
 #include "../../incs/structs.h"
+#include "../../incs/lexer.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
 
-t_bool		set_fd_in_redir(t_list *cmd);
-static int	get_fd(t_list *cmd);
+t_bool		set_fd_in_redir(t_list **token_list);
+static int	get_fd(t_list *token_list);
 int			open_file(const char *file, t_open_flag flag);
+t_bool		rm_tokens(t_list *prev, t_list *cur, t_list **token_list);
 
-t_bool	set_fd_in_redir(t_list *cmd)
+t_bool	set_fd_in_redir(t_list **token_list)
 {
 	int		fd;
+	t_list	*prev;
+	t_list	*cur;
 
-	while (cmd)
+	prev = NULL;
+	cur = (*token_list);
+	while (cur)
 	{
-		fd = get_fd(cmd);
+		fd = get_fd(cur);
 		if (fd != -1)
 		{
-			if (ft_strcmp(((t_token *) cmd->content)->value, "<") == 0)
+			if (ft_strcmp(((t_token *) cur->content)->value, "<") == 0)
 				dup2(fd, STDIN_FILENO);
 			else
 				dup2(fd, STDOUT_FILENO);
 			close(fd);
+			rm_tokens(prev, cur, token_list);
 		}
-		cmd = cmd->next;
+		else
+			cur = cur->next;
+		prev = cur;
 	}
 	return (TRUE);
 }
 
-static int	get_fd(t_list *cmd)
+static int	get_fd(t_list *token_list)
 {
 	int		ret;
 	t_token	*cur;
 	t_token	*next;
 
 	ret = -1;
-	cur = cmd->content;
-	next = NULL;
-	if (cmd->next != NULL)
-		next = cmd->next->content;
+	cur = token_list->content;
+	next = token_list->next->content;
 	if (ft_strcmp(cur->value, "<") == 0)
 		ret = open_file(next->value, FILE_IN);
 	else if (ft_strcmp(cur->value, ">") == 0)
@@ -74,4 +81,17 @@ int	open_file(const char *file, t_open_flag flag)
 		}	
 	}
 	return (fd);
+}
+
+t_bool		rm_tokens(t_list *prev, t_list *cur, t_list **token_list)
+{
+	if (cur != (*token_list))
+		prev->next = cur->next->next;
+	else
+		*token_list = cur->next->next;
+	del_token(cur->next->content);
+	free(cur->next);
+	del_token(cur->content);
+	free(cur);
+	return (TRUE);
 }

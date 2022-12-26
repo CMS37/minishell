@@ -1,21 +1,25 @@
 #include "../../incs/builtin.h"
 #include "../../incs/structs.h"
+#include <unistd.h>
 #include <stdlib.h>
 
-t_bool	builtin_export(t_list *cmd);
+int		builtin_export(t_list *token_list);
 t_list	*get_env(const char *key);
 t_bool	replace_value(t_list *envp, const char *value);
 
-t_bool	builtin_export(t_list *cmd)
+int		builtin_export(t_list *token_list)
 {
 	t_list	*env;
 	t_token	*token;
 	char	*key;
 	char	*value;
 
-	while (cmd)
+	if (ft_lstsize(token_list) == 1)
+		builtin_env(STDOUT_FILENO);
+	else
 	{
-		token = cmd->content;
+		token = token_list->next->content;
+		key = NULL;
 		value = ft_strchr(token->value, '=');
 		if (token->type == T_WORD && token->value != value)
 		{
@@ -27,9 +31,8 @@ t_bool	builtin_export(t_list *cmd)
 			else
 				replace_value(env, value);
 		}
-		cmd = cmd->next;
 	}
-	return (TRUE);
+	return (0);
 }
 
 t_list	*get_env(const char *key)
