@@ -1,16 +1,16 @@
 #include "../../incs/parser.h"
 
-void		parsing(void);
+t_bool		parsing(void);
 void		syntax_error(void);
 static void	del_cmd(void *cmd);
 
-void	parsing(void)
+t_bool	parsing(void)
 {
 	if (check_syntax_err())
-		return ;
+		return (FALSE);
 	ft_lstclear(&g_var->cmd_list, del_cmd);
 	create_cmd_list();
-	return ;
+	return (TRUE);
 }
 
 void	syntax_error(void)

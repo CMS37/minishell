@@ -61,8 +61,8 @@ static t_bool	execute_cmd_line(const char *line)
 	if (lexer(line) == FALSE || !g_var->token_list)
 		return (FALSE);
 	print_token_list();
-	parsing();
-	execute();
+	if (parsing())
+		execute();
 	close(STDERR_FILENO);
 	dup2(g_var->old_fd[2], STDERR_FILENO);
 	return (TRUE);
