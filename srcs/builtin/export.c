@@ -3,19 +3,19 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int		builtin_export(t_list *token_list);
+int		builtin_export(t_list *token_list, int fd);
 t_list	*get_env(const char *key);
 t_bool	replace_value(t_list *env, const char *envp);
 t_bool	key_is_not_valid(const char *key);
 
-int	builtin_export(t_list *token_list)
+int	builtin_export(t_list *token_list, int fd)
 {
 	t_list	*env;
 	t_token	*token;
 	char	*key;
 
 	if (ft_lstsize(token_list) == 1)
-		builtin_env(STDOUT_FILENO);
+		builtin_env(token_list, fd);
 	else
 	{
 		token = token_list->next->content;

@@ -4,12 +4,12 @@
 #include <unistd.h>
 #include <limits.h>
 
-int			builtin_exit(t_list *token_list);
-int			builtin_exit_status(void);
+int			builtin_exit(t_list *token_list, int fd);
+int			builtin_exit_status(t_list *token_list, int fd);
 static int	exit_err(void);
 static int	exit_err2(char *str);
 
-int	builtin_exit(t_list *token_list)
+int	builtin_exit(t_list *token_list, int fd)
 {
 	t_list		*tmp;
 	t_token		*token;
@@ -17,7 +17,7 @@ int	builtin_exit(t_list *token_list)
 
 	tmp = token_list;
 	i = 0;
-	printf("exit\n");
+	ft_putendl_fd("exit", fd);
 	if (tmp->next != NULL)
 	{
 		tmp = tmp->next;
@@ -37,13 +37,15 @@ int	builtin_exit(t_list *token_list)
 	return (0);
 }
 
-int	builtin_exit_status(void)
+int	builtin_exit_status(t_list *token_list, int fd)
 {
 	char	*err_num;
 
 	err_num = ft_itoa(g_var->exit_status);
 	g_var->exit_status = 127;
 	exit_status(err_num, CMD_ERR, NULL);
+	(void) token_list;
+	(void) fd;
 	return (1);
 }
 

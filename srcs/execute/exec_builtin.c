@@ -2,45 +2,46 @@
 #include "../../incs/builtin.h"
 #include <unistd.h>
 
+const static char	*g_builtin_list[] = {
+	"env", "export", "pwd", "unset", "exit", "$?", NULL
+};
+
+int static (*const	g_builtin_func[])(t_list *token_list, int fd) = {
+	builtin_env, builtin_export, builtin_pwd, builtin_unset,
+	builtin_exit, builtin_exit_status, NULL
+};
+
 t_bool	is_builtin(t_list *token_list);
 t_bool	execute_builtin(t_list *token_list);
 
 t_bool	is_builtin(t_list *token_list)
 {
+	char	**tmp;
 	t_token	*token;
 
+	tmp = (char **) g_builtin_list;
 	token = (t_token *) token_list->content;
-	if (ft_strcmp(token->value, "env") == 0)
-		return (TRUE);
-	else if (ft_strcmp(token->value, "export") == 0)
-		return (TRUE);
-	else if (ft_strcmp(token->value, "pwd") == 0)
-		return (TRUE);
-	else if (ft_strcmp(token->value, "unset") == 0)
-		return (TRUE);
-	else if (ft_strcmp(token->value, "exit") == 0)
-		return (TRUE);
-	else if (ft_strcmp(token->value, "$?") == 0)
-		return (TRUE);
+	while (*tmp)
+	{
+		if (ft_strcmp(token->value, *tmp) == 0)
+			return (TRUE);
+		tmp++;
+	}
 	return (FALSE);
 }
 
 t_bool	execute_builtin(t_list *token_list)
 {
 	t_token	*token;
+	size_t	i;
 
 	token = (t_token *) token_list->content;
-	if (ft_strcmp(token->value, "env") == 0)
-		builtin_env(STDOUT_FILENO);
-	else if (ft_strcmp(token->value, "export") == 0)
-		builtin_export(token_list);
-	else if (ft_strcmp(token->value, "pwd") == 0)
-		builtin_pwd(STDOUT_FILENO);
-	else if (ft_strcmp(token->value, "unset") == 0)
-		builtin_unset(token_list);
-	else if (ft_strcmp(token->value, "exit") == 0)
-		builtin_exit(token_list);
-	else if (ft_strcmp(token->value, "$?") == 0)
-		builtin_exit_status();
+	i = 0;
+	while (g_builtin_list[i] != NULL)
+	{
+		if (ft_strcmp(token->value, g_builtin_list[i]) == 0)
+			return (g_builtin_func[i](token_list, 1));
+		i++;
+	}
 	return (TRUE);
 }

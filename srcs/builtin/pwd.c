@@ -6,7 +6,7 @@
 #include <errno.h>
 #include <string.h>
 
-int	builtin_pwd(int fd)
+int	builtin_pwd(t_list *token_list, int fd)
 {
 	char	*pwd;
 
@@ -19,6 +19,7 @@ int	builtin_pwd(int fd)
 	ft_putendl_fd(pwd, fd);
 	free(pwd);
 	g_var->exit_status = 0;
+	(void) token_list;
 	return (0);
 }
 

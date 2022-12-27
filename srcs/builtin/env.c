@@ -3,7 +3,7 @@
 #include <unistd.h>
 
 t_bool	init_env_list(char **envp);
-int		builtin_env(int fd);
+int		builtin_env(t_list *token_list, int fd);
 
 t_bool	init_env_list(char **envp)
 {
@@ -12,7 +12,7 @@ t_bool	init_env_list(char **envp)
 	return (TRUE);
 }
 
-int	builtin_env(int fd)
+int	builtin_env(t_list *token_list, int fd)
 {
 	t_list	*cur_list;
 	char	*cur_env;
@@ -25,5 +25,6 @@ int	builtin_env(int fd)
 		cur_list = cur_list->next;
 	}
 	g_var->exit_status = 0;
+	(void) token_list;
 	return (0);
 }

@@ -3,7 +3,7 @@
 #include "../../incs/lexer.h"
 #include <stdlib.h>
 
-int	builtin_unset(t_list *token_list)
+int	builtin_unset(t_list *token_list, int fd)
 {
 	const char	*key = ((t_token *) token_list->next->content)->value;
 	t_list		*prev;
@@ -25,5 +25,6 @@ int	builtin_unset(t_list *token_list)
 		prev = cur;
 		cur = cur->next;
 	}
+	(void) fd;
 	return (0);
 }

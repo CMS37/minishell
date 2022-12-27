@@ -5,19 +5,19 @@
 
 // env.c
 t_bool	init_env_list(char **envp);
-int		builtin_env(int fd);
+int		builtin_env(t_list *token_list, int fd);
 
 // export.c
-int		builtin_export(t_list *token_list);
+int		builtin_export(t_list *token_list, int fd);
 
 // pwd.c
-int		builtin_pwd(int fd);
+int		builtin_pwd(t_list *token_list, int fd);
 
 // unset.c
-int		builtin_unset(t_list *token_list);
+int		builtin_unset(t_list *token_list, int fd);
 
 // exit.c
-int		builtin_exit(t_list *token_list);
-int		builtin_exit_status(void);
+int		builtin_exit(t_list *token_list, int fd);
+int		builtin_exit_status(t_list *token_list, int fd);
 
 #endif

@@ -25,8 +25,6 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("minishell-1.0$ ");
 		if (line == NULL)
 			exit_minishell();
-//		if (ft_strncmp(line, "exit", 4) == 0 && ft_putstr_fd("exit\n", 1))
-//			break ;
 		add_history(line);
 		execute_cmd_line(line);
 		free(line);
