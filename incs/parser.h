@@ -11,7 +11,7 @@
 # include <stdlib.h>
 
 // parser.c
-void	parsing(void);
+t_bool	parsing(void);
 void	syntax_error(void);
 
 //syntax_err.c
