@@ -40,7 +40,7 @@ int	builtin_exit(t_list *token_list)
 int	builtin_exit_status(void)
 {
 	char	*err_num;
-	//"$?" 입력하면 다음에 오는 T_WORD토큰들은 다씹히는듯? 
+
 	err_num = ft_itoa(g_var->exit_status);
 	g_var->exit_status = 127;
 	exit_status(err_num, CMD_ERR, NULL);
