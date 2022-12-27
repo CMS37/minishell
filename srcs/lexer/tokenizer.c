@@ -42,9 +42,9 @@ static t_list	*get_ifs(void)
 	char	*env;
 
 	ret = NULL;
-	ft_lstadd_back(&ret, ft_lstnew(ft_strdup(ft_itoa(9))));  //요기서 leak나요!
-	ft_lstadd_back(&ret, ft_lstnew(ft_strdup(ft_itoa(10))));
-	ft_lstadd_back(&ret, ft_lstnew(ft_strdup(ft_itoa(32))));
+	ft_lstadd_back(&ret, ft_lstnew(ft_itoa(9)));
+	ft_lstadd_back(&ret, ft_lstnew(ft_itoa(10)));
+	ft_lstadd_back(&ret, ft_lstnew(ft_itoa(32)));
 	tmp = g_var->env_list;
 	while (tmp)
 	{
@@ -55,7 +55,7 @@ static t_list	*get_ifs(void)
 			ret = NULL;
 			env += 4;
 			while (*env)
-				ft_lstadd_back(&ret, ft_lstnew(ft_strdup(ft_itoa(*env++))));
+				ft_lstadd_back(&ret, ft_lstnew(ft_itoa(*env++)));
 		}
 		tmp = tmp->next;
 	}
