@@ -6,7 +6,17 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-// TODO: here_doc unlink, expand variable
+// TODO : here_doc unlink, expand variable
+/*
+-할일(버그)목록 찾는중- (처리된거지우기)
+input> "echo 2 2 2 2"  output > "2222" 로 나오는거 토큰확인필요! echo시 공백여부..(bash="2 2 2 2")
+input> "/bin/ls"  output> CMD_ERR 바로 절대경로오는경우도 실행여부
+input> "ls | pwd"  -> pwd가 파이프로 실행되면 2번출력댐
+./minishell 입력하면 execute_extern함수에서 path가 (null)되서 커맨드에러 ->따로 처리함수작성
+env 환경변수중 SHLVL 깊이에따라 증가여부
+export만 입력시 한줄마다 declart -x 붙어서 출력. 근데 정렬방식이 다른듯?..
+echo "$?" > 환경변수 출력 지금은 그냥 달러문자로인식 echo '$?' 이건 문자로인식 > 토큰화에서 따옴표처리 플래그 전달?
+*/
 
 static t_bool	init_minishell(char **envp);
 static t_bool	execute_cmd_line(const char *line);

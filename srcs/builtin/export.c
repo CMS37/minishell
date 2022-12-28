@@ -73,7 +73,7 @@ t_bool	key_is_not_valid(const char *key)
 	}
 	return (FALSE);
 }
-\
+
 /*
 export수정하실때 exit코드 참고하시라구...
 exit_status("export", key?, IDENTIFIER_ERR);
