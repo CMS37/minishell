@@ -24,11 +24,13 @@ SRCS_DIR	= ./srcs
 OBJS_DIR	= ./objs
 
 SRCS = 	minishell.c \
+		builtin/cd.c \
+		builtin/echo.c \
 		builtin/env.c \
+		builtin/exit.c \
 		builtin/export.c \
 		builtin/pwd.c \
 		builtin/unset.c \
-		builtin/exit.c \
 		execute/execute.c \
 		execute/exec_builtin.c \
 		execute/exec_extern.c \

@@ -18,7 +18,7 @@ t_bool	syntax_err_occurred(void)
 	tmp = g_var->token_list;
 	token = (t_token *) tmp->content;
 	if (token && token->type == T_PIPE)
-		return (print_err(258, "syntax error", NULL, NULL));
+		return (print_err(258, NULL, NULL, SYNTAX_ERR));
 	while (tmp)
 	{
 		token = (t_token *) tmp->content;
@@ -28,10 +28,10 @@ t_bool	syntax_err_occurred(void)
 			next = NULL;
 		if (token->type == T_PIPE && \
 			(tmp->next == NULL || next->type == T_PIPE))
-			return (print_err(258, "syntax error", NULL, NULL));
+			return (print_err(258, NULL, NULL, SYNTAX_ERR));
 		if (token->type == T_REDIRECT && (next == NULL || \
 			next->type != T_WORD))
-			return (print_err(258, "syntax error", NULL, NULL));
+			return (print_err(258, NULL, NULL, SYNTAX_ERR));
 		tmp = tmp->next;
 	}
 	return (FALSE);
