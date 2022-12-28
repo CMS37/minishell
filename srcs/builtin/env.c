@@ -1,3 +1,4 @@
+#include "../../libs/libft/incs/libft.h"
 #include "../../incs/builtin.h"
 #include "../../incs/structs.h"
 #include <unistd.h>

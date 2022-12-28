@@ -1,3 +1,4 @@
+#include "../../libs/libft/incs/libft.h"
 #include "../../incs/parser.h"
 
 t_bool		parsing(void);

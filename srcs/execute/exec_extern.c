@@ -1,3 +1,4 @@
+#include "../../libs/libft/incs/libft.h"
 #include "../../incs/execute.h"
 #include <unistd.h>
 #include <stdlib.h>
@@ -41,7 +42,7 @@ char	*find_path(const char *cmd)
 	while (*paths)
 	{
 		ret = ft_strjoin(*paths, "/");
-		ft_strcat(ret, cmd);
+		ft_strcat(&ret, cmd);
 		if (access(ret, X_OK) == 0 && free_paths(paths))
 			return (ret);
 		free(ret);

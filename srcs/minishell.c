@@ -47,6 +47,7 @@ static t_bool	execute_cmd_line(const char *line)
 {
 	if (lexer(line) == FALSE || !g_var->token_list)
 		return (FALSE);
+
 	print_token_list();
 
 	if (parsing())

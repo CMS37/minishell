@@ -11,9 +11,9 @@ t_bool	handle_env_var(t_token *token, const char **line)
 	char *const	key = get_key(line);
 
 	if (key[0] == '?')
-		ft_strcat(token->value, ft_itoa(g_var->exit_status));
+		ft_strcat(&token->value, ft_itoa(g_var->exit_status));
 	else
-		ft_strcat(token->value, get_env(key));
+		ft_strcat(&token->value, get_env(key));
 	free(key);
 	return (TRUE);
 }

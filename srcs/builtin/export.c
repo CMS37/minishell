@@ -1,3 +1,4 @@
+#include "../../libs/libft/incs/libft.h"
 #include "../../incs/builtin.h"
 #include "../../incs/structs.h"
 #include <unistd.h>
@@ -14,21 +15,24 @@ int	builtin_export(t_list *token_list, int fd)
 	t_token	*token;
 	char	*key;
 
+	key = NULL;
 	if (ft_lstsize(token_list) == 1)
 		builtin_env(token_list, fd);
 	else
 	{
 		token = token_list->next->content;
 		key = ft_substr(token->value, 0,
-				ft_strchr(token->value, '=') - token->value);
-		if (key_is_not_valid(key))
-			return (1);
-		env = get_env(key);
-		if (env == NULL)
-			ft_lstadd_back(&g_var->env_list, ft_lstnew(token->value));
-		else
-			replace_value(env, token->value);
+			ft_strchr(token->value, '=') - token->value);
+		if (key_is_not_valid(key) == FALSE)
+		{
+			env = get_env(key);
+			if (env == NULL)
+				ft_lstadd_back(&g_var->env_list, ft_lstnew(token->value));
+			else
+				replace_value(env, token->value);
+		}
 	}
+	free(key);
 	return (0);
 }
 

@@ -1,3 +1,4 @@
+#include "../../libs/libft/incs/libft.h"
 #include "../../incs/lexer.h"
 
 t_bool	lexer(const char *line);

@@ -4,8 +4,8 @@ IDX		= 0
 
 NAME	= minishell
 
-READLINE_DIR	= ${HOME}/.brew/opt/readline
-READLINE_INCS	= ${READLINE_DIR}/include
+READLINE_DIR		= ${HOME}/.brew/opt/readline
+READLINE_INCS_DIR	= ${READLINE_DIR}/include
 
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
@@ -13,10 +13,11 @@ LDFLAGS	= -L${READLINE_DIR}/lib -lreadline
 AR		= ar rcs
 RM		= rm -f
 
-LIBS_DIR	= ./libs
-LIBFT_DIR	:= ${LIBS_DIR}/libft
-LIBFT		:= ${LIBFT_DIR}/libft.a
-LIBS		:= ${LIBFT}
+LIBS_DIR		= ./libs
+LIBFT_DIR		:= ${LIBS_DIR}/libft
+LIBFT_INCS_DIR	:= ${LIBFT_DIR}/incs
+LIBFT			:= ${LIBFT_DIR}/libft.a
+LIBS			:= ${LIBFT}
 
 INCS_DIR	= ./incs
 SRCS_DIR	= ./srcs
@@ -84,7 +85,7 @@ ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
 		echo -n "Build dependencies in ${NAME} ...  ";\
 	fi
 	@printf "\b${CHR}"
-	@${CC} ${CFLAGS} -g -c $< -o $@ -I${INCS_DIR} -I${READLINE_INCS}
+	@${CC} ${CFLAGS} -g -c $< -o $@ -I${INCS_DIR} -I${LIBFT_INCS_DIR} -I${READLINE_INCS_DIR}
 
 
 clean:

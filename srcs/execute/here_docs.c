@@ -1,3 +1,4 @@
+#include "../../libs/libft/incs/libft.h"
 #include "../../incs/execute.h"
 #include "../../incs/structs.h"
 #include <unistd.h>
@@ -65,8 +66,8 @@ static char	*generate_file_name(void)
 	char	*ret;
 
 	ret = ft_strjoin(tmp_directory_path(), ft_strdup(".heredoc_tmp_"));
-	ft_strcat(ret, ft_itoa(g_var->here_doc_cnt / 10));
-	ft_strcat(ret, ft_itoa(g_var->here_doc_cnt % 10));
+	ft_strcat(&ret, ft_itoa(g_var->here_doc_cnt / 10));
+	ft_strcat(&ret, ft_itoa(g_var->here_doc_cnt % 10));
 	return (ret);
 }
 

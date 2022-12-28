@@ -1,3 +1,4 @@
+#include "../../libs/libft/incs/libft.h"
 #include "../../incs/lexer.h"
 #include <stdlib.h>
 
@@ -14,7 +15,7 @@ t_bool	tokenize(const char *line)
 	cur = init_token();
 	while (*line)
 	{
-		if ((is_ifs(*line) || is_meta(*line)) && cur->value != NULL)
+		if ((is_ifs(*line) || is_meta(*line)) && cur->value[0] != '\0')
 		{
 			ft_lstadd_back(&g_var->token_list, ft_lstnew(cur));
 			cur = init_token();
@@ -25,13 +26,13 @@ t_bool	tokenize(const char *line)
 		if (is_quote(*line))
 			handle_quote(cur, &line);
 		else if (!is_ifs(*line) && !is_meta(*line) && !is_quote(*line))
-			ft_strcat(cur->value, ft_substr(line, 0, 1));
+			ft_strncat(&cur->value, line, 1);
 		line++;
 	}
-	if (cur->value != NULL)
+	if (cur->value[0] != '\0')
 		ft_lstadd_back(&g_var->token_list, ft_lstnew(cur));
 	else
-		free(cur);
+		del_token(cur);
 	return (TRUE);
 }
 

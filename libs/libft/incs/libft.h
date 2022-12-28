@@ -69,6 +69,7 @@ typedef enum e_bool
 void			ft_exit_with_error(const char *str, int exit_flag);
 t_bool			ft_is_space(const int c);
 int				ft_strcmp(const char *s1, const char *s2);
-t_bool			ft_strcat(char *dest, const char *src);
+t_bool			ft_strcat(char **dest, const char *src);
+t_bool			ft_strncat(char **dest, const char *src, size_t n);
 
 #endif
