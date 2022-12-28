@@ -33,7 +33,8 @@ static size_t	get_key_size(const char *line)
 	size_t	ret;
 
 	ret = 0;
-	while (line[ret] && !is_ifs(line[ret]) && line[ret] != '$')
+	while (line[ret] && !is_ifs(line[ret]) &&
+		line[ret] != '$' && line[ret] != '\"')
 		ret++;
 	return (ret);
 }
