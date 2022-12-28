@@ -8,7 +8,6 @@ int	builtin_echo(t_list *token_list, int fd)
 	t_list	*tmp;
 	int		n_flag;
 
-	fd = 0;
 	tmp = token_list;
 	n_flag = 0;
 	if (tmp->next != NULL)
@@ -19,11 +18,11 @@ int	builtin_echo(t_list *token_list, int fd)
 		tmp = tmp->next;
 	while (tmp)
 	{
-		ft_putstr_fd((char *)((t_token *)tmp->content)->value, 2);
+		ft_putstr_fd((char *)((t_token *)tmp->content)->value, fd);
 		tmp = tmp->next;
 	}
 	if (!n_flag)
-		ft_putstr_fd("\n", 2);
+		ft_putstr_fd("\n", fd);
 	return (0);
 }
 

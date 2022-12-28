@@ -26,7 +26,7 @@ int	builtin_exit(t_list *token_list, int fd)
 		return (print_err(1, "exit", NULL, ARG_ERR));
 	i = ft_atoll(token->value);
 	if (i < INT_MIN || INT_MAX < i)
-		return (print_err(255, "exit", token->value, NUMERIC_ERR));
+		exit(print_err(255, "exit", token->value, NUMERIC_ERR));
 	if (i < 0)
 		i = (256 - ((i * -1) % 256));
 	i = (i % 256);
