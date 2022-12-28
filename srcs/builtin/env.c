@@ -25,7 +25,6 @@ int	builtin_env(t_list *token_list, int fd)
 		ft_putendl_fd(cur_env, fd);
 		cur_list = cur_list->next;
 	}
-	g_var->exit_status = 0;
 	(void) token_list;
-	return (0);
+	return (set_exit_status(0));
 }

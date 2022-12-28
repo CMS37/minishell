@@ -7,8 +7,7 @@
 3. "", '' err 처리는 토큰화할때 우선처리
 */
 
-t_bool			syntax_err_occurred(void);
-static t_bool	print_syntax_err(void);
+t_bool	syntax_err_occurred(void);
 
 t_bool	syntax_err_occurred(void)
 {
@@ -19,7 +18,7 @@ t_bool	syntax_err_occurred(void)
 	tmp = g_var->token_list;
 	token = (t_token *) tmp->content;
 	if (token && token->type == T_PIPE)
-		return (print_syntax_err());
+		return (print_err(258, "syntax error", NULL, NULL));
 	while (tmp)
 	{
 		token = (t_token *) tmp->content;
@@ -29,18 +28,11 @@ t_bool	syntax_err_occurred(void)
 			next = NULL;
 		if (token->type == T_PIPE && \
 			(tmp->next == NULL || next->type == T_PIPE))
-			return (print_syntax_err());
+			return (print_err(258, "syntax error", NULL, NULL));
 		if (token->type == T_REDIRECT && (next == NULL || \
 			next->type != T_WORD))
-			return (print_syntax_err());
+			return (print_err(258, "syntax error", NULL, NULL));
 		tmp = tmp->next;
 	}
 	return (FALSE);
-}
-
-static t_bool	print_syntax_err(void)
-{
-	g_var->exit_status = 258;
-	exit_status("syntax error", NULL, NULL);
-	return (TRUE);
 }

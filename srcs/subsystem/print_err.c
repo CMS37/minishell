@@ -1,25 +1,25 @@
 #include "../../incs/subsystem.h"
 
-t_bool	exit_status(char *cmd, char *value, char *err_str);
-t_bool	set_exit_status(int status);
+int	print_err(int status, char *cmd, char *arg, char *err_str);
 
-t_bool	exit_status(char *cmd, char *value, char *err_str)
-{
-	printf("minishell: %s", cmd);
-	if (value != NULL)
-	{
-		printf(": %s", value);
-		if (err_str != NULL)
-			printf(": %s", err_str);
-	}
-	printf("\n");
-	return (TRUE);
-}
-
-t_bool	set_exit_status(int status)
+int	print_err(int status, char *cmd, char *arg, char *err_str)
 {
 	g_var->exit_status = status;
-	return (TRUE);
+	ft_putstr_fd("minishell: ", 2);
+	if (cmd != NULL)
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	if (arg != NULL)
+	{
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	if (err_str != NULL)
+		ft_putstr_fd(err_str, 2);
+	ft_putstr_fd("\n", 2);
+	return (status);
 }
 
 /*

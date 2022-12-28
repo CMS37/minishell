@@ -1,5 +1,8 @@
 #include "../../libs/libft/incs/libft.h"
+#include "../../incs/builtin.h"
 #include "../../incs/execute.h"
+#include "../../incs/subsystem.h"
+#include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -16,14 +19,14 @@ void	execute_extern(t_list *token_list)
 
 	if (path == NULL)
 	{
-		ft_putstr_fd("minishell: command not found: ", STDERR_FILENO);
-		ft_putendl_fd(cmd[0], STDERR_FILENO);
-		exit(127);
+		print_err(127, cmd[0], NULL, CMD_ERR);
+		exit(set_exit_status(127));
 	}
+	set_exit_status(0);
 	if (execve(path, cmd, envp_list_to_arr()) == -1)
 	{
-		perror("Error");
-		exit(1);
+		print_err(errno, cmd[0], NULL, strerror(errno));
+		exit(set_exit_status(errno));
 	}
 }
 
@@ -32,6 +35,7 @@ char	*find_path(const char *cmd)
 	char	*ret;
 	char	**paths;
 	t_list	*tmp;
+	size_t	i;
 
 	tmp = g_var->env_list;
 	while (ft_strnstr(tmp->content, "PATH=", 5) == NULL)
@@ -39,14 +43,15 @@ char	*find_path(const char *cmd)
 	if (tmp == NULL)
 		return (NULL);
 	paths = ft_split(tmp->content + 5, ':');
-	while (*paths)
+	i = 0;
+	while (paths[i])
 	{
-		ret = ft_strjoin(*paths, "/");
+		ret = ft_strjoin(paths[i], "/");
 		ft_strcat(&ret, cmd);
 		if (access(ret, X_OK) == 0 && free_paths(paths))
 			return (ret);
 		free(ret);
-		paths++;
+		i++;
 	}
 	free_paths(paths);
 	return (NULL);
@@ -54,8 +59,13 @@ char	*find_path(const char *cmd)
 
 static t_bool	free_paths(char **paths)
 {
-	while (*paths)
-		free(*paths++);
+	char	**tmp;
+
+	if (paths == NULL)
+		return (TRUE);
+	tmp = paths;
+	while (*tmp)
+		free(*tmp++);
 	free(paths);
 	return (TRUE);
 }

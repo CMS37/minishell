@@ -27,5 +27,5 @@ int	builtin_unset(t_list *token_list, int fd)
 		cur = cur->next;
 	}
 	(void) fd;
-	return (0);
+	return (set_exit_status(0));
 }

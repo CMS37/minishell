@@ -1,6 +1,7 @@
 #include "../../libs/libft/incs/libft.h"
 #include "../../incs/execute.h"
 #include <unistd.h>
+#include <stdlib.h>
 
 char			**list_to_arr(t_list *token_list);
 static size_t	num_of_token(t_list *token_list);

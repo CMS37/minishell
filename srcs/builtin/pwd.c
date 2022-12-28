@@ -13,15 +13,11 @@ int	builtin_pwd(t_list *token_list, int fd)
 
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL)
-	{
-		exit_status("pwd", strerror(errno), NULL);
-		return (1);
-	}
+		return (print_err(errno, "pwd", NULL, strerror(errno)));
 	ft_putendl_fd(pwd, fd);
 	free(pwd);
-	g_var->exit_status = 0;
 	(void) token_list;
-	return (0);
+	return (set_exit_status(0));
 }
 
 /*

@@ -3,10 +3,13 @@
 #include "../../incs/structs.h"
 #include "../../incs/lexer.h"
 #include "../../incs/subsystem.h"
+#include "../../incs/builtin.h"
+#include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
+#include <errno.h>
 
 t_bool		set_fd_in_redir(t_list *token_list);
 static int	get_fd(t_list *token_list);
@@ -24,7 +27,7 @@ t_bool	set_fd_in_redir(t_list *token_list)
 	{
 		fd = get_fd(cur);
 		if (fd == -1)
-			return (!set_exit_status(1));
+			return (set_exit_status(errno) == 0);
 		if (0 < fd)
 		{
 			if (ft_strcmp(((t_token *) cur->content)->value, "<") == 0)
@@ -74,7 +77,7 @@ int	open_file(const char *file, t_open_flag flag)
 	if (fd == -1)
 	{
 		if (flag == HERE_DOC || flag == FILE_OUT_TRUNC)
-			perror("\033[31mError");
+			perror("Error");
 		if (flag == FILE_OUT_TRUNC)
 			exit(EXIT_FAILURE);
 		if (flag == FILE_IN)

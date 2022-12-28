@@ -60,7 +60,8 @@ SRCS =  ft_atoi.c \
 		ft_is_space.c \
 		ft_strcmp.c \
 		ft_strcat.c \
-		ft_strncat.c
+		ft_strncat.c \
+		ft_atoll.c
 
 SRCS := ${SRCS:%.c=${SRCS_DIR}/%.c}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}

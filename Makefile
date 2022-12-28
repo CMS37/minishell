@@ -44,9 +44,9 @@ SRCS = 	minishell.c \
 		parser/create_cmd_list.c \
 		parser/syntax_err_occurred.c \
 		subsystem/signal.c \
+		subsystem/print_err.c \
 		subsystem/subsystem.c \
-		subsystem/termios.c \
-		subsystem/exit_status.c
+		subsystem/termios.c
 		
 SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}

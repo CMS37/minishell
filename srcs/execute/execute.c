@@ -42,9 +42,10 @@ static t_bool	child_process(t_list *cmd_list)
 			execute_extern(cmd_list->content);
 	}
 	set_fd_in_pipe(cmd_list, fd, FALSE);
-	if (cmd_list->next != NULL)
-		child_process(cmd_list->next);
-	waitpid(pid, NULL, 0);
+	if (cmd_list->next != NULL && child_process(cmd_list->next))
+		waitpid(pid, NULL, 0);
+	else
+		waitpid(pid, &g_var->exit_status, 0);
 	return (TRUE);
 }
 

@@ -51,8 +51,10 @@ static t_bool	execute_cmd_line(const char *line)
 	print_token_list();
 
 	if (parsing())
+	{
 		execute();
-
+		g_var->exit_status >>= 8;
+	}
 	return (TRUE);
 }
 
