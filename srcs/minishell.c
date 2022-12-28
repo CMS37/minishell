@@ -6,6 +6,9 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+// TODO: echo, cd
+// TODO: here_doc unlink, expand variable
+
 static t_bool	init_minishell(char **envp);
 static t_bool	execute_cmd_line(const char *line);
 void			exit_minishell(void);
