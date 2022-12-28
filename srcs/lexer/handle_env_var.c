@@ -24,7 +24,7 @@ static char	*get_key(const char **line)
 	char *const	ret = ft_calloc(key_size + 1, sizeof(char), "");
 
 	ft_strlcpy(ret, *line, key_size + 1);
-	*line += key_size;
+	*line += key_size - 1;
 	return (ret);
 }
 
