@@ -40,8 +40,6 @@ typedef struct	s_var
 	size_t		here_doc_cnt;
 	int			exit_status;
 	int			old_fd[3];
-	int			s_quote_flag;
-	int			d_quote_flag;
 }	t_var;
 
 // (char **) cmd_list->value[0] == (char *) "ls"
