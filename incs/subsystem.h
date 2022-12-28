@@ -21,6 +21,7 @@ void	signal_handler(int sig);
 t_bool	init_termios(void);
 
 //exit_status.c
-void	exit_status(char *cmd, char *value, char *err_str);
+t_bool	exit_status(char *cmd, char *value, char *err_str);
+t_bool	set_exit_status(int status);
 
 #endif

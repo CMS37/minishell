@@ -1,22 +1,15 @@
 #include "../../incs/parser.h"
 
 t_bool		parsing(void);
-void		syntax_error(void);
 static void	del_cmd(void *cmd);
 
 t_bool	parsing(void)
 {
-	if (check_syntax_err())
+	if (syntax_err_occurred())
 		return (FALSE);
 	ft_lstclear(&g_var->cmd_list, del_cmd);
 	create_cmd_list();
 	return (TRUE);
-}
-
-void	syntax_error(void)
-{
-	g_var->exit_status = 258;
-	exit_status("syntax error", NULL, NULL);
 }
 
 static void	del_cmd(void *cmd)

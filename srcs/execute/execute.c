@@ -14,6 +14,7 @@ int	execute(void)
 	if (g_var->cmd_list == NULL)
 		return (0);
 	here_docs();
+	// TODO: unlink here-docs files
 	if (g_var->cmd_list->next == NULL && is_builtin(g_var->cmd_list->content))
 		return (execute_builtin(g_var->cmd_list->content));
 	child_process(g_var->cmd_list);
@@ -33,9 +34,10 @@ static t_bool	child_process(t_list *cmd_list)
 	if (pid == 0)
 	{
 		set_fd_in_pipe(cmd_list, fd, TRUE);
-		set_fd_in_redir(cmd_list->content);
+		if (set_fd_in_redir(cmd_list->content) == FALSE)
+			exit(g_var->exit_status);
 		if (is_builtin(cmd_list->content) && execute_builtin(cmd_list->content))
-			exit(0);
+			exit(g_var->exit_status);
 		else
 			execute_extern(cmd_list->content);
 	}

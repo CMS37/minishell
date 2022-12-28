@@ -1,6 +1,9 @@
 #include "../../incs/subsystem.h"
 
-void	exit_status(char *cmd, char *value, char *err_str)
+t_bool	exit_status(char *cmd, char *value, char *err_str);
+t_bool	set_exit_status(int status);
+
+t_bool	exit_status(char *cmd, char *value, char *err_str)
 {
 	printf("minishell: %s", cmd);
 	if (value != NULL)
@@ -10,6 +13,13 @@ void	exit_status(char *cmd, char *value, char *err_str)
 			printf(": %s", err_str);
 	}
 	printf("\n");
+	return (TRUE);
+}
+
+t_bool	set_exit_status(int status)
+{
+	g_var->exit_status = status;
+	return (TRUE);
 }
 
 /*

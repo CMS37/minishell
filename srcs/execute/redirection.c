@@ -1,6 +1,7 @@
 #include "../../incs/execute.h"
 #include "../../incs/structs.h"
 #include "../../incs/lexer.h"
+#include "../../incs/subsystem.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -10,6 +11,7 @@ t_bool		set_fd_in_redir(t_list *token_list);
 static int	get_fd(t_list *token_list);
 int			open_file(const char *file, t_open_flag flag);
 t_bool		rm_tokens(t_list *token_list);
+t_bool		rm_token(t_list *token_list);
 
 t_bool	set_fd_in_redir(t_list *token_list)
 {
@@ -20,7 +22,9 @@ t_bool	set_fd_in_redir(t_list *token_list)
 	while (cur)
 	{
 		fd = get_fd(cur);
-		if (fd != -1)
+		if (fd == -1)
+			return (!set_exit_status(1));
+		if (0 < fd)
 		{
 			if (ft_strcmp(((t_token *) cur->content)->value, "<") == 0)
 				dup2(fd, STDIN_FILENO);
@@ -41,10 +45,10 @@ static int	get_fd(t_list *token_list)
 	t_token	*cur;
 	t_token	*next;
 
-	ret = -1;
+	ret = 0;
+	cur = token_list->content;
 	if (token_list->next == NULL)
 		return (ret);
-	cur = token_list->content;
 	next = token_list->next->content;
 	if (ft_strcmp(cur->value, "<") == 0)
 		ret = open_file(next->value, FILE_IN);
@@ -59,7 +63,7 @@ int	open_file(const char *file, t_open_flag flag)
 {
 	int	fd;
 
-	fd = 0;
+	fd = -1;
 	if (flag == HERE_DOC)
 		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	else if (flag == FILE_OUT_TRUNC)
@@ -74,10 +78,10 @@ int	open_file(const char *file, t_open_flag flag)
 			exit(EXIT_FAILURE);
 		if (flag == FILE_IN)
 		{
-			ft_putstr_fd("\033[31mError: No such file or directory: ", 2);
+			ft_putstr_fd("Error: No such file or directory: ", 2);
 			ft_putstr_fd(file, 2);
-			ft_putstr_fd("\033[m\n", 2);
-		}	
+			ft_putstr_fd("\n", 2);
+		}
 	}
 	return (fd);
 }
@@ -91,20 +95,33 @@ t_bool	rm_tokens(t_list *token_list)
 	cur = token_list;
 	while (cur)
 	{
-		if (ft_strcmp(((t_token *) cur->content)->value, "<") == 0 || \
+		while (ft_strcmp(((t_token *) cur->content)->value, "<") == 0 || \
 			ft_strcmp(((t_token *) cur->content)->value, ">") == 0 || \
 			ft_strcmp(((t_token *) cur->content)->value, ">>") == 0)
 		{
-			prev->next = cur->next->next;
-			ft_lstdelone(cur->next, del_token);
-			ft_lstdelone(cur, del_token);
-			cur = prev->next;
+			if (rm_token(cur) == FALSE)
+			{
+				prev->next = NULL;
+				free(cur);
+				return (TRUE);
+			}
 		}
-		else
-		{
-			prev = cur;
-			cur = cur->next;
-		}
+		prev = cur;
+		cur = cur->next;
 	}
+	return (TRUE);
+}
+
+t_bool		rm_token(t_list *token_list)
+{
+	t_list *const	next_token = token_list->next->next;
+
+	ft_lstdelone(token_list->next, del_token);
+	del_token(token_list->content);
+	if (next_token == NULL)
+		return (FALSE);
+	token_list->content = next_token->content;
+	token_list->next = next_token->next;
+	free(next_token);
 	return (TRUE);
 }

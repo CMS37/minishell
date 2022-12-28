@@ -12,10 +12,9 @@
 
 // parser.c
 t_bool	parsing(void);
-void	syntax_error(void);
 
 //syntax_err.c
-t_bool	check_syntax_err(void);
+t_bool	syntax_err_occurred(void);
 
 // create_cmd_list.c
 t_bool	create_cmd_list(void);

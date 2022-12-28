@@ -7,7 +7,6 @@
 #include <readline/history.h>
 
 static t_bool	init_minishell(char **envp);
-static t_bool	init_var(void);
 static t_bool	execute_cmd_line(const char *line);
 void			exit_minishell(void);
 
@@ -30,27 +29,17 @@ int	main(int argc, char **argv, char **envp)
 		free(line);
 		printf("ERR_CODE : %d\n", g_var->exit_status); //test
 	}
-	free(line);
 	return (0);
 }
 
 static t_bool	init_minishell(char **envp)
 {
-	init_var();
+	g_var = (t_var *) ft_calloc(sizeof(t_var), 1, "Failed to init var");
 	init_termios();
 	init_signal();
 	init_env_list(envp);
 	g_var->old_fd[0] = dup(STDIN_FILENO);
 	g_var->old_fd[1] = dup(STDOUT_FILENO);
-	g_var->old_fd[2] = dup(STDERR_FILENO);
-	return (TRUE);
-}
-
-static t_bool	init_var(void)
-{
-	g_var = (t_var *) ft_calloc(sizeof(t_var), 1, "Failed to init var");
-	if (g_var == NULL)
-		return (FALSE);
 	return (TRUE);
 }
 
@@ -59,10 +48,10 @@ static t_bool	execute_cmd_line(const char *line)
 	if (lexer(line) == FALSE || !g_var->token_list)
 		return (FALSE);
 	print_token_list();
+
 	if (parsing())
 		execute();
-	close(STDERR_FILENO);
-	dup2(g_var->old_fd[2], STDERR_FILENO);
+
 	return (TRUE);
 }
 
