@@ -19,7 +19,10 @@ void	execute_extern(t_list *token_list)
 
 	if (path == NULL)
 	{
-		print_err(127, cmd[0], NULL, CMD_ERR);
+		if (ft_strnstr(cmd[0], "$?", 2) != 0)
+			print_err(127, ft_itoa(g_var->exit_status), NULL, CMD_ERR);
+		else
+			print_err(127, cmd[0], NULL, CMD_ERR);
 		exit(set_exit_status(127));
 	}
 	set_exit_status(0);
