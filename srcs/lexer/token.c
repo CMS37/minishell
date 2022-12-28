@@ -22,9 +22,9 @@ t_token	*init_meta_token(const char **line)
 		ret->type = T_PIPE;
 	else if (**line == '>' || **line == '<')
 		ret->type = T_REDIRECT;
-	ret->value = ft_strjoin(ret->value, ft_substr(*line, 0, 1));
+	ft_strcat(ret->value, ft_substr(*line, 0, 1));
 	if (ret->type == T_REDIRECT && **line == *(*line + 1))
-		ret->value = ft_strjoin(ret->value, ft_substr(++(*line), 0, 1));
+		ft_strcat(ret->value, ft_substr(++(*line), 0, 1));
 	return (ret);
 }
 

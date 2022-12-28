@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 t_bool			tokenize(const char *line);
+t_bool			is_ifs(int c);
 static t_list	*get_ifs(void);
-static t_bool	is_ifs(int c);
 static t_bool	is_meta(int c);
 static t_bool	is_quote(int c);
 
@@ -25,7 +25,7 @@ t_bool	tokenize(const char *line)
 		if (is_quote(*line))
 			handle_quote(cur, &line);
 		else if (!is_ifs(*line) && !is_meta(*line) && !is_quote(*line))
-			cur->value = ft_strjoin(cur->value, ft_substr(line, 0, 1));
+			ft_strcat(cur->value, ft_substr(line, 0, 1));
 		line++;
 	}
 	if (cur->value != NULL)
@@ -33,6 +33,26 @@ t_bool	tokenize(const char *line)
 	else
 		free(cur);
 	return (TRUE);
+}
+
+t_bool	is_ifs(int c)
+{
+	t_list	*ifs;
+	t_list	*tmp;
+
+	ifs = get_ifs();
+	tmp = ifs;
+	while (tmp)
+	{
+		if (c == ft_atoi((char *) tmp->content))
+		{
+			ft_lstclear(&ifs, free);
+			return (TRUE);
+		}
+		tmp = tmp->next;
+	}
+	ft_lstclear(&ifs, free);
+	return (FALSE);
 }
 
 static t_list	*get_ifs(void)
@@ -60,26 +80,6 @@ static t_list	*get_ifs(void)
 		tmp = tmp->next;
 	}
 	return (ret);
-}
-
-static t_bool	is_ifs(int c)
-{
-	t_list	*ifs;
-	t_list	*tmp;
-
-	ifs = get_ifs();
-	tmp = ifs;
-	while (tmp)
-	{
-		if (c == ft_atoi((char *) tmp->content))
-		{
-			ft_lstclear(&ifs, free);
-			return (TRUE);
-		}
-		tmp = tmp->next;
-	}
-	ft_lstclear(&ifs, free);
-	return (FALSE);
 }
 
 static t_bool	is_meta(int c)

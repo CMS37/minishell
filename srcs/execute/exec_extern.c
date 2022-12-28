@@ -41,7 +41,7 @@ char	*find_path(const char *cmd)
 	while (*paths)
 	{
 		ret = ft_strjoin(*paths, "/");
-		ret = ft_strjoin(ret, cmd);
+		ft_strcat(ret, cmd);
 		if (access(ret, X_OK) == 0 && free_paths(paths))
 			return (ret);
 		free(ret);

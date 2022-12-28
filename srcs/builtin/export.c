@@ -57,7 +57,6 @@ t_bool	replace_value(t_list *env, const char *envp)
 
 t_bool	key_is_not_valid(const char *key)
 {
-	ft_putendl_fd(key, 2);
 	if (*key == 0)
 		return (TRUE);
 	if (ft_isalpha(*key) == 0 && *key != '_')
