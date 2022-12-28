@@ -4,12 +4,12 @@
 #include <unistd.h>
 
 const static char	*g_builtin_list[] = {
-	"env", "export", "pwd", "unset", "exit", NULL
+	"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL
 };
 
 int static (*const	g_builtin_func[])(t_list *token_list, int fd) = {
-	builtin_env, builtin_export, builtin_pwd, builtin_unset,
-	builtin_exit, NULL
+	builtin_cd, builtin_echo, builtin_env, builtin_exit, 
+	builtin_export, builtin_pwd, builtin_unset, NULL
 };
 
 t_bool	is_builtin(t_list *token_list);

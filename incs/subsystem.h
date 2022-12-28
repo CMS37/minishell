@@ -13,6 +13,7 @@
 # define ARG_ERR "too many arguments" // exit에서 많은 인자가 올떄
 # define CMD_ERR "Command not found" // input에 이상한 값오면
 # define QUOTE_ERR "quote is not closed"
+# define SYNTAX_ERR "syntax error"
 
 // signal.c
 t_bool	init_signal(void);
@@ -22,6 +23,6 @@ void	signal_handler(int sig);
 t_bool	init_termios(void);
 
 // print_err.c
-t_bool	print_err(int status, char *cmd, char *arg, char *err_str);
+int		print_err(int status, char *cmd, char *arg, char *err_str);
 
 #endif
