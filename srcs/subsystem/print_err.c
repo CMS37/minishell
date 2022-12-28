@@ -4,7 +4,6 @@ int	print_err(int status, char *cmd, char *arg, char *err_str);
 
 int	print_err(int status, char *cmd, char *arg, char *err_str)
 {
-	g_var->exit_status = status;
 	ft_putstr_fd("minishell: ", 2);
 	if (cmd != NULL)
 	{
@@ -19,6 +18,7 @@ int	print_err(int status, char *cmd, char *arg, char *err_str)
 	if (err_str != NULL)
 		ft_putstr_fd(err_str, 2);
 	ft_putstr_fd("\n", 2);
+	g_var->exit_status = status;
 	return (status);
 }
 

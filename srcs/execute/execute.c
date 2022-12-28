@@ -46,6 +46,7 @@ static t_bool	child_process(t_list *cmd_list)
 		waitpid(pid, NULL, 0);
 	else
 		waitpid(pid, &g_var->exit_status, 0);
+	g_var->exit_status >>= 8; //이거 builtin명령어만실행할때 에러코드 0으로 다시만들어버려서 다시 여기집어넣엇어유
 	return (TRUE);
 }
 
