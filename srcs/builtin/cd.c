@@ -14,13 +14,14 @@ int	builtin_cd(t_list *token_list, int fd)
 	{
 		home = get_home();
 		if (home == NULL || chdir(home) != 0)
-			print_err(1, "cd", NULL, "No home");
+			print_err(errno, "cd", home, "Not home");
+		free(home);
 	}
 	else
 	{
 		tmp = token_list->next;
 		if (chdir(((t_token *)tmp->content)->value) != 0)
-			print_err(1, "cd",
+			print_err(errno, "cd",
 				((t_token *)tmp->content)->value, strerror(errno));
 	}
 	fd = 0;
