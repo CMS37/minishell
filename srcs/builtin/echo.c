@@ -24,7 +24,6 @@ int	builtin_echo(t_list *token_list, int fd)
 	}
 	if (!n_flag)
 		ft_putstr_fd("\n", 2);
-	g_var->exit_status = 0;
 	return (0);
 }
 
