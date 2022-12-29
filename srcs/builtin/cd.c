@@ -14,6 +14,7 @@ int	builtin_cd(t_list *token_list, int fd)
 	char	*path;
 	t_token	*arg;
 
+	(void) fd;
 	home = get_home();
 	if (ft_lstsize(token_list) == 1)
 		return (chdir_to_home(home));
@@ -25,7 +26,7 @@ int	builtin_cd(t_list *token_list, int fd)
 	if ((path == NULL || chdir(path) != 0) && free_paths(home, path))
 		return (print_err(errno, "cd", arg->value, strerror(errno)));
 	free_paths(home, path);
-	set_pwd(fd);
+	// set_pwd(fd);
 	return (g_var->exit_status);
 }
 
