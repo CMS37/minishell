@@ -74,7 +74,6 @@ static char	*find_relative_or_absolute_path(const char *cmd)
 		return (NULL);
 	ft_strcat(&ret, "/");
 	ft_strcat(&ret, cmd);
-	ft_putendl_fd(ret, 2);
 	return (ret);
 }
 
