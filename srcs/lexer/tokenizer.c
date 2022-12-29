@@ -38,7 +38,7 @@ t_bool	is_not_word(int c)
 
 static t_bool	handle_tokens(t_token **token, const char **line)
 {
-	if ((is_ifs(**line) || is_meta(**line)) && (*token)->value[0] != '\0')
+	if ((is_ifs(**line) || **line == '|') && (*token)->value[0] != '\0')
 	{
 		ft_lstadd_back(&g_var->token_list, ft_lstnew((*token)));
 		(*token) = init_token();
