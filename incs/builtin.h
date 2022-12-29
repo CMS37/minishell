@@ -7,6 +7,9 @@
 // cd.c
 int	builtin_cd(t_list *token_list, int fd);
 
+// cd_util.c
+void	set_pwd(int fd);
+
 // echo.c
 int	builtin_echo(t_list *token_list, int fd);
 
