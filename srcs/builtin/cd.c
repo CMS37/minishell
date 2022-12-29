@@ -86,21 +86,23 @@ static void	set_pwd(int fd)
 }
 
 static t_lsit *ft_env_pwd(int i)
-{
+{	
 	char	*pwd;
 	t_list	*tmp;
+	t_list	*env;
 
+	env = g_var->env_list;
 	tmp = init_token();
 	ft_strncat(&tmp->content, "export", 1);
 	pwd = NULL;
-	while (i == 1 && tmp)
+	while (i == 1 && env)
 	{
 		if (ft_strnstr(tmp->content, "PWD=", 4) != 0)
 		{
 			pwd = ft_strjoin("OLD_PWD=", tmp->content + 4);
 			break;
 		}
-		tmp = tmp->next;
+		env = env->next;
 	}
 	if (i == 2)
 		pwd = getcwd(NULL, 0);
