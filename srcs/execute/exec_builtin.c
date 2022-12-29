@@ -38,7 +38,7 @@ t_bool	execute_builtin(t_list *token_list)
 
 	g_var->exit_status = 0;
 	if (set_fd_in_redir(token_list) == FALSE)
-		return (FALSE);
+		return (TRUE);
 	token = (t_token *) token_list->content;
 	i = 0;
 	while (g_builtin_list[i] != NULL)

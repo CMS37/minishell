@@ -31,7 +31,7 @@ int	builtin_exit(t_list *token_list, int fd)
 		i = (256 - ((i * -1) % 256));
 	i = (i % 256);
 	exit(set_exit_status(i));	
-	return (0);
+	return (1);
 }
 
 int	set_exit_status(int status)

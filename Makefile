@@ -38,8 +38,10 @@ SRCS = 	minishell.c \
 		execute/list_to_arr.c \
 		execute/redirection.c \
 		lexer/lexer.c \
-		lexer/handle_env_var.c \
-		lexer/handle_quote.c \
+		lexer/expand.c \
+		lexer/ifs.c \
+		lexer/meta.c \
+		lexer/quote.c \
 		lexer/token.c \
 		lexer/tokenizer.c \
 		parser/parser.c \
@@ -52,7 +54,7 @@ SRCS = 	minishell.c \
 		
 SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
-
+DEPS := ${OBJS:.o=.d}
 
 all: ${NAME}
 
@@ -87,7 +89,7 @@ ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
 		echo -n "Build dependencies in ${NAME} ...  ";\
 	fi
 	@printf "\b${CHR}"
-	@${CC} ${CFLAGS} -g -c $< -o $@ -I${INCS_DIR} -I${LIBFT_INCS_DIR} -I${READLINE_INCS_DIR}
+	@${CC} ${CFLAGS} -g -c $< -o $@ -I${INCS_DIR} -I${LIBFT_INCS_DIR} -I${READLINE_INCS_DIR} -MD
 
 
 clean:
@@ -111,3 +113,5 @@ re:
 
 
 .PHONY: all clean fclean re bonus
+
+-include ${DEPS}

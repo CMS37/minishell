@@ -2,8 +2,7 @@
 #include "../../incs/lexer.h"
 
 t_bool			handle_quote(t_token *token, const char **line);
-t_bool			num_of_single_quote_is_odd(const char *line);
-t_bool			num_of_double_quote_is_odd(const char *line);
+t_bool			is_quote(int c);
 static t_bool	handle_single_quote(t_token *token, const char **line);
 static t_bool	handle_double_quote(t_token *token, const char **line);
 
@@ -14,32 +13,9 @@ t_bool	handle_quote(t_token *token, const char **line)
 	return (handle_double_quote(token, line));
 }
 
-t_bool	num_of_single_quote_is_odd(const char *line)
+t_bool	is_quote(int c)
 {
-	int		num_of_quote;
-
-	num_of_quote = 0;
-	while (*line)
-	{
-		if (*line == '\'')
-			num_of_quote++;
-		line++;
-	}
-	return (num_of_quote % 2 == 1);
-}
-
-t_bool	num_of_double_quote_is_odd(const char *line)
-{
-	int		num_of_quote;
-
-	num_of_quote = 0;
-	while (*line)
-	{
-		if (*line == '\"')
-			num_of_quote++;
-		line++;
-	}
-	return (num_of_quote % 2 == 1);
+	return (c == '\'' || c == '\"');
 }
 
 static t_bool	handle_single_quote(t_token *token, const char **line)
@@ -64,7 +40,7 @@ static t_bool	handle_double_quote(t_token *token, const char **line)
 		if (**line == '\'')
 			handle_single_quote(token, line);
 		else if (**line == '$')
-			handle_env_var(token, line);
+			handle_expand(token, line);
 		else
 			ft_strncat(&token->value, *line, 1);
 		(*line)++;

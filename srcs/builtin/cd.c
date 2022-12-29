@@ -29,9 +29,9 @@ int	builtin_cd(t_list *token_list, int fd)
 				((t_token *)token_list->next->content)->value, strerror(errno));
 		free(path);
 	}
-	fd = 0;
 	free(home);
-	return (g_var->exit_status);
+	(void) fd;
+	return (set_exit_status(0) == 0);
 }
 
 static char	*get_home(void)

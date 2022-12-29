@@ -31,7 +31,7 @@ int	builtin_export(t_list *token_list, int fd)
 				replace_value(env, token->value);
 		}
 	}
-	return (set_exit_status(0));
+	return (set_exit_status(0) == 0);
 }
 
 t_list	*get_env(const char *key)

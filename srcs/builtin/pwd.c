@@ -17,5 +17,5 @@ int	builtin_pwd(t_list *token_list, int fd)
 	ft_putendl_fd(pwd, fd);
 	free(pwd);
 	(void) token_list;
-	return (set_exit_status(0));
+	return (set_exit_status(0) == 0);
 }
