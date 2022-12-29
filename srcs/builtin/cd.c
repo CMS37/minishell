@@ -85,7 +85,7 @@ static void	set_pwd(int fd)
 	}
 }
 
-static t_lsit *ft_env_pwd(int i)
+static t_list *ft_env_pwd(int i)
 {	
 	char	*pwd;
 	t_list	*tmp;
