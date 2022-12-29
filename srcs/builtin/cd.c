@@ -1,4 +1,5 @@
 #include "../../incs/builtin.h"
+#include "../../incs/lexer.h"
 #include <errno.h>
 #include <string.h>
 
@@ -13,7 +14,6 @@ int	builtin_cd(t_list *token_list, int fd)
 	char	*path;
 	t_token	*arg;
 
-	(void) fd;
 	home = get_home();
 	if (ft_lstsize(token_list) == 1)
 		return (chdir_to_home(home));
@@ -25,6 +25,7 @@ int	builtin_cd(t_list *token_list, int fd)
 	if ((path == NULL || chdir(path) != 0) && free_paths(home, path))
 		return (print_err(errno, "cd", arg->value, strerror(errno)));
 	free_paths(home, path);
+	set_pwd(fd);
 	return (g_var->exit_status);
 }
 
@@ -64,4 +65,49 @@ static int	chdir_to_home(char *home)
 		return (print_err(errno, "cd", NULL, strerror(errno)));
 	free_paths(home, NULL);
 	return (g_var->exit_status);
+}
+
+static void	set_pwd(int fd)
+{
+	t_list	*new_token;
+	char	*pwd;
+	int		i;
+
+	i = 0;
+	pwd = getcwd(NULL, 0);
+	if (pwd == NULL)
+		return (print_err(errno, "pwd", NULL, strerror(errno)));
+	while(++i < 3)
+	{
+		new_token = ft_env_pwd(i);
+		builtin_export(new_token, fd);
+		free(new_token);
+	}
+}
+
+static t_lsit *ft_env_pwd(int i)
+{
+	char	*pwd;
+	t_list	*tmp;
+
+	tmp = init_token();
+	ft_strncat(&tmp->content, "export", 1);
+	pwd = NULL;
+	while (i == 1 && tmp)
+	{
+		if (ft_strnstr(tmp->content, "PWD=", 4) != 0)
+		{
+			pwd = ft_strjoin("OLD_PWD=", tmp->content + 4);
+			break;
+		}
+		tmp = tmp->next;
+	}
+	if (i == 2)
+		pwd = getcwd(NULL, 0);
+	tmp2 = init_token();
+	ft_strncat(&tmp->content, pwd, 1);
+	ft_lstadd_back(&tmp, ft_lstnew(tmp2));
+	if (pwd)
+		free(pwd);
+	return (tmp);
 }
