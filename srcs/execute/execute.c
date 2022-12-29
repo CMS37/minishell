@@ -6,8 +6,8 @@
 #include <stdio.h>
 
 int				execute(void);
-static t_bool	child_process(t_list *cmd_list);
-static t_bool	set_fd_in_pipe(t_list *cmd_list, int *fd, t_bool is_child);
+static t_bool	child_process(t_list *cmd);
+static t_bool	set_fd_in_pipe(t_list *cmd, int *fd, t_bool is_child);
 
 int	execute(void)
 {
@@ -18,10 +18,11 @@ int	execute(void)
 	if (g_var->cmd_list->next == NULL && is_builtin(g_var->cmd_list->content))
 		return (execute_builtin(g_var->cmd_list->content));
 	child_process(g_var->cmd_list);
-	return (0);
+	g_var->exit_status >>= 8;
+	return (g_var->exit_status);
 }
 
-static t_bool	child_process(t_list *cmd_list)
+static t_bool	child_process(t_list *cmd)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -33,29 +34,28 @@ static t_bool	child_process(t_list *cmd_list)
 		return (FALSE);
 	if (pid == 0)
 	{
-		set_fd_in_pipe(cmd_list, fd, TRUE);
-		if (set_fd_in_redir(cmd_list->content) == FALSE)
+		set_fd_in_pipe(cmd, fd, TRUE);
+		if (set_fd_in_redir(cmd->content) == FALSE)
 			exit(g_var->exit_status);
-		if (is_builtin(cmd_list->content) && execute_builtin(cmd_list->content))
+		if (is_builtin(cmd->content) && execute_builtin(cmd->content) == 0)
 			exit(g_var->exit_status);
 		else
-			execute_extern(cmd_list->content);
+			execute_extern(cmd->content);
 	}
-	set_fd_in_pipe(cmd_list, fd, FALSE);
-	if (cmd_list->next != NULL && child_process(cmd_list->next))
+	set_fd_in_pipe(cmd, fd, FALSE);
+	if (cmd->next != NULL && child_process(cmd->next))
 		waitpid(pid, NULL, 0);
 	else
 		waitpid(pid, &g_var->exit_status, 0);
-	g_var->exit_status >>= 8; //이거 builtin명령어만실행할때 에러코드 0으로 다시만들어버려서 다시 여기집어넣엇어유
 	return (TRUE);
 }
 
-static t_bool	set_fd_in_pipe(t_list *cmd_list, int *fd, t_bool is_child)
+static t_bool	set_fd_in_pipe(t_list *cmd, int *fd, t_bool is_child)
 {
 	if (is_child)
 	{
 		close(fd[0]);
-		if (cmd_list->next != NULL)
+		if (cmd->next != NULL)
 			dup2(fd[1], STDOUT_FILENO);
 		else
 			dup2(g_var->old_fd[1], STDOUT_FILENO);
@@ -64,7 +64,7 @@ static t_bool	set_fd_in_pipe(t_list *cmd_list, int *fd, t_bool is_child)
 	else
 	{
 		close(fd[1]);
-		if (cmd_list->next != NULL)
+		if (cmd->next != NULL)
 			dup2(fd[0], STDIN_FILENO);
 		else
 			dup2(g_var->old_fd[0], STDIN_FILENO);

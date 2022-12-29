@@ -23,7 +23,7 @@ int	builtin_echo(t_list *token_list, int fd)
 	}
 	if (!n_flag)
 		ft_putstr_fd("\n", fd);
-	return (set_exit_status(0) == 0);
+	return (g_var->exit_status);
 }
 
 static int	check_arg(t_list *tmp)

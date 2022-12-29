@@ -31,7 +31,7 @@ int	builtin_cd(t_list *token_list, int fd)
 	}
 	free(home);
 	(void) fd;
-	return (set_exit_status(0) == 0);
+	return (g_var->exit_status);
 }
 
 static char	*get_home(void)

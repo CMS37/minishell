@@ -41,6 +41,7 @@ t_bool	execute_builtin(t_list *token_list)
 		return (TRUE);
 	token = (t_token *) token_list->content;
 	i = 0;
+	set_exit_status(0);
 	while (g_builtin_list[i] != NULL)
 	{
 		if (ft_strcmp(token->value, g_builtin_list[i]) == 0)
