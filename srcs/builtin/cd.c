@@ -61,7 +61,7 @@ static t_bool	free_paths(char *home, char *path)
 static int	chdir_to_home(char *home)
 {
 	if ((home == NULL || chdir(home) != 0) && free_paths(home, NULL))
-		return(print_err(errno, "cd", NULL, strerror(errno)));
+		return (print_err(errno, "cd", NULL, strerror(errno)));
 	free_paths(home, NULL);
 	return (g_var->exit_status);
 }

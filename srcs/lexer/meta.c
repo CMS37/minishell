@@ -7,6 +7,7 @@ t_token	*init_meta_token(const char **line);
 t_bool	handle_meta(const char **line)
 {
 	t_token *const	meta = init_meta_token(line);
+
 	ft_lstadd_back(&g_var->token_list, ft_lstnew(meta));
 	return (TRUE);
 }

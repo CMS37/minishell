@@ -18,7 +18,7 @@ t_bool	init_signal(void)
 
 void	signal_handler(int sig)
 {
-	if (sig == SIGINT) // Ctrl + C
+	if (sig == SIGINT)
 	{
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_on_new_line();

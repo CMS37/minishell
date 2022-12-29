@@ -41,8 +41,6 @@ static t_bool	here_doc(t_list *token_list)
 	char		*line;
 	char *const	file_name = generate_file_name();
 
-	free(((t_token *) token_list->content)->value);
-	((t_token *) token_list->content)->value = ft_strdup("<");
 	fd = open_file(file_name, HERE_DOC);
 	while (TRUE)
 	{

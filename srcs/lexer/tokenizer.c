@@ -29,9 +29,9 @@ t_bool	tokenize(const char *line)
 t_bool	is_not_word(int c)
 {
 	return (
-		is_ifs(c) ||
-		is_meta(c) ||
-		is_quote(c) ||
+		is_ifs(c) || \
+		is_meta(c) || \
+		is_quote(c) || \
 		is_expand(c)
 	);
 }

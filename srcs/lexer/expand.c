@@ -44,7 +44,7 @@ static size_t	get_key_size(const char *line)
 	return (ret);
 }
 
-static char		*get_value(const char *key)
+static char	*get_value(const char *key)
 {
 	t_list	*tmp;
 	size_t	key_len;
@@ -53,7 +53,7 @@ static char		*get_value(const char *key)
 	key_len = ft_strlen(key);
 	while (tmp)
 	{
-		if (ft_strncmp(key, tmp->content, key_len) == 0 &&
+		if (ft_strncmp(key, tmp->content, key_len) == 0 && \
 			((char *)tmp->content)[key_len] == '=')
 			return (tmp->content + key_len + 1);
 		tmp = tmp->next;

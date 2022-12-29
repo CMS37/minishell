@@ -8,7 +8,7 @@ const static char	*g_builtin_list[] = {
 };
 
 int static (*const	g_builtin_func[])(t_list *token_list, int fd) = {
-	builtin_cd, builtin_echo, builtin_env, builtin_exit, 
+	builtin_cd, builtin_echo, builtin_env, builtin_exit,
 	builtin_export, builtin_pwd, builtin_unset, NULL
 };
 
