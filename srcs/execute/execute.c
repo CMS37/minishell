@@ -37,7 +37,7 @@ static t_bool	child_process(t_list *cmd)
 		set_fd_in_pipe(cmd, fd, TRUE);
 		if (set_fd_in_redir(cmd->content) == FALSE)
 			exit(g_var->exit_status);
-		if (is_builtin(cmd->content) && execute_builtin(cmd->content) == 0)
+		if (is_builtin(cmd->content) && 0 <= execute_builtin(cmd->content))
 			exit(g_var->exit_status);
 		else
 			execute_extern(cmd->content);
