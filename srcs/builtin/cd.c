@@ -2,35 +2,29 @@
 #include <errno.h>
 #include <string.h>
 
-int			builtin_cd(t_list *token_list, int fd);
-static char	*get_home(void);
+int				builtin_cd(t_list *token_list, int fd);
+static char		*get_home(void);
+static t_bool	free_paths(char *home, char *path);
 
 int	builtin_cd(t_list *token_list, int fd)
 {
 	char	*home;
 	char	*path;
+	t_token	*arg;
 
-	home = get_home();
-	path = NULL;
-	if (token_list->next == NULL)
-	{
-		if (home == NULL || chdir(home) != 0)
-			print_err(errno, "cd", NULL, strerror(errno));
-	}
-	else
-	{
-		if (((t_token *)token_list->next->content)->value[0] == '~')
-			path = ft_strjoin(home,
-					((t_token *)token_list->next->content)->value + 1);
-		else
-			path = ft_strdup(((t_token *)token_list->next->content)->value);
-		if (chdir(path) != 0)
-			print_err(errno, "cd",
-				((t_token *)token_list->next->content)->value, strerror(errno));
-		free(path);
-	}
-	free(home);
 	(void) fd;
+	home = get_home();
+	if (token_list->next == NULL &&
+		(home == NULL || chdir(home) != 0) &&
+		free_paths(home, NULL))
+		return(print_err(errno, "cd", NULL, strerror(errno)));
+	arg = token_list->next->content;
+	if (arg->value[0] == '~')
+		path = ft_strjoin(home, arg->value + 1);
+	else
+		path = ft_strdup(arg->value);
+	if (chdir(path) != 0 && free_paths(home, path))
+		return (print_err(errno, "cd", arg->value, strerror(errno)));
 	return (g_var->exit_status);
 }
 
@@ -53,4 +47,13 @@ static char	*get_home(void)
 	}
 	res = NULL;
 	return (res);
+}
+
+static t_bool	free_paths(char *home, char *path)
+{
+	if (home)
+		free(home);
+	if (path)
+		free(path);
+	return (TRUE);
 }
