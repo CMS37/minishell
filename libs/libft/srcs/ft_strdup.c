@@ -7,9 +7,7 @@ char	*ft_strdup(const char *str)
 	size_t	len;
 
 	len = ft_strlen(str);
-	res = (char *) ft_calloc(len + 1, sizeof(char), "");
-	if (!res)
-		return (0);
+	res = (char *) ft_calloc(sizeof(char), len + 1, "");
 	ft_strlcpy(res, str, len + 1);
 	return (res);
 }

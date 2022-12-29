@@ -30,7 +30,7 @@ t_bool	create_cmd_list(void)
 
 t_token	*clone_token(t_token *token)
 {
-	t_token *const	ret = (t_token *) ft_calloc(sizeof(t_token), 1, "");
+	t_token *const	ret = ft_calloc(sizeof(t_token), 1, "");
 
 	ret->type = token->type;
 	ret->value = ft_strdup(token->value);

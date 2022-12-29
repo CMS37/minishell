@@ -9,6 +9,7 @@
 
 void			execute_extern(t_list *token_list);
 char			*find_path(const char *cmd);
+static char		*find_relative_or_absolute_path(const char *cmd);
 static t_bool	free_paths(char **paths);
 static char		**envp_list_to_arr(void);
 
@@ -40,6 +41,8 @@ char	*find_path(const char *cmd)
 	t_list	*tmp;
 	size_t	i;
 
+	if (*cmd == '/' || *cmd == '.')
+		return(find_relative_or_absolute_path(cmd));
 	tmp = g_var->env_list;
 	while (ft_strnstr(tmp->content, "PATH=", 5) == NULL)
 		tmp = tmp->next;
@@ -58,6 +61,19 @@ char	*find_path(const char *cmd)
 	}
 	free_paths(paths);
 	return (NULL);
+}
+
+static char	*find_relative_or_absolute_path(const char *cmd)
+{
+	char	*ret;
+
+	if (*cmd == '/' && access(cmd, X_OK) == 0)
+		return (ft_strdup(cmd));
+	ret = getcwd(NULL, 0);
+	if (ret == NULL)
+		return (NULL);
+	ft_strcat(&ret, cmd + 1);
+	return (ret);
 }
 
 static t_bool	free_paths(char **paths)
@@ -87,5 +103,6 @@ static char	**envp_list_to_arr(void)
 		*ret_tmp++ = ft_strdup(env_list_tmp->content);
 		env_list_tmp = env_list_tmp->next;
 	}
+	*ret_tmp = NULL;
 	return (ret);
 }

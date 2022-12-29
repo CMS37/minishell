@@ -27,7 +27,7 @@ t_bool	is_expand(int c)
 static char	*get_key(const char **line)
 {
 	const int	key_size = get_key_size(*line + 1);
-	char *const	ret = ft_calloc(key_size + 1, sizeof(char), "");
+	char *const	ret = ft_calloc(sizeof(char), key_size + 1, "");
 
 	ft_strlcpy(ret, *line + 1, key_size + 1);
 	*line += key_size;

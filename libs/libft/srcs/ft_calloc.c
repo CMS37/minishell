@@ -9,7 +9,7 @@ void	*ft_calloc(size_t sz_, size_t count, const char *error_msg)
 {
 	void	*res;
 
-	if (is_invalid_input(count, sz_))
+	if (is_invalid_input(sz_, count))
 		ft_exit_with_error(error_msg, errno);
 	res = malloc(sz_ * count);
 	if (!res)
