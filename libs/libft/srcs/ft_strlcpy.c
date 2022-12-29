@@ -6,7 +6,7 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t sz_)
 	size_t	i;
 
 	src_len = ft_strlen(src);
-	if (!sz_)
+	if (!dest || !src || !sz_)
 		return (src_len);
 	i = 0;
 	while (src[i] && i < (sz_ - 1))

@@ -49,7 +49,7 @@ static t_bool	here_doc(t_list *token_list)
 			return (FALSE);
 		if (!ft_strcmp(line, ((t_token *) token_list->next->content)->value))
 			break ;
-		ft_putstr_fd(line, fd);
+		ft_putendl_fd(line, fd);
 		free(line);
 	}
 	free(line);

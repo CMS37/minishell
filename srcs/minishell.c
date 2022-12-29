@@ -6,7 +6,6 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-// TODO : here_doc unlink
 /*
 -할일(버그)목록 찾는중- (처리된거지우기)
 input> echo 2 2 2 2  output > "2222" 로 나오는거 토큰확인필요! echo시 공백여부..(bash="2 2 2 2") 
@@ -39,7 +38,6 @@ int	main(int argc, char **argv, char **envp)
 		add_history(line);
 		execute_cmd_line(line);
 		free(line);
-		printf("ERR_CODE : %d\n", g_var->exit_status); //test
 	}
 	return (0);
 }
@@ -64,6 +62,8 @@ static t_bool	execute_cmd_line(const char *line)
 
 	if (parsing())
 		execute();
+
+	printf("EXIT_STATUS: %d\n", g_var->exit_status); //test
 	return (TRUE);
 }
 
