@@ -21,7 +21,7 @@ static t_bool	init_minishell(char **envp);
 static t_bool	execute_cmd_line(const char *line);
 void			exit_minishell(void);
 
-static t_bool	print_token_list(void);
+// static t_bool	print_token_list(void);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -58,12 +58,12 @@ static t_bool	execute_cmd_line(const char *line)
 	if (lexer(line) == FALSE || !g_var->token_list)
 		return (FALSE);
 
-	print_token_list();
+	// print_token_list();
 
 	if (parsing())
 		execute();
 
-	printf("EXIT_STATUS: %d\n", g_var->exit_status); //test
+	// printf("EXIT_STATUS: %d\n", g_var->exit_status); //test
 	return (TRUE);
 }
 
@@ -75,34 +75,34 @@ void	exit_minishell(void)
 	exit(0);
 }
 
-static t_bool	print_token_list(void)
-{
-	t_list	*cur_list;
-	t_token	*cur_token;
+// static t_bool	print_token_list(void)
+// {
+// 	t_list	*cur_list;
+// 	t_token	*cur_token;
 
-	cur_list = g_var->token_list;
-	while (cur_list != NULL)
-	{
-		cur_token = (t_token *) cur_list->content;
-		switch (cur_token->type) {
-			case T_NULL:
-				printf("Token_type: T_NULL, ");
-				break ;
-			case T_WORD:
-				printf("Token_type: T_WORD, ");
-				break ;
-			case T_PIPE:
-				printf("Token_type: T_PIPE, ");
-				break ;
-			case T_REDIRECT:
-				printf("Token_type: T_REDIRECT, ");
-				break ;
-			default:
-				printf("Token_type: Unknown, ");
-				break ;
-		}
-		printf("Token_value: %s\n", cur_token->value);
-		cur_list = cur_list->next;
-	}
-	return (TRUE);
-}
+// 	cur_list = g_var->token_list;
+// 	while (cur_list != NULL)
+// 	{
+// 		cur_token = (t_token *) cur_list->content;
+// 		switch (cur_token->type) {
+// 			case T_NULL:
+// 				printf("Token_type: T_NULL, ");
+// 				break ;
+// 			case T_WORD:
+// 				printf("Token_type: T_WORD, ");
+// 				break ;
+// 			case T_PIPE:
+// 				printf("Token_type: T_PIPE, ");
+// 				break ;
+// 			case T_REDIRECT:
+// 				printf("Token_type: T_REDIRECT, ");
+// 				break ;
+// 			default:
+// 				printf("Token_type: Unknown, ");
+// 				break ;
+// 		}
+// 		printf("Token_value: %s\n", cur_token->value);
+// 		cur_list = cur_list->next;
+// 	}
+// 	return (TRUE);
+// }
