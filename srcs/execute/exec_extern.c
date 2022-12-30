@@ -20,11 +20,13 @@ void	execute_extern(t_list *token_list)
 	char *const		path = find_path(cmd[0]);
 	DIR				*dir;
 
-	if (path == NULL || access(path, F_OK) != 0)
+	if (path == NULL)
 		exit(print_err(127, cmd[0], NULL, CMD_ERR));
+	if (access(path, F_OK) != 0)
+		exit(print_err(127, path, NULL, "No such file or directory"));
 	dir = opendir(path);
 	if (dir != NULL && closedir(dir) == 0)
-		exit(print_err(126, cmd[0], NULL, "is a directory"));
+		exit(print_err(126, path, NULL, "is a directory"));
 	if (access(path, X_OK) != 0)
 		exit(print_err(126, cmd[0], NULL, "permission denied"));
 	set_exit_status(0);
@@ -56,7 +58,7 @@ static char	*find_path(const char *cmd)
 	t_list	*tmp;
 	size_t	i;
 
-	if (*cmd == '/' || *cmd == '~' || *cmd == '.')
+	if (ft_strchr(cmd, '/') != NULL)
 		return (convert_relative_path_to_absolute_path(cmd));
 	tmp = g_var->env_list;
 	while (ft_strnstr(tmp->content, "PATH=", 5) == NULL)
