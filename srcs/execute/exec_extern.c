@@ -51,7 +51,7 @@ static char	*find_path(const char *cmd)
 	size_t	i;
 
 	if (*cmd == '/' || *cmd == '~' || *cmd == '.')
-		return(get_absolute_path(cmd));
+		return (get_absolute_path(cmd));
 	tmp = g_var->env_list;
 	while (ft_strnstr(tmp->content, "PATH=", 5) == NULL)
 		tmp = tmp->next;

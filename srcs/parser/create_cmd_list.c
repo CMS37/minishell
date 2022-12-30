@@ -1,9 +1,9 @@
 #include "../../libs/libft/incs/libft.h"
 #include "../../incs/parser.h"
 #include "../../incs/structs.h"
+#include "../../incs/lexer.h"
 
 t_bool	create_cmd_list(void);
-t_token	*clone_token(t_token *token);
 
 t_bool	create_cmd_list(void)
 {
@@ -26,13 +26,4 @@ t_bool	create_cmd_list(void)
 	if (cmd != NULL)
 		ft_lstadd_back(&g_var->cmd_list, ft_lstnew(cmd));
 	return (TRUE);
-}
-
-t_token	*clone_token(t_token *token)
-{
-	t_token *const	ret = ft_calloc(sizeof(t_token), 1, "");
-
-	ret->type = token->type;
-	ret->value = ft_strdup(token->value);
-	return (ret);
 }

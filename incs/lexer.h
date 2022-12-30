@@ -25,6 +25,7 @@ t_bool	is_quote(int c);
 
 // token.c
 t_token	*init_token(void);
+t_token	*clone_token(t_token *token);
 void	del_token(void *content);
 
 // tokenizer.c

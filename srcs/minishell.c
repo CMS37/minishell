@@ -8,18 +8,19 @@
 
 /*
 -할일(버그)목록 찾는중- (처리된거지우기)
-input> echo 2 2 2 2  output > "2222" 로 나오는거 토큰확인필요! echo시 공백여부..(bash="2 2 2 2") 
-		echo $? > 이거토큰도 환경변수로  echo "$?" > 0  echo '$?' > $? 이거두개는 토큰으로 잘넘어옴
-input> "/bin/ls"  output> CMD_ERR 바로 절대경로오는경우도 실행여부
-./minishell 입력하면 execute_extern함수에서 path가 (null)되서 커맨드에러 ->따로 처리함수작성?
-env 환경변수중 SHLVL 깊이에따라 증가여부
-export만 입력시 한줄마다 declart -x 붙어서 출력. 근데 정렬방식이 env하고 다른듯?..
-input> cat 하고 입력상태에서 ctrl-\하면 Quit: 3  나오는거 이거 구현여부?...
+export 정렬
+here_doc expand
+last executed command ($_) update
+
+syntax
+leak check
+pdf 다시 정독
+minishell.png 다시 봐주시고
 */
 
 static t_bool	init_minishell(char **envp);
 static t_bool	execute_cmd_line(const char *line);
-void			exit_minishell(void);
+static void		exit_minishell(void);
 
 // static t_bool	print_token_list(void);
 

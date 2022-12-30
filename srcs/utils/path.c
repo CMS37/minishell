@@ -26,9 +26,12 @@ char	*convert_relative_path_to_absolute_path(const char *path)
 	if (*path == '/')
 		return (ft_strdup(path));
 	if (*path == '~')
+	{
 		ret = home_dir();
-	else
-		ret = getcwd(NULL, 0);
+		ft_strcat(&ret, path + 1);
+		return (ret);
+	}
+	ret = getcwd(NULL, 0);
 	if (ret == NULL)
 		return (NULL);
 	ft_strcat(&ret, "/");

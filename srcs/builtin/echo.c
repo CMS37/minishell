@@ -4,7 +4,7 @@ int	builtin_echo(t_list *token_list, int fd);
 
 int	builtin_echo(t_list *token_list, int fd)
 {
-	t_token *token;
+	t_token	*token;
 	t_bool	n_flag;
 
 	token_list = token_list->next;

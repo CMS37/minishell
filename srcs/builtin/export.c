@@ -2,14 +2,15 @@
 #include "../../incs/builtin.h"
 #include "../../incs/structs.h"
 #include "../../incs/utils.h"
+#include "../../incs/lexer.h"
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <errno.h>
 
 int				builtin_export(t_list *token_list, int fd);
-static t_list	*get_env(const char *key);
-static t_bool	replace_value(t_list *env, const char *envp);
+t_list			*get_env(const char *key);
+t_bool			replace_value(t_list *env, const char *envp);
 static t_bool	key_is_not_valid(const char *key);
 static int		printenv(int fd);
 
@@ -17,22 +18,31 @@ int	builtin_export(t_list *token_list, int fd)
 {
 	t_list	*env;
 	t_token	*token;
+	t_list	*last_executed;
 
 	if (ft_lstsize(token_list) == 1)
 		return (printenv(fd));
-	token = token_list->next->content;
-	if (key_is_not_valid(token->value))
-		return (print_err(EINVAL, "export", token->value, strerror(EINVAL)));
-	env = get_env(token->value);
-	if (env == NULL)
-		ft_lstadd_back(&g_var->env_list,
-			ft_lstnew(ft_strdup(token->value)));
-	else
-		replace_value(env, token->value);
+	token_list = token_list->next;
+	while (token_list)
+	{
+		last_executed = ft_lstlast(g_var->env_list);
+		token = token_list->content;
+		if (key_is_not_valid(token->value))
+			return (print_err(1, "export", token->value, IDENTIFIER_ERR));
+		env = get_env(token->value);
+		if (env == NULL)
+		{
+			ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strdup(token->value)));
+			ft_swap(&last_executed->content, &last_executed->next->content);
+		}
+		else
+			replace_value(env, token->value);
+		token_list = token_list->next;
+	}
 	return (g_var->exit_status);
 }
 
-static t_list	*get_env(const char *key)
+t_list	*get_env(const char *key)
 {
 	t_list	*ret;
 	size_t	key_len;
@@ -50,7 +60,7 @@ static t_list	*get_env(const char *key)
 	return (NULL);
 }
 
-static t_bool	replace_value(t_list *env, const char *envp)
+t_bool	replace_value(t_list *env, const char *envp)
 {
 	if (ft_strchr(envp, '=') == NULL)
 		return (TRUE);
@@ -77,7 +87,7 @@ static t_bool	key_is_not_valid(const char *key)
 	return (FALSE);
 }
 
-static int		printenv(int fd)
+static int	printenv(int fd)
 {
 	t_list	*env;
 	char	*c;

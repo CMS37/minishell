@@ -5,13 +5,13 @@
 #include "subsystem.h"
 
 // cd.c
-int	builtin_cd(t_list *token_list, int fd);
+int		builtin_cd(t_list *token_list, int fd);
 
 // cd_util.c
 void	set_pwd(int fd);
 
 // echo.c
-int	builtin_echo(t_list *token_list, int fd);
+int		builtin_echo(t_list *token_list, int fd);
 
 // env.c
 t_bool	init_env_list(char **envp);
@@ -23,6 +23,8 @@ int		set_exit_status(int status);
 
 // export.c
 int		builtin_export(t_list *token_list, int fd);
+t_list	*get_env(const char *key);
+t_bool	replace_value(t_list *env, const char *envp);
 
 // pwd.c
 int		builtin_pwd(t_list *token_list, int fd);
