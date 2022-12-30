@@ -7,6 +7,11 @@ int	builtin_echo(t_list *token_list, int fd)
 	t_token	*token;
 	t_bool	n_flag;
 
+	if (token_list->next == NULL)
+	{
+		ft_putstr_fd("\n", fd);
+		return (g_var->exit_status);
+	}
 	token_list = token_list->next;
 	token = token_list->content;
 	n_flag = (ft_strnstr(token->value, "-n", 2) != NULL);

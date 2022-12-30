@@ -10,9 +10,14 @@ static char		*get_value(const char *key);
 t_bool	handle_expand(t_token *token, const char **line)
 {
 	char *const	key = get_key(line);
+	char	*exit_status;
 
 	if (key[0] == '?')
-		ft_strcat(&token->value, ft_itoa(g_var->exit_status));
+	{
+		exit_status = ft_itoa(g_var->exit_status);
+		ft_strcat(&token->value, exit_status);
+		free(exit_status);
+	}
 	else
 		ft_strcat(&token->value, get_value(key));
 	free(key);
