@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 int				execute(void);
+t_bool			set_underscore_env(void);
 static t_bool	child_process(t_list *cmd);
 static t_bool	set_fd_in_pipe(t_list *cmd, int *fd, t_bool is_child);
 
@@ -17,8 +18,29 @@ int	execute(void)
 	if (g_var->cmd_list->next == NULL && is_builtin(g_var->cmd_list->content))
 		return (execute_builtin(g_var->cmd_list->content));
 	child_process(g_var->cmd_list);
+	set_underscore_env();
 	g_var->exit_status >>= 8;
 	return (g_var->exit_status);
+}
+
+t_bool	set_underscore_env(void)
+{
+	t_list *const	env = get_env("_=");
+	t_token			*last_token;
+	char			*arg;
+
+	last_token = ft_lstlast(g_var->cmd_list->content)->content;
+	arg = ft_strdup("_=");
+	if (1 < ft_lstsize(g_var->cmd_list))
+		ft_strcat(&arg, "");
+	else
+		ft_strcat(&arg, last_token->value);
+	if (env == NULL)
+		ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strdup(arg)));
+	else
+		replace_value(env, arg);
+	free(arg);
+	return (TRUE);
 }
 
 static t_bool	child_process(t_list *cmd)

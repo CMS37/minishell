@@ -6,6 +6,7 @@
 
 // execute.c
 int		execute(void);
+t_bool	set_underscore_env(void);
 
 // execute_builtin.c
 t_bool	is_builtin(t_list *token_list);
