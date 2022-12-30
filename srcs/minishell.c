@@ -10,7 +10,6 @@
 -할일(버그)목록 찾는중- (처리된거지우기)
 export 정렬
 here_doc expand
-last executed command ($_) update
 
 변수와 환경변수의 차이를 이해하고 구현하기.
 
