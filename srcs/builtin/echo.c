@@ -16,6 +16,8 @@ int	builtin_echo(t_list *token_list, int fd)
 	{
 		token = token_list->content;
 		ft_putstr_fd(token->value, fd);
+		if (token_list->next != NULL)
+			ft_putstr_fd(" ", fd);
 		token_list = token_list->next;
 	}
 	if (n_flag == FALSE)

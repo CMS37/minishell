@@ -52,6 +52,8 @@ static t_list	*get_env(const char *key)
 
 static t_bool	replace_value(t_list *env, const char *envp)
 {
+	if (ft_strchr(envp, '=') == NULL)
+		return (TRUE);
 	if (env->content != NULL)
 		free(env->content);
 	env->content = ft_strdup(envp);
