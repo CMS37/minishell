@@ -16,12 +16,7 @@ syntax
 
 leak check
 
-$PATH, $HOME 에러메세지 다른거 확인
 cd "" -> home으로 안가고 제자리이동, OLDPWD도 변경
-
-처리댄거
-- $? 누수발생
-- echo 만 입력 > segmentation fault
 
 pdf 다시 정독
 minishell.png 다시 봐주시고
