@@ -13,7 +13,15 @@ here_doc expand
 last executed command ($_) update
 
 syntax
+
 leak check
+
+$PATH, $HOME 에러메세지 다른거 확인
+
+처리댄거
+- $? 누수발생
+- echo 만 입력 > segmentation fault
+
 pdf 다시 정독
 minishell.png 다시 봐주시고
 */

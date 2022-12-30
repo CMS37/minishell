@@ -110,9 +110,3 @@ static int	printenv(int fd)
 	}
 	return (g_var->exit_status);
 }
-
-/*
-export수정하실때 exit코드 참고하시라구...
-exit_status("export", key?, IDENTIFIER_ERR);
-(export 첫 인자와 =을 띄어 쓴 경우 || export나 unset 인자에 숫자가 포함된 경우) = IDENTIFIER_ERR
-*/
