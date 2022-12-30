@@ -9,7 +9,7 @@ int				execute(void);
 static t_bool	child_process(t_list *cmd);
 static t_bool	set_fd_in_pipe(t_list *cmd, int *fd, t_bool is_child);
 
-int	execute(void)
+int	 execute(void)
 {
 	if (g_var->cmd_list == NULL)
 		return (0);

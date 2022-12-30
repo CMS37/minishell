@@ -63,6 +63,8 @@ static t_bool	execute_cmd_line(const char *line)
 	if (parsing())
 		execute();
 
+	dup2(g_var->old_fd[0], STDIN_FILENO);
+	dup2(g_var->old_fd[1], STDOUT_FILENO);
 	// printf("EXIT_STATUS: %d\n", g_var->exit_status); //test
 	return (TRUE);
 }
