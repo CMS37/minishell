@@ -16,8 +16,6 @@ syntax
 
 leak check
 
-cd "" -> home으로 안가고 제자리이동, OLDPWD도 변경
-
 pdf 다시 정독
 minishell.png 다시 봐주시고
 */
