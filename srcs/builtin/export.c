@@ -50,7 +50,7 @@ t_list	*get_env(const char *key)
 	ret = g_var->env_list;
 	key_len = ft_strlen(key);
 	if (ft_strchr(key, '=') != NULL)
-		key_len = ft_strchr(key, '=') - key;
+		key_len = ft_strchr(key, '=') - key + 1;
 	while (ret)
 	{
 		if (ft_strncmp(ret->content, key, key_len) == 0)
