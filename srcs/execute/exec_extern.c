@@ -7,20 +7,26 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <dirent.h>
 
 void			execute_extern(t_list *token_list);
 static char		**list_to_arr(t_list *token_list);
 static char		*find_path(const char *cmd);
-static char		*get_absolute_path(const char *cmd);	
 static t_bool	free_paths(char **paths);
 
 void	execute_extern(t_list *token_list)
 {
 	char **const	cmd = list_to_arr(token_list);
 	char *const		path = find_path(cmd[0]);
+	DIR				*dir;
 
-	if (path == NULL)
+	if (path == NULL || access(path, F_OK) != 0)
 		exit(print_err(127, cmd[0], NULL, CMD_ERR));
+	dir = opendir(path);
+	if (dir != NULL && closedir(dir) == 0)
+		exit(print_err(126, cmd[0], NULL, "is a directory"));
+	if (access(path, X_OK) != 0)
+		exit(print_err(126, cmd[0], NULL, "permission denied"));
 	set_exit_status(0);
 	if (execve(path, cmd, ft_getenv()) == -1)
 		exit(print_err(errno, cmd[0], NULL, strerror(errno)));
@@ -51,7 +57,7 @@ static char	*find_path(const char *cmd)
 	size_t	i;
 
 	if (*cmd == '/' || *cmd == '~' || *cmd == '.')
-		return (get_absolute_path(cmd));
+		return (convert_relative_path_to_absolute_path(cmd));
 	tmp = g_var->env_list;
 	while (ft_strnstr(tmp->content, "PATH=", 5) == NULL)
 		tmp = tmp->next;
@@ -63,25 +69,12 @@ static char	*find_path(const char *cmd)
 	{
 		ret = ft_strjoin(paths[i], "/");
 		ft_strcat(&ret, cmd);
-		if (access(ret, X_OK) == 0 && free_paths(paths))
+		if (access(ret, F_OK) == 0 && free_paths(paths))
 			return (ret);
 		free(ret);
 		i++;
 	}
 	free_paths(paths);
-	return (NULL);
-}
-
-static char	*get_absolute_path(const char *cmd)
-{
-	char	*ret;
-
-	ret = convert_relative_path_to_absolute_path(cmd);
-	if (ret == NULL)
-		return (NULL);
-	if (access(ret, X_OK) == 0)
-		return (ret);
-	free(ret);
 	return (NULL);
 }
 
