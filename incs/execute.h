@@ -6,7 +6,6 @@
 
 // execute.c
 int		execute(void);
-char	*find_path(const char *cmd);
 
 // execute_builtin.c
 t_bool	is_builtin(t_list *token_list);
@@ -14,9 +13,6 @@ t_bool	execute_builtin(t_list *token_list);
 
 // execute_extern.c
 void	execute_extern(t_list *token_list);
-
-// list_to_arr.c
-char	**list_to_arr(t_list *token_list);
 
 // here_docs.c
 t_bool	here_docs(void);

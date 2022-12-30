@@ -1,6 +1,7 @@
 #include "../../libs/libft/incs/libft.h"
 #include "../../incs/lexer.h"
 #include "../../incs/subsystem.h"
+#include "../../incs/utils.h"
 #include <errno.h>
 
 t_bool			lexer(const char *line);

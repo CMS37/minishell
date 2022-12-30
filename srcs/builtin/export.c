@@ -1,6 +1,7 @@
 #include "../../libs/libft/incs/libft.h"
 #include "../../incs/builtin.h"
 #include "../../incs/structs.h"
+#include "../../incs/utils.h"
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>

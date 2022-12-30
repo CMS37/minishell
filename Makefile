@@ -34,7 +34,6 @@ SRCS = 	minishell.c \
 		execute/exec_builtin.c \
 		execute/exec_extern.c \
 		execute/here_docs.c \
-		execute/list_to_arr.c \
 		execute/redirection.c \
 		lexer/lexer.c \
 		lexer/expand.c \
@@ -46,10 +45,12 @@ SRCS = 	minishell.c \
 		parser/parser.c \
 		parser/create_cmd_list.c \
 		parser/syntax_err_occurred.c \
-		subsystem/signal.c \
-		subsystem/print_err.c \
 		subsystem/subsystem.c \
-		subsystem/termios.c
+		subsystem/signal.c \
+		subsystem/termios.c \
+		utils/ft_getenv.c \
+		utils/path.c \
+		utils/print_err.c
 		
 SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
@@ -66,6 +67,7 @@ ${OBJS_DIR}:
 	@mkdir -p ${OBJS_DIR}/lexer
 	@mkdir -p ${OBJS_DIR}/parser
 	@mkdir -p ${OBJS_DIR}/subsystem
+	@mkdir -p ${OBJS_DIR}/utils
 
 
 ${LIBFT}:

@@ -2,16 +2,17 @@
 #include "../../incs/builtin.h"
 #include "../../incs/execute.h"
 #include "../../incs/subsystem.h"
+#include "../../incs/utils.h"
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 
 void			execute_extern(t_list *token_list);
-char			*find_path(const char *cmd);
-static char		*find_relative_or_absolute_path(const char *cmd);
+static char		**list_to_arr(t_list *token_list);
+static char		*find_path(const char *cmd);
+static char		*get_absolute_path(const char *cmd);	
 static t_bool	free_paths(char **paths);
-static char		**envp_list_to_arr(void);
 
 void	execute_extern(t_list *token_list)
 {
@@ -19,30 +20,38 @@ void	execute_extern(t_list *token_list)
 	char *const		path = find_path(cmd[0]);
 
 	if (path == NULL)
-	{
-		if (ft_strnstr(cmd[0], "$?", 2) != 0)
-			print_err(127, ft_itoa(g_var->exit_status), NULL, CMD_ERR);
-		else
-			print_err(127, cmd[0], NULL, CMD_ERR);
-		exit(set_exit_status(127));
-	}
+		exit(print_err(127, cmd[0], NULL, CMD_ERR));
 	set_exit_status(0);
-	if (execve(path, cmd, envp_list_to_arr()) == -1)
-	{
-		print_err(errno, cmd[0], NULL, strerror(errno));
-		exit(set_exit_status(errno));
-	}
+	if (execve(path, cmd, ft_getenv()) == -1)
+		exit(print_err(errno, cmd[0], NULL, strerror(errno)));
+	ft_putendl_fd("This is easter egg!!", 2);
 }
 
-char	*find_path(const char *cmd)
+static char	**list_to_arr(t_list *token_list)
+{
+	const size_t	sz = ft_lstsize(token_list);
+	char **const	ret = ft_calloc(sizeof(char *), sz + 1, "");
+	size_t			i;
+
+	i = 0;
+	while (i < sz)
+	{
+		ret[i] = ft_strdup(((t_token *) token_list->content)->value);
+		token_list = token_list->next;
+		i++;
+	}
+	return (ret);
+}
+
+static char	*find_path(const char *cmd)
 {
 	char	*ret;
 	char	**paths;
 	t_list	*tmp;
 	size_t	i;
 
-	if (*cmd == '/' || *cmd == '.')
-		return(find_relative_or_absolute_path(cmd));
+	if (*cmd == '/' || *cmd == '~' || *cmd == '.')
+		return(get_absolute_path(cmd));
 	tmp = g_var->env_list;
 	while (ft_strnstr(tmp->content, "PATH=", 5) == NULL)
 		tmp = tmp->next;
@@ -63,18 +72,17 @@ char	*find_path(const char *cmd)
 	return (NULL);
 }
 
-static char	*find_relative_or_absolute_path(const char *cmd)
+static char	*get_absolute_path(const char *cmd)
 {
 	char	*ret;
 
-	if (*cmd == '/' && access(cmd, X_OK) == 0)
-		return (ft_strdup(cmd));
-	ret = getcwd(NULL, 0);
+	ret = convert_relative_path_to_absolute_path(cmd);
 	if (ret == NULL)
 		return (NULL);
-	ft_strcat(&ret, "/");
-	ft_strcat(&ret, cmd);
-	return (ret);
+	if (access(ret, X_OK) == 0)
+		return (ret);
+	free(ret);
+	return (NULL);
 }
 
 static t_bool	free_paths(char **paths)
@@ -88,22 +96,4 @@ static t_bool	free_paths(char **paths)
 		free(*tmp++);
 	free(paths);
 	return (TRUE);
-}
-
-static char	**envp_list_to_arr(void)
-{
-	char **const	ret = (char **) ft_calloc(sizeof(char *),
-			ft_lstsize(g_var->env_list) + 1, "");
-	char			**ret_tmp;
-	t_list			*env_list_tmp;
-
-	ret_tmp = ret;
-	env_list_tmp = g_var->env_list;
-	while (env_list_tmp)
-	{
-		*ret_tmp++ = ft_strdup(env_list_tmp->content);
-		env_list_tmp = env_list_tmp->next;
-	}
-	*ret_tmp = NULL;
-	return (ret);
 }

@@ -2,6 +2,7 @@
 #include "../../incs/builtin.h"
 #include "../../incs/structs.h"
 #include "../../incs/subsystem.h"
+#include "../../incs/utils.h"
 #include <unistd.h>
 #include <limits.h>
 
