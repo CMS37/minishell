@@ -17,6 +17,7 @@ syntax
 leak check
 
 $PATH, $HOME 에러메세지 다른거 확인
+cd "" -> home으로 안가고 제자리이동, OLDPWD도 변경
 
 처리댄거
 - $? 누수발생
