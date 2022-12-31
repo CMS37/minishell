@@ -8,15 +8,16 @@
 
 /*
 -할일(버그)목록 찾는중- (처리된거지우기)
+
 export 정렬
 here_doc expand
-
+here_doc ctrl + d
 변수와 환경변수의 차이를 이해하고 구현하기.
 
+
+
 syntax
-
 leak check
-
 pdf 다시 정독
 minishell.png 다시 봐주시고
 */
