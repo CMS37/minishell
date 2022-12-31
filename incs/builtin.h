@@ -14,8 +14,8 @@ void	set_pwd(int fd);
 int		builtin_echo(t_list *token_list, int fd);
 
 // env.c
-t_bool	init_env_list(char **envp);
 int		builtin_env(t_list *token_list, int fd);
+t_bool	init_env_list(int argc, char **argv, char **envp);
 
 // exit.c
 int		builtin_exit(t_list *token_list, int fd);

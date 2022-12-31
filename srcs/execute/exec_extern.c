@@ -17,13 +17,19 @@ static t_bool	free_paths(char **paths);
 void	execute_extern(t_list *token_list)
 {
 	char **const	cmd = list_to_arr(token_list);
-	char *const		path = find_path(cmd[0]);
+	char 			*path;
 	DIR				*dir;
 
+	if (convert_to_absolute_path(&cmd[0]) == FALSE)
+		exit(print_err(errno, cmd[0], NULL, strerror(errno)));
+	if (*cmd[0] == '/')
+		path = ft_strdup(cmd[0]);
+	else
+		path = find_path(cmd[0]);
 	if (path == NULL)
 		exit(print_err(127, cmd[0], NULL, CMD_ERR));
 	if (access(path, F_OK) != 0)
-		exit(print_err(127, path, NULL, "No such file or directory"));
+		exit(print_err(127, cmd[0], NULL, "No such file or directory"));
 	dir = opendir(path);
 	if (dir != NULL && closedir(dir) == 0)
 		exit(print_err(126, path, NULL, "is a directory"));
@@ -58,8 +64,6 @@ static char	*find_path(const char *cmd)
 	t_list	*tmp;
 	size_t	i;
 
-	if (ft_strchr(cmd, '/') != NULL)
-		return (convert_relative_path_to_absolute_path(cmd));
 	tmp = g_var->env_list;
 	while (ft_strnstr(tmp->content, "PATH=", 5) == NULL)
 		tmp = tmp->next;

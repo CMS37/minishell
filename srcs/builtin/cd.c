@@ -5,7 +5,7 @@
 #include <string.h>
 
 int				builtin_cd(t_list *token_list, int fd);
-static t_bool	chdir_to_home(char *home, char *oldpwd);
+static int		chdir_to_home(char *oldpwd);
 static t_bool	set_path_env(char *oldpwd);
 
 int	builtin_cd(t_list *token_list, int fd)
@@ -17,38 +17,41 @@ int	builtin_cd(t_list *token_list, int fd)
 	(void) fd;
 	if (oldpwd == NULL)
 		return (print_err(errno, "cd", NULL, strerror(errno)));
-	if (ft_lstsize(token_list) == 1 && chdir_to_home(home_dir(), oldpwd))
-		return (g_var->exit_status);
-	else if (ft_lstsize(token_list) == 1)
-		return (print_err(errno, "cd", NULL, strerror(errno)));
-	if (ft_strchr(arg->value, '/') != NULL)
-		path = convert_relative_path_to_absolute_path(arg->value);
-	else if (arg->value[0] == '\0')
+	if (ft_lstsize(token_list) == 1)
+		return (chdir_to_home(oldpwd));
+	if (convert_to_absolute_path(&arg->value) == FALSE)
+	{
+		free(oldpwd);
+		return (print_err(errno, "cd", arg->value, strerror(errno)));
+	}
+	if (arg->value[0] == '\0')
 		path = oldpwd;
 	else
-		path = ft_strdup(arg->value);
+		path = arg->value;
 	if (path == NULL || chdir(path) != 0)
 		print_err(errno, "cd", arg->value, strerror(errno));
 	else
 		set_path_env(oldpwd);
-	if (path != NULL)
-		free(path);
+	free(oldpwd);
 	return (g_var->exit_status);
 }
 
-static t_bool	chdir_to_home(char *home, char *oldpwd)
+static int	chdir_to_home(char *oldpwd)
 {
-	t_bool	ret;
+	char *const	home = home_dir();
+	int			ret;
 
-	ret = TRUE;
+	ret = 0;
 	if (home == NULL || chdir(home) != 0)
-		ret = FALSE;
+		ret = errno;
 	else if (set_path_env(oldpwd) == FALSE)
-		ret = FALSE;
+		ret = errno;
 	if (home != NULL)
 		free(home);
 	free(oldpwd);
-	return (ret);
+	if (ret != 0)
+		print_err(ret, "cd", NULL, strerror(ret));
+	return (set_exit_status(ret));
 }
 
 static t_bool	set_path_env(char *oldpwd)

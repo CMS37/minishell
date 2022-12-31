@@ -21,7 +21,7 @@ pdf 다시 정독
 minishell.png 다시 봐주시고
 */
 
-static t_bool	init_minishell(char **envp);
+static t_bool	init_minishell(int argc, char **argv, char **envp);
 static t_bool	execute_cmd_line(const char *line);
 static void		exit_minishell(void);
 
@@ -31,9 +31,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	
-	(void) argc;
-	(void) argv;
-	init_minishell(envp);
+	init_minishell(argc, argv, envp);
 	while (TRUE)
 	{
 		line = readline("minishell-1.0$ ");
@@ -46,12 +44,12 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-static t_bool	init_minishell(char **envp)
+static t_bool	init_minishell(int argc, char **argv, char **envp)
 {
 	g_var = (t_var *) ft_calloc(sizeof(t_var), 1, "Failed to init var");
 	init_termios();
 	init_signal();
-	init_env_list(envp);
+	init_env_list(argc, argv, envp);
 	g_var->old_fd[0] = dup(STDIN_FILENO);
 	g_var->old_fd[1] = dup(STDOUT_FILENO);
 	return (TRUE);

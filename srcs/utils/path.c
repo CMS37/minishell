@@ -1,9 +1,10 @@
 #include "../../incs/utils.h"
 #include "../../incs/structs.h"
 #include <unistd.h>
+#include <stdlib.h>
 
 char	*home_dir(void);
-char	*convert_relative_path_to_absolute_path(const char *path);
+t_bool	convert_to_absolute_path(char **path);
 
 char	*home_dir(void)
 {
@@ -19,22 +20,26 @@ char	*home_dir(void)
 	return (NULL);
 }
 
-char	*convert_relative_path_to_absolute_path(const char *path)
+t_bool	convert_to_absolute_path(char **path)
 {
 	char	*ret;
 
-	if (*path == '/')
-		return (ft_strdup(path));
-	if (*path == '~')
+	if (**path == '~')
 	{
 		ret = home_dir();
-		ft_strcat(&ret, path + 1);
-		return (ret);
+		ft_strcat(&ret, *path + 1);
+		free(*path);
+		*path = ret;
+		return (TRUE);
 	}
+	if (**path == '\0' || **path == '/' || ft_strchr(*path, '/') == NULL)
+		return (TRUE);
 	ret = getcwd(NULL, 0);
 	if (ret == NULL)
-		return (NULL);
+		return (FALSE);
 	ft_strcat(&ret, "/");
-	ft_strcat(&ret, path);
-	return (ret);
+	ft_strcat(&ret, *path);
+	free(*path);
+	*path = ret;
+	return (TRUE);
 }
