@@ -11,6 +11,9 @@ t_bool	lexer(const char *line);
 char	*expand(const char **line);
 t_bool	is_expand(int c);
 
+// here_docs.c
+t_bool	here_docs(void);
+
 // ifs.c
 t_bool	is_ifs(int c);
 

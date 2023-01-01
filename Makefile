@@ -33,10 +33,10 @@ SRCS = 	minishell.c \
 		execute/execute.c \
 		execute/exec_builtin.c \
 		execute/exec_extern.c \
-		execute/here_docs.c \
 		execute/redirection.c \
 		lexer/lexer.c \
 		lexer/expand.c \
+		lexer/here_docs.c \
 		lexer/ifs.c \
 		lexer/meta.c \
 		lexer/quote.c \

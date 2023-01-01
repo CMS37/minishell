@@ -10,33 +10,32 @@
 #include <readline/readline.h>
 
 t_bool			here_docs(void);
-static t_bool	here_doc(t_list *token_list);
+static t_bool	here_doc(t_token *token);
 static char		*generate_file_name(void);
 static char		*tmp_directory_path(void);
 static t_bool	convert_expand(char **line);
 
 t_bool	here_docs(void)
 {
-	t_list	*cmd_list_tmp;
-	t_list	*cur_cmd;
+	t_list	*tmp;
 
-	cmd_list_tmp = g_var->cmd_list;
-	while (cmd_list_tmp)
+	tmp = g_var->token_list;
+	while (tmp)
 	{
-		cur_cmd = cmd_list_tmp->content;
-		while (cur_cmd)
+		if (ft_strcmp(((t_token *) tmp->content)->value, "<<") == 0)
 		{
-			if (ft_strcmp(((t_token *) cur_cmd->content)->value, "<<") == 0)
-				if (here_doc(cur_cmd) == FALSE)
-					return (FALSE);
-			cur_cmd = cur_cmd->next;
+			if (tmp->next == NULL ||
+				((t_token *) tmp->next->content)->type != T_WORD)
+				return (set_exit_status(258) == 0);
+			if (here_doc(tmp->next->content) == FALSE)
+				return (FALSE);
 		}
-		cmd_list_tmp = cmd_list_tmp->next;
+		tmp = tmp->next;
 	}
 	return (TRUE);
 }
 
-static t_bool	here_doc(t_list *token_list)
+static t_bool	here_doc(t_token *token)
 {
 	char *const	file_name = generate_file_name();
 	const int	fd = open_file(file_name, HERE_DOC);
@@ -47,8 +46,7 @@ static t_bool	here_doc(t_list *token_list)
 	while (TRUE)
 	{
 		line = readline("heredoc> ");
-		if (line == NULL ||
-			!ft_strcmp(line, ((t_token *) token_list->next->content)->value))
+		if (line == NULL || ft_strcmp(line, (token->value)) == 0)
 			break ;
 		convert_expand(&line);
 		ft_putendl_fd(line, fd);
@@ -56,8 +54,8 @@ static t_bool	here_doc(t_list *token_list)
 	}
 	if (line != NULL)
 		free(line);
-	free(((t_token *) token_list->next->content)->value);
-	((t_token *) token_list->next->content)->value = file_name;
+	free(token->value);
+	token->value = file_name;
 	close(fd);
 	return (TRUE);
 }

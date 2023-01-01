@@ -7,10 +7,18 @@
 #include <readline/history.h>
 
 /*
--할일(버그)목록 찾는중- (처리된거지우기)
+보류
 
 export 정렬
 변수와 환경변수의 차이를 이해하고 구현하기.
+*/
+
+/*
+-할일(버그)목록 찾는중- (처리된거지우기)
+1).	ls>|cat 이딴게 실행됨. '>'랑 '|'가 붙어있을 때에만 이상 반응 보임
+2).	here document를 parsing단계에서 토큰 하나하나 지날때 마다 오류있기 전까지 heredoc이 나타나면 바로 실행해야됨.
+	오류가 있다면 뒤에 있는 heredoc은 실행하지 않음.
+	ex) cat << EOF << EOF < a < b < << EOF (2번의 heredoc 실행)
 
 syntax
 leak check

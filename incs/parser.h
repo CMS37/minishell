@@ -18,6 +18,6 @@ t_bool	syntax_err_occurred(void);
 
 // create_cmd_list.c
 t_bool	create_cmd_list(void);
-t_bool	del_cmd(void *cmd);
+void	del_cmd(void *cmd);
 
 #endif

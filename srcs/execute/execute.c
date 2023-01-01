@@ -14,7 +14,6 @@ int	execute(void)
 {
 	if (g_var->cmd_list == NULL)
 		return (0);
-	here_docs();
 	if (g_var->cmd_list->next == NULL && is_builtin(g_var->cmd_list->content))
 		return (execute_builtin(g_var->cmd_list->content));
 	child_process(g_var->cmd_list);
