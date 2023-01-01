@@ -1,9 +1,7 @@
 #include "../../incs/execute.h"
-#include "../../incs/structs.h"
 #include "../../incs/builtin.h"
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 int				execute(void);
 t_bool			set_underscore_env(void);

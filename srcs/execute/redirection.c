@@ -1,10 +1,6 @@
-#include "../../libs/libft/incs/libft.h"
 #include "../../incs/execute.h"
-#include "../../incs/structs.h"
 #include "../../incs/lexer.h"
-#include "../../incs/subsystem.h"
 #include "../../incs/builtin.h"
-#include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>

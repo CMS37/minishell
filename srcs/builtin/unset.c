@@ -1,7 +1,5 @@
-#include "../../libs/libft/incs/libft.h"
 #include "../../incs/builtin.h"
 #include "../../incs/structs.h"
-#include "../../incs/lexer.h"
 #include "../../incs/utils.h"
 #include <stdlib.h>
 

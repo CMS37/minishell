@@ -1,6 +1,8 @@
 #include "../../incs/builtin.h"
 #include "../../incs/lexer.h"
 #include "../../incs/utils.h"
+#include <unistd.h>
+#include <stdlib.h>
 #include <errno.h>
 #include <string.h>
 

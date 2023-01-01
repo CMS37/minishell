@@ -1,7 +1,6 @@
-#include "../../libs/libft/incs/libft.h"
 #include "../../incs/builtin.h"
 #include "../../incs/structs.h"
-#include <unistd.h>
+#include <stdlib.h>
 
 int		builtin_env(t_list *token_list, int fd);
 t_bool	init_env_list(int argc, char **argv, char **envp);

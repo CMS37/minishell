@@ -1,4 +1,3 @@
-#include "../../libs/libft/incs/libft.h"
 #include "../../incs/lexer.h"
 
 t_bool			handle_quote(t_token *token, const char **line);

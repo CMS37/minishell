@@ -1,12 +1,11 @@
-#include "../../libs/libft/incs/libft.h"
+#include "../../incs/parser.h"
 #include "../../incs/execute.h"
-#include "../../incs/structs.h"
 #include "../../incs/lexer.h"
 #include "../../incs/builtin.h"
 #include <unistd.h>
-#include <fcntl.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <errno.h>
 #include <readline/readline.h>
 
 t_bool			here_docs(void);

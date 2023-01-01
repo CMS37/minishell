@@ -1,12 +1,7 @@
-#include "../../libs/libft/incs/libft.h"
 #include "../../incs/builtin.h"
 #include "../../incs/structs.h"
 #include "../../incs/utils.h"
-#include "../../incs/lexer.h"
-#include <string.h>
-#include <unistd.h>
 #include <stdlib.h>
-#include <errno.h>
 
 int				builtin_export(t_list *token_list, int fd);
 t_list			*get_env(const char *key);

@@ -1,7 +1,5 @@
-#include "../../libs/libft/incs/libft.h"
 #include "../../incs/execute.h"
 #include "../../incs/builtin.h"
-#include <unistd.h>
 
 const static char	*g_builtin_list[] = {
 	"cd", "echo", "env", "exit", "export", "pwd", "unset", NULL

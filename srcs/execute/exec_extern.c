@@ -1,13 +1,11 @@
-#include "../../libs/libft/incs/libft.h"
-#include "../../incs/builtin.h"
 #include "../../incs/execute.h"
-#include "../../incs/subsystem.h"
+#include "../../incs/builtin.h"
 #include "../../incs/utils.h"
-#include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
+#include <string.h>
 #include <dirent.h>
+#include <errno.h>
 
 void			execute_extern(t_list *token_list);
 static char		**list_to_arr(t_list *token_list);

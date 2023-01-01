@@ -36,7 +36,6 @@ SRCS = 	minishell.c \
 		execute/redirection.c \
 		lexer/lexer.c \
 		lexer/expand.c \
-		lexer/here_docs.c \
 		lexer/ifs.c \
 		lexer/meta.c \
 		lexer/quote.c \
@@ -44,6 +43,7 @@ SRCS = 	minishell.c \
 		lexer/tokenizer.c \
 		parser/parser.c \
 		parser/create_cmd_list.c \
+		parser/here_docs.c \
 		parser/syntax_err_occurred.c \
 		subsystem/subsystem.c \
 		subsystem/signal.c \

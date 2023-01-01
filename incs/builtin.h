@@ -2,7 +2,6 @@
 # define BUINLTIN_H
 
 # include "../libs/libft/incs/libft.h"
-#include "subsystem.h"
 
 // cd.c
 int		builtin_cd(t_list *token_list, int fd);

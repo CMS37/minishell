@@ -1,4 +1,3 @@
-#include "../../libs/libft/incs/libft.h"
 #include "../../incs/utils.h"
 #include "../../incs/structs.h"
 

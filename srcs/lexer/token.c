@@ -1,4 +1,3 @@
-#include "../../libs/libft/incs/libft.h"
 #include "../../incs/lexer.h"
 #include <stdlib.h>
 

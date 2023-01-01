@@ -1,4 +1,6 @@
 #include "../../incs/builtin.h"
+#include "../../incs/structs.h"
+#include <stdlib.h>
 
 int	builtin_echo(t_list *token_list, int fd);
 

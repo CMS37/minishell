@@ -1,5 +1,10 @@
-#include "../incs/minishell.h"
 #include "../libs/libft/incs/libft.h"
+#include "../incs/structs.h"
+#include "../incs/subsystem.h"
+#include "../incs/lexer.h"
+#include "../incs/parser.h"
+#include "../incs/execute.h"
+#include "../incs/builtin.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,9 +20,9 @@ export 정렬
 
 /*
 -할일(버그)목록 찾는중- (처리된거지우기)
-1).	ls>|cat 이딴게 실행됨. '>'랑 '|'가 붙어있을 때에만 이상 반응 보임
+1).	bash에서 ls>|cat 이딴게 실행됨. '>'랑 '|'가 붙어있을 때에만 이상 반응 보임
 2).	here document를 parsing단계에서 토큰 하나하나 지날때 마다 오류있기 전까지 heredoc이 나타나면 바로 실행해야됨.
-	오류가 있다면 뒤에 있는 heredoc은 실행하지 않음.
+	오류가 있다면 해당 지점을 기준으로 뒤에 있는 heredoc은 실행하지 않음.
 	ex) cat << EOF << EOF < a < b < << EOF (2번의 heredoc 실행)
 
 syntax
@@ -92,9 +97,9 @@ static t_bool	execute_cmd_line(const char *line)
 
 void	exit_minishell(void)
 {
-	printf("\033[1A");
-	printf("\033[14C");
-	printf(" exit\n");
+	ft_putstr_fd("\033[1A", 1);
+	ft_putstr_fd("\033[14C", 1);
+	ft_putstr_fd(" exit\n", 1);
 	exit(0);
 }
 

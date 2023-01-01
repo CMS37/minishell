@@ -1,10 +1,8 @@
-#include "../../libs/libft/incs/libft.h"
 #include "../../incs/subsystem.h"
-#include <signal.h>
-#include <stdio.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <signal.h>
 #include <readline/readline.h>
-#include <readline/history.h>
 
 t_bool	init_signal(void);
 void	signal_handler(int sig);

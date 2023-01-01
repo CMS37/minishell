@@ -1,5 +1,6 @@
 #include "../../incs/parser.h"
 #include "../../incs/utils.h"
+#include "../../incs/structs.h"
 
 /*
 규칙 생각나는대로 추가
