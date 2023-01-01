@@ -10,10 +10,7 @@
 -할일(버그)목록 찾는중- (처리된거지우기)
 
 export 정렬
-here_doc expand
 변수와 환경변수의 차이를 이해하고 구현하기.
-
-
 
 syntax
 leak check
@@ -22,6 +19,7 @@ minishell.png 다시 봐주시고
 */
 
 static t_bool	init_minishell(int argc, char **argv, char **envp);
+static t_bool	init_var(void);
 static t_bool	execute_cmd_line(const char *line);
 static void		exit_minishell(void);
 
@@ -46,7 +44,8 @@ int	main(int argc, char **argv, char **envp)
 
 static t_bool	init_minishell(int argc, char **argv, char **envp)
 {
-	g_var = (t_var *) ft_calloc(sizeof(t_var), 1, "Failed to init var");
+	g_var = ft_calloc(sizeof(t_var), 1, "");
+	init_var();
 	init_termios();
 	init_signal();
 	init_env_list(argc, argv, envp);
@@ -55,15 +54,27 @@ static t_bool	init_minishell(int argc, char **argv, char **envp)
 	return (TRUE);
 }
 
+static t_bool	init_var(void)
+{
+	ft_lstclear(&g_var->token_list, del_token);
+	ft_lstclear(&g_var->cmd_list, del_cmd);
+	g_var->here_doc_cnt = 0;
+	return (TRUE);
+}
+
 static t_bool	execute_cmd_line(const char *line)
 {
-	if (lexer(line) == FALSE || !g_var->token_list)
+	init_var();
+
+	if (lexer(line) == FALSE || g_var->token_list == NULL)
 		return (FALSE);
 
 	// print_token_list();
 
-	if (parsing())
-		execute();
+	if (parsing() == FALSE)
+		return (FALSE);
+
+	execute();
 
 	dup2(g_var->old_fd[0], STDIN_FILENO);
 	dup2(g_var->old_fd[1], STDOUT_FILENO);

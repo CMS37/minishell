@@ -11,7 +11,6 @@ t_bool	lexer(const char *line)
 {
 	if (num_of_quote_is_odd(line))
 		return (print_err(EINVAL, (char *) line, NULL, QUOTE_ERR) == 0);
-	ft_lstclear(&g_var->token_list, del_token);
 	tokenize(line);
 	return (TRUE);
 }

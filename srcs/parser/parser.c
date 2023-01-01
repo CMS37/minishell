@@ -1,24 +1,14 @@
 #include "../../libs/libft/incs/libft.h"
 #include "../../incs/parser.h"
 
-t_bool		parsing(void);
-static void	del_cmd(void *cmd);
+t_bool	parsing(void);
 
 t_bool	parsing(void)
 {
 	if (syntax_err_occurred())
 		return (FALSE);
-	ft_lstclear(&g_var->cmd_list, del_cmd);
 	create_cmd_list();
 	return (TRUE);
-}
-
-static void	del_cmd(void *cmd)
-{
-	t_list	*t_cmd;
-
-	t_cmd = (t_list *) cmd;
-	ft_lstclear(&t_cmd, del_token);
 }
 
 /*

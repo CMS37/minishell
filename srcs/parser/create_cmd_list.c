@@ -4,6 +4,7 @@
 #include "../../incs/lexer.h"
 
 t_bool	create_cmd_list(void);
+t_bool	del_cmd(void *cmd);
 
 t_bool	create_cmd_list(void)
 {
@@ -25,5 +26,14 @@ t_bool	create_cmd_list(void)
 	}
 	if (cmd != NULL)
 		ft_lstadd_back(&g_var->cmd_list, ft_lstnew(cmd));
+	return (TRUE);
+}
+
+t_bool	del_cmd(void *cmd)
+{
+	t_list	*t_cmd;
+
+	t_cmd = (t_list *) cmd;
+	ft_lstclear(&t_cmd, del_token);
 	return (TRUE);
 }
