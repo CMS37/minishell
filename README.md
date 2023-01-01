@@ -12,3 +12,22 @@
 
 ## Usage
 	$ ./minishell
+
+### Supported tokens
+	- `|` (pipe)
+	- `<` (redirect input)
+	- `>` (redirect output)
+	- `>>` (redirect output with append)
+	- `<<` (heredoc)
+	- `'` (single quote)
+	- `"` (double quote)
+	- `$` (variable: only `$?`, `$_` and environment variables)
+
+### builtin commands
+	- `cd`
+	- `echo`
+	- `env`
+	- `exit`
+	- `export`
+	- `pwd`
+	- `unset`
