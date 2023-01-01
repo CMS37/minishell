@@ -12,6 +12,7 @@
 
 ## Usage
 	$ ./minishell
+<br/>
 
 ### Supported meta-characters
 	- | (pipe)
@@ -22,6 +23,7 @@
 	- ' (single quote)
 	- " (double quote)
 	- $ (variable: only $?, $_ and environment variables)
+<br/>
 
 ### builtin commands
 	- cd
