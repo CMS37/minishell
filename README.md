@@ -13,7 +13,7 @@
 ## Usage
 	$ ./minishell
 
-### Supported tokens
+### Supported meta-characters
 	- | (pipe)
 	- < (redirect input)
 	- > (redirect output)
