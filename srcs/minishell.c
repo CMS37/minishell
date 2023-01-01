@@ -11,7 +11,6 @@
 
 export 정렬
 here_doc expand
-here_doc ctrl + d
 변수와 환경변수의 차이를 이해하고 구현하기.
 
 

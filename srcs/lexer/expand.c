@@ -1,27 +1,23 @@
 #include "../../incs/lexer.h"
 #include <stdlib.h>
 
-t_bool			handle_expand(t_token *token, const char **line);
+char			*expand(const char **line);
 t_bool			is_expand(int c);
 static char		*get_key(const char **line);
 static size_t	get_key_size(const char *line);
 static char		*get_value(const char *key);
 
-t_bool	handle_expand(t_token *token, const char **line)
+char	*expand(const char **line)
 {
 	char *const	key = get_key(line);
-	char	*exit_status;
+	char 		*ret;
 
 	if (key[0] == '?')
-	{
-		exit_status = ft_itoa(g_var->exit_status);
-		ft_strcat(&token->value, exit_status);
-		free(exit_status);
-	}
+		ret = ft_itoa(g_var->exit_status);
 	else
-		ft_strcat(&token->value, get_value(key));
+		ret = get_value(key);
 	free(key);
-	return (TRUE);
+	return (ret);
 }
 
 t_bool	is_expand(int c)
@@ -43,6 +39,8 @@ static size_t	get_key_size(const char *line)
 {
 	size_t	ret;
 
+	if (*line == '?')
+		return (1);
 	ret = 0;
 	while (line[ret] && is_not_word(line[ret]) == FALSE)
 		ret++;

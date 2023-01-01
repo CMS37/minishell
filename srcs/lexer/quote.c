@@ -40,7 +40,7 @@ static t_bool	handle_double_quote(t_token *token, const char **line)
 		if (**line == '\'')
 			handle_single_quote(token, line);
 		else if (**line == '$')
-			handle_expand(token, line);
+			ft_strcat(&token->value, expand(line));
 		else
 			ft_strncat(&token->value, *line, 1);
 		(*line)++;

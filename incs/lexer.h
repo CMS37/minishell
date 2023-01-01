@@ -8,7 +8,7 @@
 t_bool	lexer(const char *line);
 
 // expand.c
-t_bool	handle_expand(t_token *token, const char **line);
+char	*expand(const char **line);
 t_bool	is_expand(int c);
 
 // ifs.c

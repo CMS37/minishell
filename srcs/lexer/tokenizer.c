@@ -55,6 +55,6 @@ static t_bool	handle_tokens(t_token **token, const char **line, t_bool *flag)
 		*flag = TRUE;
 	}
 	else if (is_expand(**line))
-		handle_expand(*token, line);
+		ft_strcat(&(*token)->value, expand(line));
 	return (TRUE);
 }

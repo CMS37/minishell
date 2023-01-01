@@ -85,12 +85,12 @@ int	open_file(const char *file, t_open_flag flag)
 		if (flag == HERE_DOC || flag == FILE_OUT_TRUNC)
 			perror("Error");
 		if (flag == FILE_OUT_TRUNC)
-			exit(EXIT_FAILURE);
+			exit(errno);
 		if (flag == FILE_IN)
 		{
-			ft_putstr_fd("Error: No such file or directory: ", 2);
+			ft_putstr_fd("Error: ", 2);
 			ft_putstr_fd(file, 2);
-			ft_putstr_fd("\n", 2);
+			ft_putendl_fd(": No such file or directory", 2);
 		}
 	}
 	return (fd);
