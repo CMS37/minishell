@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/02 14:58:02 by younhwan          #+#    #+#             */
+/*   Updated: 2023/01/02 15:20:55 by younhwan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/parser.h"
 #include "../../incs/utils.h"
 #include "../../incs/structs.h"
@@ -8,17 +20,15 @@ t_bool	parsing(void);
 
 t_bool	parsing(void)
 {
-	if (syntax_err_occurred())
+	if (g_var->token_list == NULL)
 		return (FALSE);
-	create_cmd_list();
-	
-	// 여기서 실행 하면 안되고 syntax_err_occurred 함수 안에서 실행 해야함
-	if (here_docs() == FALSE)
+	if (syntax_err_occurred())
 	{
 		if (g_var->exit_status == 258)
 			return (print_err(258, NULL, NULL, SYNTAX_ERR) == 0);
 		return (print_err(errno, NULL, NULL, strerror(errno)) == 0);
 	}
+	create_cmd_list();
 	return (TRUE);
 }
 

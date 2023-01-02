@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_extern.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/02 14:57:31 by younhwan          #+#    #+#             */
+/*   Updated: 2023/01/02 14:58:30 by younhwan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/execute.h"
 #include "../../incs/builtin.h"
 #include "../../incs/utils.h"
@@ -15,7 +27,7 @@ static t_bool	free_paths(char **paths);
 void	execute_extern(t_list *token_list)
 {
 	char **const	cmd = list_to_arr(token_list);
-	char 			*path;
+	char			*path;
 	DIR				*dir;
 
 	if (convert_to_absolute_path(&cmd[0]) == FALSE)

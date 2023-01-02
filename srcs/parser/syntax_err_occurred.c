@@ -1,40 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   syntax_err_occurred.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/02 14:58:08 by younhwan          #+#    #+#             */
+/*   Updated: 2023/01/02 15:25:23 by younhwan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/parser.h"
+#include "../../incs/builtin.h"
 #include "../../incs/utils.h"
 #include "../../incs/structs.h"
 
-/*
-규칙 생각나는대로 추가
-1. 리다이랙션 뒤에 인자가 아닌것이 오거나 비어있으면 err
-2. 첫문자에 파이프가 오거나 마지막이 파이프로 끝나면 err
-3. "", '' err 처리는 토큰화할때 우선처리
-*/
-
-t_bool	syntax_err_occurred(void);
+t_bool			syntax_err_occurred(void);
+static t_bool	is_err(t_list *cur);
 
 t_bool	syntax_err_occurred(void)
 {
-	t_token	*token;
-	t_token	*next;
 	t_list	*tmp;
 
 	tmp = g_var->token_list;
-	token = (t_token *) tmp->content;
-	if (token && token->type == T_PIPE)
-		return (print_err(258, NULL, NULL, SYNTAX_ERR));
+	if (((t_token *) tmp->content)->type == T_PIPE)
+		return (set_exit_status(258));
 	while (tmp)
 	{
-		token = (t_token *) tmp->content;
-		if (tmp->next != NULL)
-			next = (t_token *) tmp->next->content;
-		else
-			next = NULL;
-		if (token->type == T_PIPE && \
-			(tmp->next == NULL || next->type == T_PIPE))
-			return (print_err(258, NULL, NULL, SYNTAX_ERR));
-		if (token->type == T_REDIRECT && (next == NULL || \
-			next->type != T_WORD))
-			return (print_err(258, NULL, NULL, SYNTAX_ERR));
+		if (is_err(tmp))
+			return (TRUE);
+		if (ft_strcmp(((t_token *) tmp->content)->value, "<<") == 0)
+		{
+			tmp = tmp->next;
+			if (here_doc(tmp->content) == FALSE)
+				return (TRUE);
+		}
 		tmp = tmp->next;
 	}
+	return (FALSE);
+}
+
+static t_bool	is_err(t_list *cur)
+{
+	t_token	*cur_t;
+	t_token	*next_t;
+
+	cur_t = (t_token *) cur->content;
+	next_t = NULL;
+	if (cur->next != NULL)
+		next_t = (t_token *) cur->next->content;
+	if (cur_t->type == T_PIPE
+		&& (cur->next == NULL || next_t->type == T_PIPE))
+		return (set_exit_status(258));
+	if (cur_t->type == T_REDIRECT
+		&& (next_t == NULL || next_t->type != T_WORD))
+		return (set_exit_status(258));
 	return (FALSE);
 }

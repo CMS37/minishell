@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/02 14:57:39 by younhwan          #+#    #+#             */
+/*   Updated: 2023/01/02 14:58:30 by younhwan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/lexer.h"
 #include <stdlib.h>
 
@@ -10,7 +22,7 @@ static char		*get_value(const char *key);
 char	*expand(const char **line)
 {
 	char *const	key = get_key(line);
-	char 		*ret;
+	char		*ret;
 
 	if (key[0] == '?')
 		ret = ft_itoa(g_var->exit_status);

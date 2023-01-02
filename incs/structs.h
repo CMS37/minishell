@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structs.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/02 14:56:55 by younhwan          #+#    #+#             */
+/*   Updated: 2023/01/02 14:56:56 by younhwan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
@@ -30,7 +42,7 @@ typedef enum e_open_flag
 	FILE_OUT_APPEND = 3,
 }	t_open_flag;
 
-typedef struct	s_var
+typedef struct s_var
 {
 	t_termios	old_term;
 	t_termios	new_term;
@@ -42,6 +54,6 @@ typedef struct	s_var
 	int			old_fd[3];
 }	t_var;
 
-t_var	*g_var;
+t_var					*g_var;
 
 #endif

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/02 14:57:11 by younhwan          #+#    #+#             */
+/*   Updated: 2023/01/02 15:01:07 by younhwan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/builtin.h"
 #include "../../incs/structs.h"
 #include <stdlib.h>
@@ -42,6 +54,6 @@ t_bool	init_env_list(int argc, char **argv, char **envp)
 		ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strdup(*envp++)));
 	}
 	free(ft_lstlast(g_var->env_list)->content);
-	ft_lstlast(g_var->env_list)->content = ft_strjoin("_=", argv[argc - 1]);
+	ft_lstlast(g_var->env_list)->content = ft_strjoin( "_=", argv[argc - 1] );
 	return (TRUE);
 }

@@ -43,9 +43,8 @@ SRCS = 	minishell.c \
 		lexer/tokenizer.c \
 		parser/parser.c \
 		parser/create_cmd_list.c \
-		parser/here_docs.c \
+		parser/here_doc.c \
 		parser/syntax_err_occurred.c \
-		subsystem/subsystem.c \
 		subsystem/signal.c \
 		subsystem/termios.c \
 		utils/ft_getenv.c \

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/02 14:57:20 by younhwan          #+#    #+#             */
+/*   Updated: 2023/01/02 14:57:20 by younhwan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/builtin.h"
 #include "../../incs/structs.h"
 #include "../../incs/utils.h"
@@ -12,7 +24,7 @@ static int		printenv(int fd);
 int	builtin_export(t_list *token_list, int fd)
 {
 	t_list	*env;
-	t_token	*token;
+	char	*value;
 	t_list	*last_executed;
 
 	if (ft_lstsize(token_list) == 1)
@@ -20,18 +32,18 @@ int	builtin_export(t_list *token_list, int fd)
 	token_list = token_list->next;
 	while (token_list)
 	{
+		value = ((t_token *) token_list->content)->value;
 		last_executed = ft_lstlast(g_var->env_list);
-		token = token_list->content;
-		if (key_is_not_valid(token->value))
-			return (print_err(1, "export", token->value, IDENTIFIER_ERR));
-		env = get_env(token->value);
+		if (key_is_not_valid(value))
+			return (print_err(1, "export", value, IDENTIFIER_ERR));
+		env = get_env(value);
 		if (env == NULL)
 		{
-			ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strdup(token->value)));
+			ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strdup(value)));
 			ft_swap(&last_executed->content, &last_executed->next->content);
 		}
 		else
-			replace_value(env, token->value);
+			replace_value(env, value);
 		token_list = token_list->next;
 	}
 	return (g_var->exit_status);

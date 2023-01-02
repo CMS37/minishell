@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/02 14:58:00 by younhwan          #+#    #+#             */
+/*   Updated: 2023/01/02 15:14:27 by younhwan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/parser.h"
 #include "../../incs/execute.h"
 #include "../../incs/lexer.h"
@@ -8,33 +20,12 @@
 #include <errno.h>
 #include <readline/readline.h>
 
-t_bool			here_docs(void);
-static t_bool	here_doc(t_token *token);
+t_bool			here_doc(t_token *token);
 static char		*generate_file_name(void);
 static char		*tmp_directory_path(void);
 static t_bool	convert_expand(char **line);
 
-t_bool	here_docs(void)
-{
-	t_list	*tmp;
-
-	tmp = g_var->token_list;
-	while (tmp)
-	{
-		if (ft_strcmp(((t_token *) tmp->content)->value, "<<") == 0)
-		{
-			if (tmp->next == NULL ||
-				((t_token *) tmp->next->content)->type != T_WORD)
-				return (set_exit_status(258) == 0);
-			if (here_doc(tmp->next->content) == FALSE)
-				return (FALSE);
-		}
-		tmp = tmp->next;
-	}
-	return (TRUE);
-}
-
-static t_bool	here_doc(t_token *token)
+t_bool	here_doc(t_token *token)
 {
 	char *const	file_name = generate_file_name();
 	const int	fd = open_file(file_name, HERE_DOC);
@@ -87,7 +78,7 @@ static char	*tmp_directory_path(void)
 static t_bool	convert_expand(char **line)
 {
 	const char	*exp = ft_strchr(*line, '$');
-	char	 	*res;
+	char		*res;
 
 	if (exp == NULL)
 		return (TRUE);
