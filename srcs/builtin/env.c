@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:11 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 18:43:15 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/02 23:18:15 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 
 int		builtin_env(t_list *token_list, int fd);
+t_list	*get_env(const char *key);
 t_bool	init_env_list(int argc, char **argv, char **envp);
 
 int	builtin_env(t_list *token_list, int fd)
@@ -34,28 +35,45 @@ int	builtin_env(t_list *token_list, int fd)
 	return (g_var->exit_status);
 }
 
+t_list	*get_env(const char *key)
+{
+	t_list	*ret;
+	size_t	key_len;
+
+	ret = g_var->env_list;
+	key_len = ft_strlen(key);
+	if (ft_strchr(key, '=') != NULL)
+		key_len = ft_strchr(key, '=') - key + 1;
+	while (ret)
+	{
+		if (ft_strncmp(ret->content, key, key_len) == 0)
+			return (ret);
+		ret = ret->next;
+	}
+	return (NULL);
+}
+
 t_bool	init_env_list(int argc, char **argv, char **envp)
 {
-	int		shlvl;
-	char	*c_shlvl;
-	t_list	*last_exec;
+	char *const	last_exec = ft_strjoin("_=", argv[argc - 1]);
+	char		*c_shlvl;
 
 	while (*envp != NULL)
 	{
 		if (ft_strncmp(*envp, "SHLVL", 5) == 0)
 		{
-			shlvl = ft_atoi(ft_strchr(*envp, '=') + 1) + 1;
-			c_shlvl = ft_itoa(shlvl);
+			c_shlvl = ft_itoa(ft_atoi(*envp + 6) + 1);
 			ft_lstadd_back(&g_var->env_list,
 				ft_lstnew(ft_strjoin("SHLVL=", c_shlvl)));
 			free(c_shlvl);
 			envp++;
-			continue ;
 		}
-		ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strdup(*envp++)));
+		else if (ft_strncmp(*envp, "OLDPWD", 6) == 0)
+			envp++;
+		else
+			ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strdup(*envp++)));
 	}
-	last_exec = ft_lstlast(g_var->env_list);
-	free(last_exec->content);
-	last_exec->content = ft_strjoin("_=", argv[argc - 1]);
+	replace_value(g_var->env_list, last_exec);
+	free(last_exec);
 	return (TRUE);
 }

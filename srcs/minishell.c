@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:28 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 20:59:33 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/02 23:32:10 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,7 @@
 #include <readline/history.h>
 
 // "'"'
-// cd 고치기
-// echo -n 만 되게하기
-// cat << 'a'
-// heredoc> "$HOME"
-// heredoc> '$HOME'
-// exit | exit
 // 서브쉘 시그널 중복 처리
-// cd -
-// PWD, OLDPWD 없으면 생성 있으면 replace
-// export 에러나도 뒤에꺼 환경변수 핸들링 해줘야함
 // 
 
 static t_bool	init_minishell(int argc, char **argv, char **envp);

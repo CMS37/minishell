@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:02 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 17:37:14 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/02 22:39:48 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int		print_err(int status, char *cmd, char *arg, char *err_str);
 
 // path.c
 char	*home_dir(void);
-t_bool	convert_to_absolute_path(char **path);
+char	*get_absolute_path(char *path);
+char	*calc_relative_path(char *path);
 
 // ft_getenv.c
 char	**ft_getenv(void);

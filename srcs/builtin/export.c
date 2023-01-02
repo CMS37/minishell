@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:20 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 14:57:20 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/02 23:23:13 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,55 +16,28 @@
 #include <stdlib.h>
 
 int				builtin_export(t_list *token_list, int fd);
-t_list			*get_env(const char *key);
 t_bool			replace_value(t_list *env, const char *envp);
+static t_bool	export(t_list *token_list);
 static t_bool	key_is_not_valid(const char *key);
-static int		printenv(int fd);
+static int		print_export(int fd);
 
 int	builtin_export(t_list *token_list, int fd)
 {
-	t_list	*env;
 	char	*value;
-	t_list	*last_executed;
 
 	if (ft_lstsize(token_list) == 1)
-		return (printenv(fd));
+		return (print_export(fd));
 	token_list = token_list->next;
 	while (token_list)
 	{
 		value = ((t_token *) token_list->content)->value;
-		last_executed = ft_lstlast(g_var->env_list);
 		if (key_is_not_valid(value))
-			return (print_err(1, "export", value, IDENTIFIER_ERR));
-		env = get_env(value);
-		if (env == NULL)
-		{
-			ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strdup(value)));
-			ft_swap(&last_executed->content, &last_executed->next->content);
-		}
+			print_err(1, "export", value, IDENTIFIER_ERR);
 		else
-			replace_value(env, value);
+			export(token_list);
 		token_list = token_list->next;
 	}
 	return (g_var->exit_status);
-}
-
-t_list	*get_env(const char *key)
-{
-	t_list	*ret;
-	size_t	key_len;
-
-	ret = g_var->env_list;
-	key_len = ft_strlen(key);
-	if (ft_strchr(key, '=') != NULL)
-		key_len = ft_strchr(key, '=') - key + 1;
-	while (ret)
-	{
-		if (ft_strncmp(ret->content, key, key_len) == 0)
-			return (ret);
-		ret = ret->next;
-	}
-	return (NULL);
 }
 
 t_bool	replace_value(t_list *env, const char *envp)
@@ -74,6 +47,22 @@ t_bool	replace_value(t_list *env, const char *envp)
 	if (env->content != NULL)
 		free(env->content);
 	env->content = ft_strdup(envp);
+	return (TRUE);
+}
+
+static t_bool	export(t_list *token_list)
+{
+	char *const		value = ((t_token *) token_list->content)->value;
+	t_list *const	last_executed = ft_lstlast(g_var->env_list);
+	t_list *const	env = get_env(value);
+
+	if (env == NULL)
+	{
+		ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strdup(value)));
+		ft_swap(&last_executed->content, &last_executed->next->content);
+	}
+	else
+		replace_value(env, value);
 	return (TRUE);
 }
 
@@ -94,7 +83,7 @@ static t_bool	key_is_not_valid(const char *key)
 	return (FALSE);
 }
 
-static int	printenv(int fd)
+static int	print_export(int fd)
 {
 	t_list	*env;
 	char	*c;

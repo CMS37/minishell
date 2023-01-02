@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:39 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 18:58:32 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/02 23:30:03 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,14 @@ char	*expand(const char **line)
 	char *const	key = get_key(line);
 	char		*ret;
 
-	if (key[0] == '?')
+	if (key == NULL)
+		ret = ft_strdup("$");
+	else if (key[0] == '?')
 		ret = ft_itoa(g_var->exit_status);
 	else
 		ret = ft_strdup(get_value(key));
-	free(key);
+	if (key != NULL)
+		free(key);
 	return (ret);
 }
 
@@ -40,8 +43,11 @@ t_bool	is_expand(int c)
 static char	*get_key(const char **line)
 {
 	const int	key_size = get_key_size(*line + 1);
-	char *const	ret = ft_calloc(sizeof(char), key_size + 1, "");
+	char		*ret;
 
+	if (key_size == 0)
+		return (NULL);
+	ret = ft_calloc(sizeof(char), key_size + 1, "");
 	ft_strlcpy(ret, *line + 1, key_size + 1);
 	*line += key_size;
 	return (ret);
