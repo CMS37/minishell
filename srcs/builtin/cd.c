@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:07 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 18:24:02 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/02 19:08:32 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	builtin_cd(t_list *token_list, int fd)
 		return (print_err(errno, "cd", arg->value, strerror(errno)));
 	}
 	path = arg->value;
-	ft_putendl_fd(path, 2);
 	if (path == NULL || chdir(path) != 0)
 		print_err(errno, "cd", arg->value, strerror(errno));
 	if (set_oldpwd(oldpwd) == FALSE || set_pwd(path) == FALSE)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:00 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 15:14:27 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/02 19:06:04 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ t_bool	here_doc(t_token *token)
 	char		*line;
 
 	if (fd == -1)
+	{
+		free(file_name);
 		return (set_exit_status(errno) == 0);
+	}
 	while (TRUE)
 	{
 		line = readline("heredoc> ");
@@ -53,11 +56,18 @@ t_bool	here_doc(t_token *token)
 static char	*generate_file_name(void)
 {
 	char	*ret;
+	char	*num_1;
+	char	*num_2;
 
 	++g_var->here_doc_cnt;
-	ret = ft_strjoin(tmp_directory_path(), ft_strdup(".heredoc_tmp_"));
-	ft_strcat(&ret, ft_itoa(g_var->here_doc_cnt / 10));
-	ft_strcat(&ret, ft_itoa(g_var->here_doc_cnt % 10));
+	ret = tmp_directory_path();
+	ft_strcat(&ret, ".heredoc_tmp_");
+	num_1 = ft_itoa(g_var->here_doc_cnt / 10);
+	num_2 = ft_itoa(g_var->here_doc_cnt % 10);
+	ft_strcat(&ret, num_1);
+	ft_strcat(&ret, num_2);
+	free(num_1);
+	free(num_2);
 	return (ret);
 }
 
@@ -79,11 +89,14 @@ static t_bool	convert_expand(char **line)
 {
 	const char	*exp = ft_strchr(*line, '$');
 	char		*res;
+	char		*exp_tmp;
 
 	if (exp == NULL)
 		return (TRUE);
 	res = ft_substr(*line, 0, exp - *line);
-	ft_strcat(&res, expand(&exp));
+	exp_tmp = expand(&exp);
+	ft_strcat(&res, exp_tmp);
+	free(exp_tmp);
 	ft_strcat(&res, exp + 1);
 	free(*line);
 	*line = res;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:39 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 14:58:30 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/02 18:58:32 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*expand(const char **line)
 	if (key[0] == '?')
 		ret = ft_itoa(g_var->exit_status);
 	else
-		ret = get_value(key);
+		ret = ft_strdup(get_value(key));
 	free(key);
 	return (ret);
 }

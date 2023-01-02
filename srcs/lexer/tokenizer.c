@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:54 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 14:57:54 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/02 19:00:20 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/lexer.h"
+#include <stdlib.h>
 
 t_bool			tokenize(const char *line);
 t_bool			is_not_word(int c);
@@ -50,6 +51,8 @@ t_bool	is_not_word(int c)
 
 static t_bool	handle_tokens(t_token **token, const char **line, t_bool *flag)
 {
+	char	*exp;
+
 	if ((is_ifs(**line) || is_meta(**line))
 		&& ((*token)->value[0] != '\0' || *flag == TRUE))
 	{
@@ -65,6 +68,10 @@ static t_bool	handle_tokens(t_token **token, const char **line, t_bool *flag)
 		*flag = TRUE;
 	}
 	else if (is_expand(**line))
-		ft_strcat(&(*token)->value, expand(line));
+	{
+		exp = expand(line);
+		ft_strcat(&(*token)->value, exp);
+		free(exp);
+	}
 	return (TRUE);
 }
