@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:11 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 15:01:07 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/02 18:43:15 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_bool	init_env_list(int argc, char **argv, char **envp)
 {
 	int		shlvl;
 	char	*c_shlvl;
+	t_list	*last_exec;
 
 	while (*envp != NULL)
 	{
@@ -53,7 +54,8 @@ t_bool	init_env_list(int argc, char **argv, char **envp)
 		}
 		ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strdup(*envp++)));
 	}
-	free(ft_lstlast(g_var->env_list)->content);
-	ft_lstlast(g_var->env_list)->content = ft_strjoin( "_=", argv[argc - 1] );
+	last_exec = ft_lstlast(g_var->env_list);
+	free(last_exec->content);
+	last_exec->content = ft_strjoin("_=", argv[argc - 1]);
 	return (TRUE);
 }
