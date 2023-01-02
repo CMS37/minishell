@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:09 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 14:57:10 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/02 20:17:41 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	builtin_echo(t_list *token_list, int fd)
 	}
 	token_list = token_list->next;
 	token = token_list->content;
-	n_flag = (ft_strnstr(token->value, "-n", 2) != NULL);
+	n_flag = (ft_strncmp(token->value, "-n", 2) == 0);
 	if (n_flag == TRUE)
 		token_list = token_list->next;
 	while (token_list)
