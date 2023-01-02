@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:07 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 19:08:32 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/02 20:00:59 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static t_bool	set_pwd(char *pwd);
 int	builtin_cd(t_list *token_list, int fd)
 {
 	char *const		oldpwd = ft_getcwd();
-	t_token *const	arg = token_list->next->content;
+	t_token			*arg;
 	char			*path;
 
 	(void) fd;
@@ -34,6 +34,7 @@ int	builtin_cd(t_list *token_list, int fd)
 		return (print_err(errno, "cd", NULL, strerror(errno)));
 	if (ft_lstsize(token_list) == 1)
 		return (chdir_to_home(oldpwd));
+	arg = token_list->next->content;
 	if (convert_to_absolute_path(&arg->value) == FALSE)
 	{
 		free(oldpwd);
@@ -59,7 +60,6 @@ static int	chdir_to_home(char *oldpwd)
 		ret = errno;
 	if (home != NULL)
 		free(home);
-	free(oldpwd);
 	if (ret != 0)
 		print_err(ret, "cd", NULL, strerror(ret));
 	return (set_exit_status(ret));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:24 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 18:31:26 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/02 20:03:04 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ t_bool	convert_to_absolute_path(char **path)
 
 	if (**path == '\0')
 		ret = ft_getcwd();
+	else if (**path == '~')
+	{
+		ret = home_dir();
+		ft_strcat(&ret, *path + 1);
+	}
 	else if (**path != '/')
 	{
 		ret = ft_getcwd();
