@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:49 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 19:00:12 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/02 23:36:37 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static t_bool	handle_single_quote(t_token *token, const char **line)
 	(*line)++;
 	while (**line && **line != '\'')
 		ft_strncat(&token->value, (*line)++, 1);
-	return (FALSE);
+	return (**line == '\'');
 }
 
 static t_bool	handle_double_quote(t_token *token, const char **line)
@@ -55,5 +55,5 @@ static t_bool	handle_double_quote(t_token *token, const char **line)
 			ft_strncat(&token->value, *line, 1);
 		(*line)++;
 	}
-	return (FALSE);
+	return (**line == '\"');
 }

@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:54 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 23:28:07 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/02 23:41:56 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,13 @@ t_bool	tokenize(const char *line)
 	while (*line)
 	{
 		if (is_not_word(*line))
-			handle_tokens(&cur, &line, &quote_exists);
+		{
+			if (handle_tokens(&cur, &line, &quote_exists) == FALSE)
+			{
+				del_token(cur);
+				return (FALSE);
+			}
+		}
 		else
 			ft_strncat(&cur->value, line, 1);
 		line++;
@@ -64,7 +70,8 @@ static t_bool	handle_tokens(t_token **token, const char **line, t_bool *flag)
 		handle_meta(line);
 	else if (is_quote(**line))
 	{
-		handle_quote(*token, line);
+		if (handle_quote(*token, line) == FALSE)
+			return (FALSE);
 		*flag = TRUE;
 	}
 	else if (is_expand(**line))
