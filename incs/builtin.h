@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:56:46 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 14:56:47 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:02:19 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 
 // cd.c
 int		builtin_cd(t_list *token_list, int fd);
-
-// cd_util.c
-void	set_pwd(int fd);
 
 // echo.c
 int		builtin_echo(t_list *token_list, int fd);
@@ -39,6 +36,7 @@ t_bool	replace_value(t_list *env, const char *envp);
 
 // pwd.c
 int		builtin_pwd(t_list *token_list, int fd);
+char	*ft_getcwd(void);
 
 // unset.c
 int		builtin_unset(t_list *token_list, int fd);
