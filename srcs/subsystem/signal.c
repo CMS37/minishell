@@ -26,6 +26,13 @@ t_bool	init_signal(void)
 	return (TRUE);
 }
 
+void	proc_signal_handler(int sig)
+{
+	if (sig == SIGINT)
+		ft_putchar_fd('\n', STDOUT_FILENO);
+	return ;
+}
+
 void	signal_handler(int sig)
 {
 	if (sig == SIGINT)

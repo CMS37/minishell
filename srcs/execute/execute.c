@@ -64,6 +64,7 @@ static t_bool	child_process(t_list *cmd)
 		return (FALSE);
 	if (pid == 0)
 	{
+		signal(SIGINT, child_signal_handler);
 		set_fd_in_pipe(cmd, fd, TRUE);
 		if (set_fd_in_redir(cmd->content) == FALSE)
 			exit(g_var->exit_status);
