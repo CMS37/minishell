@@ -18,6 +18,7 @@
 // signal.c
 t_bool	init_signal(void);
 void	signal_handler(int sig);
+void	child_signal_handler(int sig);
 
 // termios.c
 t_bool	init_termios(void);
