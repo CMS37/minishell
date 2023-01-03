@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:33 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 14:58:30 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 00:44:34 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static t_bool	child_process(t_list *cmd)
 		return (FALSE);
 	if (pid == 0)
 	{
-		signal(SIGINT, child_signal_handler);
+		// signal(SIGINT, child_signal_handler);
 		set_fd_in_pipe(cmd, fd, TRUE);
 		if (set_fd_in_redir(cmd->content) == FALSE)
 			exit(g_var->exit_status);

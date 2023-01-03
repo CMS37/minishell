@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:28 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 23:32:10 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 01:01:54 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-// "'"'
 // 서브쉘 시그널 중복 처리
-// 
+// heredoc filename -> random
 
 static t_bool	init_minishell(int argc, char **argv, char **envp);
 static t_bool	init_var(void);
@@ -70,7 +69,6 @@ static t_bool	init_var(void)
 {
 	ft_lstclear(&g_var->token_list, del_token);
 	ft_lstclear(&g_var->cmd_list, del_cmd);
-	g_var->here_doc_cnt = 0;
 	return (TRUE);
 }
 

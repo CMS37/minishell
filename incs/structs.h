@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:56:55 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 14:56:56 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 00:44:56 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_var
 	t_list		*token_list;
 	t_list		*env_list;
 	t_list		*cmd_list;
-	size_t		here_doc_cnt;
 	int			exit_status;
 	int			old_fd[3];
 }	t_var;

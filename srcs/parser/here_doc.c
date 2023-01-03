@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:00 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 22:46:26 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 01:03:31 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <fcntl.h>
 #include <errno.h>
 #include <readline/readline.h>
 
 t_bool			here_doc(t_token *token);
 static char		*generate_file_name(void);
 static char		*tmp_directory_path(void);
+static char		*generate_random_hex_code(void);
 static t_bool	convert_expand(char **line);
 
 t_bool	here_doc(t_token *token)
@@ -31,6 +33,7 @@ t_bool	here_doc(t_token *token)
 	const int	fd = open_file(file_name, HERE_DOC);
 	char		*line;
 
+	ft_putendl_fd(file_name, 2);
 	if (fd == -1)
 	{
 		free(file_name);
@@ -56,33 +59,50 @@ t_bool	here_doc(t_token *token)
 static char	*generate_file_name(void)
 {
 	char	*ret;
-	char	*num_1;
-	char	*num_2;
+	char	*hex_code;
 
-	++g_var->here_doc_cnt;
 	ret = tmp_directory_path();
-	ft_strcat(&ret, ".heredoc_tmp_");
-	num_1 = ft_itoa(g_var->here_doc_cnt / 10);
-	num_2 = ft_itoa(g_var->here_doc_cnt % 10);
-	ft_strcat(&ret, num_1);
-	ft_strcat(&ret, num_2);
-	free(num_1);
-	free(num_2);
+	hex_code = generate_random_hex_code();
+	ft_strcat(&ret, ".heredoc_tmp_0x");
+	ft_strcat(&ret, hex_code);
+	free(hex_code);
 	return (ret);
 }
 
 static char	*tmp_directory_path(void)
 {
-	t_list	*cur;
+	t_list	*tmp;
 
-	cur = g_var->env_list;
-	while (cur)
+	tmp = g_var->env_list;
+	while (tmp)
 	{
-		if (ft_strncmp(cur->content, "TMPDIR=", 7) == 0)
-			return (ft_strdup(cur->content + 7));
-		cur = cur->next;
+		if (ft_strncmp(tmp->content, "TMPDIR=", 7) == 0)
+			return (ft_strdup(tmp->content + 7));
+		tmp = tmp->next;
 	}
-	return (ft_strdup(""));
+	return (ft_strdup("/"));
+}
+
+static char	*generate_random_hex_code(void)
+{
+	const char	*hex = "0123456789abcdef";
+	char *const	ret = ft_calloc(sizeof(char), 9, "");
+	const int	fd = open("/dev/urandom", O_RDONLY);
+	size_t		i;
+
+	if (fd == -1)
+		return (ret);
+	read(fd, ret, 8);
+	close(fd);
+	i = 0;
+	while (i < 8)
+	{
+		if (ret[i] < 0)
+			ret[i] *= -1;
+		ret[i] = hex[ret[i] % 16];
+		i++;
+	}
+	return (ret);
 }
 
 static t_bool	convert_expand(char **line)
