@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:07 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 17:03:00 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 22:36:24 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ static int	chdir_to_home(char *oldpwd)
 
 static t_bool	convert_to_absolute_path(char **path)
 {
-	char *const	before_calculated = get_absolute_path(*path);
-	char		*calculated;
+	char *const		before_calculated = get_absolute_path(*path);
+	char			*calculated;
+	const t_bool	oldpwd = ((**path) == '-');
 
 	if (ft_strcmp(*path, "-") == 0 && before_calculated == NULL)
 		return (FALSE);
@@ -82,6 +83,8 @@ static t_bool	convert_to_absolute_path(char **path)
 		*path = before_calculated;
 		free(calculated);
 	}
+	if (oldpwd)
+		ft_putendl_fd(*path, 1);
 	return (TRUE);
 }
 
