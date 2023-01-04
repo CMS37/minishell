@@ -6,7 +6,7 @@
 /*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:09 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 14:25:41 by min-cho          ###   ########.fr       */
+/*   Updated: 2023/01/04 14:29:44 by min-cho          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "../../incs/structs.h"
 #include <stdlib.h>
 
-int	builtin_echo(t_list *token_list, int fd);
-static	t_bool check_n_flag(t_list **list);
+int				builtin_echo(t_list *token_list, int fd);
+static t_bool	check_n_flag(t_list **list);
 
 int	builtin_echo(t_list *token_list, int fd)
 {
@@ -30,8 +30,6 @@ int	builtin_echo(t_list *token_list, int fd)
 	token_list = token_list->next;
 	n_flag = check_n_flag(&token_list);
 	token = token_list->content;
-	// if (n_flag == TRUE)
-	// 	token_list = token_list->next;
 	while (token_list)
 	{
 		token = token_list->content;
@@ -45,9 +43,9 @@ int	builtin_echo(t_list *token_list, int fd)
 	return (g_var->exit_status);
 }
 
-static	t_bool check_n_flag(t_list **list)
+static t_bool	check_n_flag(t_list **list)
 {
-	t_token *token;
+	t_token	*token;
 	int		flag;
 	int		i;
 
