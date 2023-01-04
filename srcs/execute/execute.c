@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:33 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 22:15:48 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 01:00:53 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,8 @@ int	execute(void)
 
 t_bool	set_underscore_env(void)
 {
-	t_list *const	env = get_env("_=");
-	t_token			*last_token;
-	char			*arg;
+	t_token	*last_token;
+	char	*arg;
 
 	last_token = ft_lstlast(g_var->cmd_list->content)->content;
 	arg = ft_strdup("_=");
@@ -49,10 +48,7 @@ t_bool	set_underscore_env(void)
 		ft_strcat(&arg, "");
 	else
 		ft_strcat(&arg, last_token->value);
-	if (env == NULL)
-		ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strdup(arg)));
-	else
-		replace_value(env, arg);
+	export(arg);
 	free(arg);
 	return (TRUE);
 }

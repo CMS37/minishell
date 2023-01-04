@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:11 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 17:36:07 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 01:03:43 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,27 @@ t_list	*get_env(const char *key)
 t_bool	init_env_list(int argc, char **argv, char **envp)
 {
 	char *const	last_exec = ft_strjoin("_=", argv[argc - 1]);
-	char		*c_shlvl;
+	char *const	shlvl = ft_strdup("SHLVL=");
+	char		*lvl;
 
+	lvl = NULL;
 	while (*envp != NULL)
 	{
 		if (ft_strncmp(*envp, "SHLVL", 5) == 0)
-		{
-			c_shlvl = ft_itoa(ft_atoi(*envp + 6) + 1);
-			ft_lstadd_back(&g_var->env_list,
-				ft_lstnew(ft_strjoin("SHLVL=", c_shlvl)));
-			free(c_shlvl);
-			envp++;
-		}
-		else if (ft_strncmp(*envp, "OLDPWD", 6) == 0)
+			lvl = ft_itoa(ft_atoi(*envp + 6) + 1);
+		if (ft_strncmp(*envp, "OLDPWD", 6) == 0)
 			envp++;
 		else
 			ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strdup(*envp++)));
 	}
-	replace_value(ft_lstlast(g_var->env_list), last_exec);
+	if (lvl == NULL || ft_atoi(lvl) <= 0)
+		ft_strcat((char **) &shlvl, "1");
+	else
+		ft_strcat((char **) &shlvl, lvl);
+	free(lvl);
+	export(shlvl);
+	export(last_exec);
+	free(shlvl);
 	free(last_exec);
 	return (TRUE);
 }

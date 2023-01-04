@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:02 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 19:12:23 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 01:08:16 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define CMD_ERR "command not found"
 # define QUOTE_ERR "quote is not closed"
 # define SYNTAX_ERR "syntax error"
+# define EXIST_ERR "No such file or directory"
 
 // print_err.c
 int		print_err(int status, char *cmd, char *arg, char *err_str);

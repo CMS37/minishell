@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_extern.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:31 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 20:31:43 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 01:08:28 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	execute_extern(t_list *token_list)
 	if (path == NULL)
 		exit(print_err(127, cmd[0], NULL, CMD_ERR) >> 8);
 	if (access(path, F_OK) != 0)
-		exit(print_err(127, cmd[0], NULL, "No such file or directory") >> 8);
+		exit(print_err(127, cmd[0], NULL, EXIST_ERR) >> 8);
 	dir = opendir(path);
 	if (dir != NULL && closedir(dir) == 0)
 		exit(print_err(126, path, NULL, "is a directory") >> 8);

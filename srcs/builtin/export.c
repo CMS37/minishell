@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:20 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 20:29:55 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 01:03:01 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include <stdlib.h>
 
 int				builtin_export(t_list *token_list, int fd);
-t_bool			replace_value(t_list *env, const char *envp);
 t_bool			export(char *value);
 t_bool			key_is_not_valid(const char *key);
+static t_bool	replace_value(t_list *env, const char *envp);
 static int		print_export(int fd);
 
 int	builtin_export(t_list *token_list, int fd)
@@ -40,16 +40,6 @@ int	builtin_export(t_list *token_list, int fd)
 	return (g_var->exit_status);
 }
 
-t_bool	replace_value(t_list *env, const char *envp)
-{
-	if (ft_strchr(envp, '=') == NULL)
-		return (TRUE);
-	if (env->content != NULL)
-		free(env->content);
-	env->content = ft_strdup(envp);
-	return (TRUE);
-}
-
 t_bool	export(char *value)
 {
 	t_list *const	last_executed = ft_lstlast(g_var->env_list);
@@ -57,6 +47,7 @@ t_bool	export(char *value)
 
 	if (env == NULL)
 	{
+		ft_putendl_fd(value, 2);
 		ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strdup(value)));
 		ft_swap(&last_executed->content, &last_executed->next->content);
 	}
@@ -82,6 +73,16 @@ t_bool	key_is_not_valid(const char *key)
 		key++;
 	}
 	return (FALSE);
+}
+
+static t_bool	replace_value(t_list *env, const char *envp)
+{
+	if (ft_strchr(envp, '=') == NULL)
+		return (TRUE);
+	if (env->content != NULL)
+		free(env->content);
+	env->content = ft_strdup(envp);
+	return (TRUE);
 }
 
 static int	print_export(int fd)

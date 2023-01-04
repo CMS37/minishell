@@ -6,13 +6,14 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:36 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 19:59:23 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 01:09:14 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/execute.h"
 #include "../../incs/lexer.h"
 #include "../../incs/builtin.h"
+#include "../../incs/utils.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -97,11 +98,7 @@ int	open_file(const char *file, t_open_flag flag)
 		if (flag == FILE_OUT_TRUNC)
 			exit(set_exit_status(errno));
 		if (flag == FILE_IN)
-		{
-			ft_putstr_fd("Error: ", 2);
-			ft_putstr_fd(file, 2);
-			ft_putendl_fd(": No such file or directory", 2);
-		}
+			print_err(1, (char *) file, NULL, EXIST_ERR);
 	}
 	return (fd);
 }
