@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:19 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 14:58:30 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 15:31:20 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,20 @@
 #include <unistd.h>
 
 t_bool	init_termios(void);
+t_bool	set_termios(void);
 t_bool	reset_termios(void);
 
 t_bool	init_termios(void)
 {
 	tcgetattr(STDOUT_FILENO, &(g_var->old_term));
 	tcgetattr(STDOUT_FILENO, &(g_var->new_term));
+	g_var->old_term.c_lflag |= ECHOCTL;
 	g_var->new_term.c_lflag &= ~(ECHOCTL);
+	return (TRUE);
+}
+
+t_bool	set_termios(void)
+{
 	tcsetattr(STDOUT_FILENO, TCSANOW, &(g_var->new_term));
 	return (TRUE);
 }

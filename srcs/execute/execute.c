@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:33 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 14:37:00 by min-cho          ###   ########.fr       */
+/*   Updated: 2023/01/04 16:28:49 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "../../incs/subsystem.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include <errno.h>
 
 int				execute(void);
 t_bool			set_underscore_env(void);
@@ -29,7 +30,6 @@ int	execute(void)
 		return (execute_builtin(g_var->cmd_list->content));
 	child_process(g_var->cmd_list);
 	set_underscore_env();
-	g_var->exit_status >>= 8;
 	return (g_var->exit_status);
 }
 
@@ -58,17 +58,17 @@ static t_bool	child_process(t_list *cmd)
 	pid_t	pid;
 	int		fd[2];
 
-	signal(SIGINT, child_signal_handler);
 	if (pipe(fd) == -1)
 		return (FALSE);
 	pid = fork();
 	if (pid == -1)
 		return (FALSE);
+	unset_subsystem(pid);
 	if (pid == 0)
 	{
 		set_fd_in_pipe(cmd, fd, TRUE);
 		if (set_fd_in_redir(cmd->content) == FALSE)
-			exit(g_var->exit_status);
+			exit(errno);
 		if (is_builtin(cmd->content) && 0 <= execute_builtin(cmd->content))
 			exit(g_var->exit_status);
 		else

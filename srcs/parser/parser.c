@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:02 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 19:12:04 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:29:59 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_bool	parsing(void)
 		return (FALSE);
 	if (syntax_err_occurred())
 	{
-		if (g_var->exit_status == 258)
+		if (g_var->exit_status == 258 << 8)
 			return (print_err(258, NULL, NULL, SYNTAX_ERR) == 0);
 		return (print_err(errno, NULL, NULL, strerror(errno)) == 0);
 	}

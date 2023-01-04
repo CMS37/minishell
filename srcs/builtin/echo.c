@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:09 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 14:29:44 by min-cho          ###   ########.fr       */
+/*   Updated: 2023/01/04 16:44:41 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 #include <stdlib.h>
 
 int				builtin_echo(t_list *token_list, int fd);
-static t_bool	check_n_flag(t_list **list);
+static t_bool	check_n_flag(t_token *token);
 
 int	builtin_echo(t_list *token_list, int fd)
 {
-	t_token	*token;
 	t_bool	n_flag;
 
 	if (token_list->next == NULL)
@@ -28,14 +27,17 @@ int	builtin_echo(t_list *token_list, int fd)
 		return (g_var->exit_status);
 	}
 	token_list = token_list->next;
-	n_flag = check_n_flag(&token_list);
-	token = token_list->content;
+	n_flag = FALSE;
 	while (token_list)
 	{
-		token = token_list->content;
-		ft_putstr_fd(token->value, fd);
-		if (token_list->next != NULL)
-			ft_putstr_fd(" ", fd);
+		if (check_n_flag(((t_token *) token_list->content)) == TRUE)
+			n_flag = TRUE;
+		else
+		{
+			ft_putstr_fd(((t_token *) token_list->content)->value, fd);
+			if (token_list->next != NULL)
+				ft_putstr_fd(" ", fd);
+		}
 		token_list = token_list->next;
 	}
 	if (n_flag == FALSE)
@@ -43,31 +45,18 @@ int	builtin_echo(t_list *token_list, int fd)
 	return (g_var->exit_status);
 }
 
-static t_bool	check_n_flag(t_list **list)
+static t_bool	check_n_flag(t_token *token)
 {
-	t_token	*token;
-	int		flag;
-	int		i;
+	size_t	i;
 
-	flag = FALSE;
-	token = (*list)->content;
-	while (ft_strncmp(token->value, "-n", 2) == 0)
+	if (ft_strncmp(token->value, "-n", 2) != 0)
+		return (FALSE);
+	i = 2;
+	while (token->value[i])
 	{
-		if (ft_strlen(token->value) != 2)
-		{
-			i = 2;
-			while (token->value[i])
-			{
-				if (token->value[i] != 'n')
-					return (flag);
-				i++;
-			}
-		}
-		flag = TRUE;
-		if ((*list)->next == NULL)
-			break ;
-		(*list) = (*list)->next;
-		token = (*list)->content;
+		if (token->value[i] != 'n')
+			return (FALSE);
+		i++;
 	}
-	return (flag);
+	return (TRUE);
 }

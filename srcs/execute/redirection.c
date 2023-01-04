@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:36 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 15:35:55 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:25:54 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_bool	set_fd_in_redir(t_list *token_list)
 	{
 		fd = get_fd(cur);
 		if (fd == -1)
-			return (set_exit_status(errno) == 0);
+			return (FALSE);
 		if (0 < fd)
 		{
 			if (ft_strcmp(((t_token *) cur->content)->value, "<") == 0 || \

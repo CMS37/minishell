@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:15 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 14:42:22 by min-cho          ###   ########.fr       */
+/*   Updated: 2023/01/04 16:23:36 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,26 @@ int	builtin_exit(t_list *token_list, int fd)
 	tmp = token_list->next;
 	ft_putendl_fd("exit", fd);
 	if (tmp == NULL)
-		exit(set_exit_status(0));
+		exit(set_exit_status(0) >> 8);
 	token = tmp->content;
 	if (is_num(token->value) == FALSE)
-		exit(print_err(255, "exit", token->value, NUMERIC_ERR));
+		exit(print_err(255, "exit", token->value, NUMERIC_ERR) >> 8);
 	if (tmp->next != NULL)
-		return (print_err(1, "exit", NULL, ARG_ERR));
+		return (print_err(1, "exit", NULL, ARG_ERR) >> 8);
 	i = ft_atoll(token->value);
 	if (i < INT_MIN || INT_MAX < i)
-		exit(print_err(255, "exit", token->value, NUMERIC_ERR));
+		exit(print_err(255, "exit", token->value, NUMERIC_ERR) >> 8);
 	if (i < 0)
 		i = (256 - ((i * -1) % 256));
 	i = (i % 256);
-	exit(set_exit_status(i));
+	exit(set_exit_status(i) >> 8);
 	return (g_var->exit_status);
 }
 
 int	set_exit_status(int status)
 {
-	g_var->exit_status = status;
-	return (status);
+	g_var->exit_status = status << 8;
+	return (g_var->exit_status);
 }
 
 static t_bool	is_num(const char *str)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:28 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 14:35:36 by min-cho          ###   ########.fr       */
+/*   Updated: 2023/01/04 16:31:18 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 #include <readline/history.h>
 
 static t_bool	init_minishell(int argc, char **argv, char **envp);
-static t_bool	init_var(void);
+static t_bool	set_var(void);
 static t_bool	execute_cmd_line(const char *line);
 static void		exit_minishell(void);
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 		return (print_err(2, argv[1], NULL, strerror(2)));
 	while (TRUE)
 	{
-		init_signal();
+		set_var();
 		line = readline("minishell-1.0$ ");
 		if (line == NULL)
 			exit_minishell();
@@ -54,7 +54,6 @@ static t_bool	init_minishell(int argc, char **argv, char **envp)
 	g_var = ft_calloc(sizeof(t_var), 1, "");
 	if (1 < argc && access(argv[1], F_OK) == -1)
 		return (FALSE);
-	init_var();
 	init_termios();
 	init_env_list(argc, argv, envp);
 	g_var->old_fd[0] = dup(STDIN_FILENO);
@@ -62,23 +61,23 @@ static t_bool	init_minishell(int argc, char **argv, char **envp)
 	return (TRUE);
 }
 
-static t_bool	init_var(void)
+static t_bool	set_var(void)
 {
 	ft_lstclear(&g_var->token_list, del_token);
 	ft_lstclear(&g_var->cmd_list, del_cmd);
+	set_subsystem();
+	dup2(g_var->old_fd[0], STDIN_FILENO);
+	dup2(g_var->old_fd[1], STDOUT_FILENO);
 	return (TRUE);
 }
 
 static t_bool	execute_cmd_line(const char *line)
 {
-	init_var();
-	if (lexer(line) == FALSE || g_var->token_list == NULL)
-		return (FALSE);
-	if (parsing() == FALSE)
-		return (FALSE);
-	execute();
-	dup2(g_var->old_fd[0], STDIN_FILENO);
-	dup2(g_var->old_fd[1], STDOUT_FILENO);
+	if (lexer(line) && g_var->token_list != NULL)
+		if (parsing())
+			execute();
+	if (256 <= g_var->exit_status && g_var->exit_status % 256 != 0x7f)
+		g_var->exit_status >>= 8;
 	return (TRUE);
 }
 
