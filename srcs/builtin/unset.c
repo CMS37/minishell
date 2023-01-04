@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:25 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 14:57:25 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:22:38 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 #include <stdlib.h>
 
 int				builtin_unset(t_list *token_list, int fd);
-static t_bool	unset_env(t_list *token_list);
+static t_bool	unset(char *key);
+static t_bool	is_correct(t_list *env, char *key);
 
 int	builtin_unset(t_list *token_list, int fd)
 {
@@ -26,17 +27,18 @@ int	builtin_unset(t_list *token_list, int fd)
 	while (token_list)
 	{
 		token = token_list->content;
-		if (unset_env(token_list) == FALSE)
-			return (print_err(1, "unset", token->value, IDENTIFIER_ERR));
+		if (key_is_not_valid(token->value))
+			print_err(1, "unset", token->value, IDENTIFIER_ERR);
+		else
+			unset(token->value);
 		token_list = token_list->next;
 	}
 	(void) fd;
 	return (g_var->exit_status);
 }
 
-static t_bool	unset_env(t_list *token_list)
+static t_bool	unset(char *key)
 {
-	const char	*key = ((t_token *) token_list->content)->value;
 	t_list		*prev;
 	t_list		*cur;
 
@@ -44,17 +46,30 @@ static t_bool	unset_env(t_list *token_list)
 	cur = g_var->env_list;
 	while (cur)
 	{
-		if (ft_strncmp(cur->content, key, ft_strlen(key)) == 0)
+		if (is_correct(cur, key))
 		{
 			if (prev == NULL)
 				g_var->env_list = cur->next;
 			else
 				prev->next = cur->next;
 			ft_lstdelone(cur, free);
-			break ;
+			cur = prev->next;
 		}
-		prev = cur;
-		cur = cur->next;
+		else
+		{
+			prev = cur;
+			cur = cur->next;
+		}
 	}
 	return (TRUE);
+}
+
+static t_bool	is_correct(t_list *env, char *key)
+{
+	size_t	key_len;
+
+	key_len = ft_strlen(env->content);
+	if (ft_strchr(env->content, '=') != NULL)
+		key_len = ft_strchr(env->content, '=') - (char *)env->content + 1;
+	return (ft_strncmp(env->content, key, key_len) == 0);
 }

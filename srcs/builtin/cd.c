@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:07 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 23:18:28 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:03:00 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,20 +87,13 @@ static t_bool	convert_to_absolute_path(char **path)
 
 static t_bool	set_path_env(char *oldpwd, char *pwd)
 {
-	t_list		*env;
 	char *const	old_path = ft_strjoin("OLDPWD=", oldpwd);
 	char *const	cur_path = ft_strjoin("PWD=", pwd);
 
-	env = get_env("OLDPWD");
-	if (env == NULL)
-		ft_lstadd_back(&g_var->env_list, ft_lstnew(old_path));
-	else
-		replace_value(env, old_path);
-	env = get_env("PWD");
-	if (env == NULL)
-		ft_lstadd_back(&g_var->env_list, ft_lstnew(cur_path));
-	else
-		replace_value(env, cur_path);
+	export(old_path);
+	export(cur_path);
 	free(oldpwd);
+	free(old_path);
+	free(cur_path);
 	return (TRUE);
 }

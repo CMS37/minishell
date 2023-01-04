@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:36 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 16:25:54 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:54:07 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	open_file(const char *file, t_open_flag flag)
 		if (flag == HERE_DOC || flag == FILE_OUT_TRUNC)
 			perror("Error");
 		if (flag == FILE_OUT_TRUNC)
-			exit(errno);
+			exit(set_exit_status(errno));
 		if (flag == FILE_IN)
 		{
 			ft_putstr_fd("Error: ", 2);

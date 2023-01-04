@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:20 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 23:23:13 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:13:08 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 int				builtin_export(t_list *token_list, int fd);
 t_bool			replace_value(t_list *env, const char *envp);
-static t_bool	export(t_list *token_list);
-static t_bool	key_is_not_valid(const char *key);
+t_bool			export(char *value);
+t_bool			key_is_not_valid(const char *key);
 static int		print_export(int fd);
 
 int	builtin_export(t_list *token_list, int fd)
@@ -34,7 +34,7 @@ int	builtin_export(t_list *token_list, int fd)
 		if (key_is_not_valid(value))
 			print_err(1, "export", value, IDENTIFIER_ERR);
 		else
-			export(token_list);
+			export(value);
 		token_list = token_list->next;
 	}
 	return (g_var->exit_status);
@@ -50,9 +50,8 @@ t_bool	replace_value(t_list *env, const char *envp)
 	return (TRUE);
 }
 
-static t_bool	export(t_list *token_list)
+t_bool	export(char *value)
 {
-	char *const		value = ((t_token *) token_list->content)->value;
 	t_list *const	last_executed = ft_lstlast(g_var->env_list);
 	t_list *const	env = get_env(value);
 
@@ -66,7 +65,7 @@ static t_bool	export(t_list *token_list)
 	return (TRUE);
 }
 
-static t_bool	key_is_not_valid(const char *key)
+t_bool	key_is_not_valid(const char *key)
 {
 	if (*key == 0)
 		return (TRUE);

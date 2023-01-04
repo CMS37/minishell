@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:56:46 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 23:18:29 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:12:20 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int		set_exit_status(int status);
 // export.c
 int		builtin_export(t_list *token_list, int fd);
 t_bool	replace_value(t_list *env, const char *envp);
+t_bool	export(char *value);
+t_bool	key_is_not_valid(const char *key);
 
 // pwd.c
 int		builtin_pwd(t_list *token_list, int fd);

@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:12 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 16:31:43 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:47:14 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 t_bool		set_signal(void);
 t_bool		unset_signal(int pid);
 static void	handle_custom_signal(int sig);
-static void	handle_default_signal_in_parent(int sig);
 
 t_bool	set_signal(void)
 {
@@ -39,8 +38,8 @@ t_bool	unset_signal(int pid)
 	}
 	else
 	{
-		signal(SIGINT, handle_default_signal_in_parent);
-		signal(SIGQUIT, handle_default_signal_in_parent);
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 	}
 	return (TRUE);
 }
@@ -54,14 +53,5 @@ static void	handle_custom_signal(int sig)
 		rl_replace_line("", 1);
 		rl_redisplay();
 	}
-	return ;
-}
-
-static void	handle_default_signal_in_parent(int sig)
-{
-	if (sig == SIGINT)
-		printf("\n");
-	else if (sig == SIGQUIT)
-		printf("Quit: 3\n");
 	return ;
 }
