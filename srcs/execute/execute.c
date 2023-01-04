@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:33 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 00:44:34 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 13:52:03 by min-cho          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/execute.h"
 #include "../../incs/builtin.h"
+#include "../../incs/subsystem.h"
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -57,6 +58,7 @@ static t_bool	child_process(t_list *cmd)
 	pid_t	pid;
 	int		fd[2];
 
+	signal(SIGINT, child_signal_handler);
 	if (pipe(fd) == -1)
 		return (FALSE);
 	pid = fork();
@@ -64,7 +66,6 @@ static t_bool	child_process(t_list *cmd)
 		return (FALSE);
 	if (pid == 0)
 	{
-		// signal(SIGINT, child_signal_handler);
 		set_fd_in_pipe(cmd, fd, TRUE);
 		if (set_fd_in_redir(cmd->content) == FALSE)
 			exit(g_var->exit_status);
