@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:12 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 14:58:30 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 13:51:08 by min-cho          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,19 @@ t_bool	init_signal(void)
 	return (TRUE);
 }
 
-void	proc_signal_handler(int sig)
+void	child_signal_handler(int sig)
 {
 	if (sig == SIGINT)
-		ft_putchar_fd('\n', STDOUT_FILENO);
-	return ;
+		return ;
 }
 
 void	signal_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		ft_putchar_fd('\n', STDOUT_FILENO);
+		printf("\n");
 		rl_on_new_line();
-		rl_replace_line("", STDOUT_FILENO);
+		rl_replace_line("", 1);
 		rl_redisplay();
 	}
 	return ;
