@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:11 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 23:18:15 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:36:07 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_bool	init_env_list(int argc, char **argv, char **envp)
 		else
 			ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strdup(*envp++)));
 	}
-	replace_value(g_var->env_list, last_exec);
+	replace_value(ft_lstlast(g_var->env_list), last_exec);
 	free(last_exec);
 	return (TRUE);
 }
