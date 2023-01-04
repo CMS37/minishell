@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:28 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 18:43:09 by min-cho          ###   ########.fr       */
+/*   Updated: 2023/01/04 19:37:46 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 static t_bool	init_minishell(int argc, char **argv, char **envp);
 static t_bool	set_var(void);
-static t_bool	execute_cmd_line(const char *line);
+static t_bool	execute_cmd_line(char **line);
 static void		exit_minishell(void);
 
 int	main(int argc, char **argv, char **envp)
@@ -43,7 +43,7 @@ int	main(int argc, char **argv, char **envp)
 		if (line == NULL)
 			exit_minishell();
 		add_history(line);
-		execute_cmd_line(line);
+		execute_cmd_line(&line);
 		free(line);
 	}
 	return (0);
@@ -71,7 +71,7 @@ static t_bool	set_var(void)
 	return (TRUE);
 }
 
-static t_bool	execute_cmd_line(const char *line)
+static t_bool	execute_cmd_line(char **line)
 {
 	if (lexer(line) && g_var->token_list != NULL)
 		if (parsing())

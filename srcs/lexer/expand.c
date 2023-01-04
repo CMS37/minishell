@@ -6,26 +6,29 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:39 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 23:30:03 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 19:28:55 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/lexer.h"
+#include "../../incs/builtin.h"
 #include <stdlib.h>
 
-char			*expand(const char **line);
+char			*expand(char **line);
 t_bool			is_expand(int c);
-static char		*get_key(const char **line);
-static size_t	get_key_size(const char *line);
-static char		*get_value(const char *key);
+static char		*get_key(char **line);
+static size_t	get_key_size(char *line);
+static char		*get_value(char *key);
 
-char	*expand(const char **line)
+char	*expand(char **line)
 {
 	char *const	key = get_key(line);
 	char		*ret;
 
 	if (key == NULL)
 		ret = ft_strdup("$");
+	else if (key_is_not_valid(key))
+		ret = NULL;
 	else if (key[0] == '?')
 		ret = ft_itoa(g_var->exit_status);
 	else
@@ -40,7 +43,7 @@ t_bool	is_expand(int c)
 	return (c == '$');
 }
 
-static char	*get_key(const char **line)
+static char	*get_key(char **line)
 {
 	const int	key_size = get_key_size(*line + 1);
 	char		*ret;
@@ -53,7 +56,7 @@ static char	*get_key(const char **line)
 	return (ret);
 }
 
-static size_t	get_key_size(const char *line)
+static size_t	get_key_size(char *line)
 {
 	size_t	ret;
 
@@ -65,7 +68,7 @@ static size_t	get_key_size(const char *line)
 	return (ret);
 }
 
-static char	*get_value(const char *key)
+static char	*get_value(char *key)
 {
 	t_list	*tmp;
 	size_t	key_len;

@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:00 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 01:03:31 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 19:55:52 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_bool	here_doc(t_token *token)
 	const int	fd = open_file(file_name, HERE_DOC);
 	char		*line;
 
-	ft_putendl_fd(file_name, 2);
 	if (fd == -1)
 	{
 		free(file_name);
@@ -114,7 +113,7 @@ static t_bool	convert_expand(char **line)
 	if (exp == NULL)
 		return (TRUE);
 	res = ft_substr(*line, 0, exp - *line);
-	exp_tmp = expand(&exp);
+	exp_tmp = expand((char **) &exp);
 	ft_strcat(&res, exp_tmp);
 	free(exp_tmp);
 	ft_strcat(&res, exp + 1);

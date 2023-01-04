@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_extern.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:31 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 18:33:42 by min-cho          ###   ########.fr       */
+/*   Updated: 2023/01/04 19:57:42 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ static char	*find_path(const char *cmd)
 	t_list	*tmp;
 	size_t	i;
 
+	if (*cmd == '\0')
+		return (NULL);
 	tmp = g_var->env_list;
 	while (ft_strnstr(tmp->content, "PATH=", 5) == NULL)
 		tmp = tmp->next;

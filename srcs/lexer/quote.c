@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:49 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 23:36:37 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 19:47:23 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ static t_bool	handle_double_quote(t_token *token, const char **line)
 	{
 		if (**line == '$')
 		{
-			exp = expand(line);
+			exp = expand((char **) line);
+			if (exp == NULL)
+				return (FALSE);
 			ft_strcat(&token->value, exp);
 			free(exp);
 		}

@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:56:51 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 14:56:52 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 19:36:00 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 # include "structs.h"
 
 // lexer.c
-t_bool	lexer(const char *line);
+t_bool	lexer(char **line);
 
 // expand.c
-char	*expand(const char **line);
+char	*expand(char **line);
 t_bool	is_expand(int c);
 
 // ifs.c

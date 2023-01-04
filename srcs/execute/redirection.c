@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:36 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 16:54:07 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 19:59:23 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,13 @@ int	open_file(const char *file, t_open_flag flag)
 
 	fd = -1;
 	if (flag == HERE_DOC)
-		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	else if (flag == FILE_OUT_TRUNC)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	else if (flag == FILE_IN)
 		fd = open(file, O_RDONLY, 0777);
+	else if (flag == FILE_OUT_APPEND)
+		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	if (fd == -1)
 	{
 		if (flag == HERE_DOC || flag == FILE_OUT_TRUNC)
