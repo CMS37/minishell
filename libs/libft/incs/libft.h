@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:02:21 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 15:02:22 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 18:06:56 by min-cho          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ t_bool			ft_is_space(const int c);
 int				ft_strcmp(const char *s1, const char *s2);
 t_bool			ft_strcat(char **dest, const char *src);
 t_bool			ft_strncat(char **dest, const char *src, size_t n);
-long long		ft_atoll(const char *str);
 t_bool			ft_strappend(char ***dest, const char *src);
 t_bool			ft_swap(void **a, void **b);
 

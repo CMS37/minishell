@@ -61,7 +61,6 @@ SRCS =  ft_atoi.c \
 		ft_strcmp.c \
 		ft_strcat.c \
 		ft_strncat.c \
-		ft_atoll.c \
 		ft_strappend.c \
 		ft_swap.c
 

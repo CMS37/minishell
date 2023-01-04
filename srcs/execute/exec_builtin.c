@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:29 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 14:58:30 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 18:36:18 by min-cho          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ t_bool	execute_builtin(t_list *token_list)
 	t_token	*token;
 	size_t	i;
 
-	g_var->exit_status = 0;
 	if (set_fd_in_redir(token_list) == FALSE)
 		return (TRUE);
 	token = (t_token *) token_list->content;
