@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:00 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 19:55:52 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 21:23:12 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../../incs/execute.h"
 #include "../../incs/lexer.h"
 #include "../../incs/builtin.h"
+#include "../../incs/subsystem.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -21,15 +22,14 @@
 #include <errno.h>
 #include <readline/readline.h>
 
-t_bool			here_doc(t_token *token);
-static char		*generate_file_name(void);
+t_bool			here_doc(char *file_name, char *end_flag);
+char			*generate_file_name(void);
 static char		*tmp_directory_path(void);
 static char		*generate_random_hex_code(void);
 static t_bool	convert_expand(char **line);
 
-t_bool	here_doc(t_token *token)
+t_bool	here_doc(char *file_name, char *end_flag)
 {
-	char *const	file_name = generate_file_name();
 	const int	fd = open_file(file_name, HERE_DOC);
 	char		*line;
 
@@ -41,7 +41,7 @@ t_bool	here_doc(t_token *token)
 	while (TRUE)
 	{
 		line = readline("heredoc> ");
-		if (line == NULL || ft_strcmp(line, (token->value)) == 0)
+		if (line == NULL || ft_strcmp(line, end_flag) == 0)
 			break ;
 		convert_expand(&line);
 		ft_putendl_fd(line, fd);
@@ -49,13 +49,11 @@ t_bool	here_doc(t_token *token)
 	}
 	if (line != NULL)
 		free(line);
-	free(token->value);
-	token->value = file_name;
 	close(fd);
 	return (TRUE);
 }
 
-static char	*generate_file_name(void)
+char	*generate_file_name(void)
 {
 	char	*ret;
 	char	*hex_code;

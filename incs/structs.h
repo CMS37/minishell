@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:56:55 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 00:44:56 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 20:49:43 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ typedef enum e_open_flag
 
 typedef struct s_var
 {
-	t_termios	old_term;
-	t_termios	new_term;
+	t_termios	old_termios_stdout;
+	t_termios	new_termios_stdout;
+	t_termios	old_termios_stdin;
+	t_termios	new_termios_stdin;
 	t_list		*token_list;
 	t_list		*env_list;
 	t_list		*cmd_list;

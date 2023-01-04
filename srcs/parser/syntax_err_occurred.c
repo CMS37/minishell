@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_err_occurred.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:08 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 15:25:23 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 21:35:52 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,16 @@
 #include "../../incs/builtin.h"
 #include "../../incs/utils.h"
 #include "../../incs/structs.h"
+#include "../../incs/subsystem.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <signal.h>
 
 t_bool			syntax_err_occurred(void);
 static t_bool	is_err(t_list *cur);
+static int		child_process_to_heredoc(t_token *token);
 
 t_bool	syntax_err_occurred(void)
 {
@@ -32,7 +39,7 @@ t_bool	syntax_err_occurred(void)
 		if (ft_strcmp(((t_token *) tmp->content)->value, "<<") == 0)
 		{
 			tmp = tmp->next;
-			if (here_doc(tmp->content) == FALSE)
+			if (child_process_to_heredoc(tmp->content) != 0)
 				return (TRUE);
 		}
 		tmp = tmp->next;
@@ -56,4 +63,30 @@ static t_bool	is_err(t_list *cur)
 		&& (next_t == NULL || next_t->type != T_WORD))
 		return (set_exit_status(258));
 	return (FALSE);
+}
+
+static int		child_process_to_heredoc(t_token *token)
+{
+	char *const	file_name = generate_file_name();
+	pid_t		pid;
+
+	pid = fork();
+	if (pid == -1)
+	{
+		free(file_name);
+		return (errno);
+	}
+	unset_signal(pid);
+	if (pid == 0)
+	{
+		if (here_doc(file_name, token->value) == FALSE)
+			exit(errno);
+		else
+			exit(0);
+	}
+	waitpid(pid, &g_var->exit_status, 0);
+	signal(SIGINT, handle_custom_signal);
+	free(token->value);
+	token->value = file_name;
+	return (g_var->exit_status);
 }

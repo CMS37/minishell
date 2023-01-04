@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:20 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 17:13:08 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 20:29:55 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ t_bool	key_is_not_valid(const char *key)
 {
 	if (*key == 0)
 		return (TRUE);
+	if (*key == '?')
+		return (FALSE);
 	if (ft_isalpha(*key) == 0 && *key != '_')
 		return (TRUE);
 	while (*key)

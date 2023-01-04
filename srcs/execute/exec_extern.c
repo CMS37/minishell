@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_extern.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:31 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 19:57:42 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 20:31:43 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static char	*find_path(const char *cmd)
 	if (*cmd == '\0')
 		return (NULL);
 	tmp = g_var->env_list;
-	while (ft_strnstr(tmp->content, "PATH=", 5) == NULL)
+	while (tmp && ft_strnstr(tmp->content, "PATH=", 5) == NULL)
 		tmp = tmp->next;
 	if (tmp == NULL)
 		return (NULL);

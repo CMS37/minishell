@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:56:53 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 15:11:45 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 21:18:30 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ t_bool	create_cmd_list(void);
 void	del_cmd(void *cmd);
 
 // here_doc.c
-t_bool	here_doc(t_token *token);
+t_bool	here_doc(char *file_name, char *end_flag);
+char	*generate_file_name(void);
 
 //syntax_err.c
 t_bool	syntax_err_occurred(void);

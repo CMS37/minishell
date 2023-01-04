@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:12 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 16:47:14 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 21:32:04 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/subsystem.h"
 #include "../../incs/builtin.h"
+#include "../../incs/structs.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -20,7 +21,7 @@
 
 t_bool		set_signal(void);
 t_bool		unset_signal(int pid);
-static void	handle_custom_signal(int sig);
+void		handle_custom_signal(int sig);
 
 t_bool	set_signal(void)
 {
@@ -44,10 +45,11 @@ t_bool	unset_signal(int pid)
 	return (TRUE);
 }
 
-static void	handle_custom_signal(int sig)
+void	handle_custom_signal(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_var->exit_status = 1;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 1);

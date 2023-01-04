@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:44 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 19:51:22 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 20:33:38 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static t_bool	expand_var(char **res, char **iter);
 
 t_bool	lexer(char **line)
 {
+	if (**line == '\0')
+		return (FALSE);
 	if (expand_vars(line) == FALSE)
 		return (print_err(1, *line, NULL, IDENTIFIER_ERR));
 	if (tokenize(*line) == FALSE)
