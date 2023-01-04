@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_extern.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:31 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 17:35:11 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 18:33:42 by min-cho          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <string.h>
 #include <dirent.h>
 #include <errno.h>
+#include <stdio.h>
 
 void			execute_extern(t_list *token_list);
 static t_bool	convert_relative_to_absolute_path(char **path);
@@ -32,23 +33,23 @@ void	execute_extern(t_list *token_list)
 	DIR				*dir;
 
 	if (convert_relative_to_absolute_path(&cmd[0]) == FALSE)
-		exit(print_err(errno, cmd[0], NULL, strerror(errno)));
+		exit(print_err(errno, cmd[0], NULL, strerror(errno)) >> 8);
 	if (*cmd[0] == '/')
 		path = ft_strdup(cmd[0]);
 	else
 		path = find_path(cmd[0]);
 	if (path == NULL)
-		exit(print_err(127, cmd[0], NULL, CMD_ERR));
+		exit(print_err(127, cmd[0], NULL, CMD_ERR) >> 8);
 	if (access(path, F_OK) != 0)
-		exit(print_err(127, cmd[0], NULL, "No such file or directory"));
+		exit(print_err(127, cmd[0], NULL, "No such file or directory") >> 8);
 	dir = opendir(path);
 	if (dir != NULL && closedir(dir) == 0)
-		exit(print_err(126, path, NULL, "is a directory"));
+		exit(print_err(126, path, NULL, "is a directory") >> 8);
 	if (access(path, X_OK) != 0)
-		exit(print_err(126, cmd[0], NULL, "permission denied"));
+		exit(print_err(126, cmd[0], NULL, "permission denied") >> 8);
 	set_exit_status(0);
 	if (execve(path, cmd, ft_getenv()) == -1)
-		exit(print_err(errno, cmd[0], NULL, strerror(errno)));
+		exit(print_err(errno, cmd[0], NULL, strerror(errno)) >> 8);
 	ft_putendl_fd("This is easter egg!!", 2);
 }
 
