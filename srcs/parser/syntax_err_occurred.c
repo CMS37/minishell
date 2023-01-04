@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_err_occurred.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:08 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 22:24:25 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 01:32:38 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,11 @@ t_bool	syntax_err_occurred(void)
 		{
 			tmp = tmp->next;
 			if (child_process_to_heredoc(tmp->content) != 0)
+			{
+				if (g_var->exit_status == 2)
+					g_var->exit_status = 1;
 				return (TRUE);
+			}
 		}
 		tmp = tmp->next;
 	}
@@ -76,7 +80,7 @@ static int	child_process_to_heredoc(t_token *token)
 		free(file_name);
 		return (errno);
 	}
-	unset_signal(pid);
+	set_signal_while_heredoc(pid);
 	if (pid == 0)
 	{
 		if (here_doc(file_name, token->value) == FALSE)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:12 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 22:12:02 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 01:32:42 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 #include <signal.h>
 #include <readline/readline.h>
 
-t_bool		set_signal(void);
-t_bool		unset_signal(int pid);
-void		handle_custom_signal(int sig);
+t_bool			set_signal(void);
+t_bool			unset_signal(int pid);
+t_bool			set_signal_while_heredoc(int pid);
+static void		handle_custom_signal(int sig);
 
 t_bool	set_signal(void)
 {
@@ -45,7 +46,7 @@ t_bool	unset_signal(int pid)
 	return (TRUE);
 }
 
-void	handle_custom_signal(int sig)
+static void	handle_custom_signal(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -56,4 +57,14 @@ void	handle_custom_signal(int sig)
 		rl_redisplay();
 	}
 	return ;
+}
+
+t_bool	set_signal_while_heredoc(int pid)
+{
+	if (pid == 0)
+		signal(SIGINT, SIG_DFL);
+	else
+		signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	return (TRUE);
 }

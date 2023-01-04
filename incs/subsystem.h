@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subsystem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:56:59 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 21:31:01 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 01:25:40 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ t_bool	unset_subsystem(int pid);
 
 // signal.c
 t_bool	set_signal(void);
-t_bool	unset_signal(int sig);
-void	handle_custom_signal(int sig);
+t_bool	unset_signal(int pid);
+t_bool	set_signal_while_heredoc(int pid);
 
 // termios.c
 t_bool	init_termios(void);
