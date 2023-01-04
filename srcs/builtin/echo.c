@@ -6,7 +6,7 @@
 /*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:09 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 14:16:46 by min-cho          ###   ########.fr       */
+/*   Updated: 2023/01/04 14:25:41 by min-cho          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static	t_bool check_n_flag(t_list **list)
 {
 	t_token *token;
 	int		flag;
+	int		i;
 
 	flag = FALSE;
 	token = (*list)->content;
@@ -56,9 +57,12 @@ static	t_bool check_n_flag(t_list **list)
 	{
 		if (ft_strlen(token->value) != 2)
 		{
-			while (1)
+			i = 2;
+			while (token->value[i])
 			{
-				
+				if (token->value[i] != 'n')
+					return (flag);
+				i++;
 			}
 		}
 		flag = TRUE;
