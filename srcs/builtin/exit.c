@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:15 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 14:57:16 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 14:42:22 by min-cho          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	set_exit_status(int status)
 
 static t_bool	is_num(const char *str)
 {
+	if (*str == '+' || *str == '-')
+		str++;
 	while (str && *str)
 	{
 		if (('0' <= *str && *str <= '9') == FALSE)

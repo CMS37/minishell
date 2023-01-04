@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:28 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 01:04:41 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 14:35:36 by min-cho          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int argc, char **argv, char **envp)
 		return (print_err(2, argv[1], NULL, strerror(2)));
 	while (TRUE)
 	{
+		init_signal();
 		line = readline("minishell-1.0$ ");
 		if (line == NULL)
 			exit_minishell();
@@ -55,7 +56,6 @@ static t_bool	init_minishell(int argc, char **argv, char **envp)
 		return (FALSE);
 	init_var();
 	init_termios();
-	init_signal();
 	init_env_list(argc, argv, envp);
 	g_var->old_fd[0] = dup(STDIN_FILENO);
 	g_var->old_fd[1] = dup(STDOUT_FILENO);
