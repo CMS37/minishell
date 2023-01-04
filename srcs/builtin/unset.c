@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:25 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 20:05:54 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 22:26:39 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,14 @@ static t_bool	unset(char *key)
 			else
 				prev->next = cur->next;
 			ft_lstdelone(cur, free);
-			cur = prev->next;
+			if (prev == NULL)
+				cur = g_var->env_list;
+			else
+				cur = prev->next;
+			continue ;
 		}
-		else
-		{
-			prev = cur;
-			cur = cur->next;
-		}
+		prev = cur;
+		cur = cur->next;
 	}
 	return (TRUE);
 }
@@ -70,6 +71,6 @@ static t_bool	is_correct(t_list *env, char *key)
 
 	key_len = ft_strlen(env->content);
 	if (ft_strchr(env->content, '=') != NULL)
-		key_len = ft_strchr(env->content, '=') - (char *)env->content;
+		key_len = ft_strchr(env->content, '=') - (char *) env->content;
 	return (ft_strncmp(env->content, key, key_len) == 0);
 }

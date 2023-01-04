@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:24 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 22:55:00 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 22:29:06 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ char	*home_dir(void)
 			return (ft_strdup(tmp->content + 5));
 		tmp = tmp->next;
 	}
-	return (NULL);
+	export("HOME=/Users/younhwan");
+	return (ft_strdup("/Users/younhwan"));
 }
 
 char	*get_absolute_path(char *path)

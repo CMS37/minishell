@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:08 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 21:35:52 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 22:24:25 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static t_bool	is_err(t_list *cur)
 	return (FALSE);
 }
 
-static int		child_process_to_heredoc(t_token *token)
+static int	child_process_to_heredoc(t_token *token)
 {
 	char *const	file_name = generate_file_name();
 	pid_t		pid;
@@ -85,7 +85,6 @@ static int		child_process_to_heredoc(t_token *token)
 			exit(0);
 	}
 	waitpid(pid, &g_var->exit_status, 0);
-	signal(SIGINT, handle_custom_signal);
 	free(token->value);
 	token->value = file_name;
 	return (g_var->exit_status);

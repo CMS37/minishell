@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:28 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 19:37:46 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/04 22:26:07 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ static t_bool	execute_cmd_line(char **line)
 			execute();
 	if (256 <= g_var->exit_status && g_var->exit_status % 256 != 0x7f)
 		g_var->exit_status >>= 8;
+	else if (0 < g_var->exit_status && g_var->exit_status < 128)
+		g_var->exit_status += 128;
 	return (TRUE);
 }
 
