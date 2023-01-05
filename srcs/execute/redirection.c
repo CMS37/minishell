@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:36 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 15:21:32 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/06 00:30:31 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,16 @@ t_bool	set_fd_in_redir(t_list **token_list)
 
 static int	get_fd(t_list *token_list)
 {
-	int		ret;
-	t_token	*cur;
-	t_token	*next;
+	t_token *const	cur = token_list->content;
+	t_token			*next;
+	int				ret;
 
 	ret = 0;
-	cur = token_list->content;
 	if (token_list->next == NULL)
 		return (ret);
 	next = token_list->next->content;
+	if (cur->type != T_REDIRECT)
+		return (ret);
 	if (ft_strcmp(cur->value, "<") == 0)
 		ret = open_file(next->value, FILE_IN);
 	else if (ft_strcmp(cur->value, "<<") == 0)
@@ -111,10 +112,7 @@ t_bool	rm_tokens(t_list **token_list)
 	cur = *token_list;
 	while (cur)
 	{
-		while (ft_strcmp(((t_token *) cur->content)->value, "<") == 0
-			|| ft_strcmp(((t_token *) cur->content)->value, "<<") == 0
-			|| ft_strcmp(((t_token *) cur->content)->value, ">") == 0
-			|| ft_strcmp(((t_token *) cur->content)->value, ">>") == 0)
+		while (((t_token *) cur->content)->type == T_REDIRECT)
 		{
 			if (rm_token(cur) == FALSE)
 			{
