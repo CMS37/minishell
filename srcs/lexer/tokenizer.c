@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:54 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 17:56:55 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/06 00:17:54 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 t_bool			tokenize(const char *line);
 t_bool			is_not_word(int c);
 static t_bool	handle_tokens(t_token **token, const char **line, t_bool *flag);
+static t_bool	handle_expand(t_token **token, char **line);
+static t_bool	free_string(char **str);
 
 t_bool	tokenize(const char *line)
 {
@@ -73,6 +75,40 @@ static t_bool	handle_tokens(t_token **token, const char **line, t_bool *flag)
 		*flag = TRUE;
 	}
 	else if (is_expand(**line))
-		ft_strncat(&(*token)->value, (*line)++, 1);
+		handle_expand(token, (char **)line);
+	return (TRUE);
+}
+
+static t_bool	handle_expand(t_token **token, char **line)
+{
+	char *const		exp = expand(line);
+	char **const	tokens = ft_split(exp, ' ');
+	char			**tmp;
+
+	free(exp);
+	tmp = tokens;
+	while (*(tmp + 1))
+	{
+		ft_strcat(&(*token)->value, *tmp);
+		ft_lstadd_back(&g_var->token_list, ft_lstnew(*token));
+		*token = init_token();
+		tmp++;
+	}
+	ft_strcat(&(*token)->value, *tmp);
+	free_string(tokens);
+	return (TRUE);
+}
+
+static t_bool	free_string(char **str)
+{
+	char	**tmp;
+
+	tmp = str;
+	while (*tmp)
+	{
+		free(*tmp);
+		tmp++;
+	}
+	free(str);
 	return (TRUE);
 }
