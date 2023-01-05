@@ -6,7 +6,7 @@
 /*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:15 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 18:13:27 by min-cho          ###   ########.fr       */
+/*   Updated: 2023/01/05 18:15:24 by min-cho          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	set_exit_status(int status)
 
 static t_bool	is_num(const char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] && ft_is_space(str[i]))
@@ -64,7 +64,7 @@ static t_bool	is_num(const char *str)
 		str++;
 	while (str[i])
 	{
-		if (('0' <= str[i] && str[i] <= '9') == FALSE &&
+		if (('0' <= str[i] && str[i] <= '9') == FALSE && \
 			ft_is_space(str[i]) == FALSE)
 			return (FALSE);
 		i++;
