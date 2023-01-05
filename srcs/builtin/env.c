@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:11 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 14:23:04 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 17:51:16 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_list	*get_env(const char *key)
 	ret = g_var->env_list;
 	key_len = ft_strlen(key);
 	if (ft_strchr(key, '=') != NULL)
-		key_len = ft_strchr(key, '=') - key;
+		key_len = ft_strchr(key, '=') - key + 1;
 	while (ret)
 	{
 		if (ft_strncmp(ret->content, key, key_len) == 0)

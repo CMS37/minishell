@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:54 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 19:29:31 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 17:56:55 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,6 @@ static t_bool	handle_tokens(t_token **token, const char **line, t_bool *flag)
 		*flag = TRUE;
 	}
 	else if (is_expand(**line))
-		return (FALSE);
+		ft_strncat(&(*token)->value, (*line)++, 1);
 	return (TRUE);
 }
