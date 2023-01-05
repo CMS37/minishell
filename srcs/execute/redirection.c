@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:36 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 15:08:14 by min-cho          ###   ########.fr       */
+/*   Updated: 2023/01/05 15:16:36 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ t_bool	rm_tokens(t_list **token_list)
 					*token_list = NULL;
 				else
 					prev->next = NULL;
-				return (FALSE);
+				return (*token_list != NULL);
 			}
 		}
 		prev = cur;
