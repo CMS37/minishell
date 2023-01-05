@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:00 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 22:23:55 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:04:09 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 t_bool			here_doc(char *file_name, char *end_flag);
 char			*generate_file_name(void);
 static char		*tmp_directory_path(void);
-static char		*generate_random_hex_code(void);
+static char		*generate_random_hexcode(void);
 static t_bool	convert_expand(char **line);
 
 t_bool	here_doc(char *file_name, char *end_flag)
@@ -59,7 +59,7 @@ char	*generate_file_name(void)
 	char	*hex_code;
 
 	ret = tmp_directory_path();
-	hex_code = generate_random_hex_code();
+	hex_code = generate_random_hexcode();
 	ft_strcat(&ret, ".heredoc_tmp_0x");
 	ft_strcat(&ret, hex_code);
 	free(hex_code);
@@ -80,7 +80,7 @@ static char	*tmp_directory_path(void)
 	return (ft_strdup("/"));
 }
 
-static char	*generate_random_hex_code(void)
+static char	*generate_random_hexcode(void)
 {
 	const char	*hex = "0123456789abcdef";
 	char *const	ret = ft_calloc(sizeof(char), 9, "");

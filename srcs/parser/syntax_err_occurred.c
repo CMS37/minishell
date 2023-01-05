@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_err_occurred.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:08 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 01:32:38 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:58:05 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

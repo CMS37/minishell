@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:20 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 01:03:01 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:22:57 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_bool	export(char *value)
 
 	if (env == NULL)
 	{
-		ft_putendl_fd(value, 2);
 		ft_lstadd_back(&g_var->env_list, ft_lstnew(ft_strdup(value)));
 		ft_swap(&last_executed->content, &last_executed->next->content);
 	}
