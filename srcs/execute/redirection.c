@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:36 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 15:16:36 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 15:21:32 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ t_bool	rm_tokens(t_list **token_list)
 		{
 			if (rm_token(cur) == FALSE)
 			{
-				ft_lstdelone(cur, del_token);
 				if (prev == NULL)
 					*token_list = NULL;
 				else
@@ -138,7 +137,10 @@ t_bool	rm_token(t_list *token_list)
 
 	ft_lstdelone(token_list->next, del_token);
 	if (next_token == NULL)
+	{
+		ft_lstdelone(token_list, del_token);
 		return (FALSE);
+	}
 	free(token_list->content);
 	token_list->content = next_token->content;
 	token_list->next = next_token->next;
