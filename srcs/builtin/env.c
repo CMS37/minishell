@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:11 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 17:51:16 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 21:45:57 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,20 @@ int	builtin_env(t_list *token_list, int fd)
 t_list	*get_env(const char *key)
 {
 	t_list	*ret;
-	size_t	key_len;
+	size_t	target_key_len;
+	size_t	cur_key_len;
 
 	ret = g_var->env_list;
-	key_len = ft_strlen(key);
+	target_key_len = ft_strlen(key);
 	if (ft_strchr(key, '=') != NULL)
-		key_len = ft_strchr(key, '=') - key + 1;
+		target_key_len = ft_strchr(key, '=') - key;
 	while (ret)
 	{
-		if (ft_strncmp(ret->content, key, key_len) == 0)
+		cur_key_len = ft_strlen(ret->content);
+		if (ft_strchr(ret->content, '=') != NULL)
+			cur_key_len = ft_strchr(ret->content, '=') - (char *) ret->content;
+		if (target_key_len == cur_key_len && \
+			ft_strncmp(ret->content, key, cur_key_len) == 0)
 			return (ret);
 		ret = ret->next;
 	}
