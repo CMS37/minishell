@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:28 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 15:26:19 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 18:29:51 by min-cho          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static t_bool	execute_cmd_line(char **line)
 	t_bool	success;
 
 	if (lexer(line) == FALSE || g_var->token_list == NULL)
-		return (FALSE);
+		return ((g_var->exit_status >>= 8) == 0);
 	success = parsing();
 	if (success)
 		execute();
