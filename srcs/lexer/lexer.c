@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:44 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 15:25:56 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 17:45:12 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 #include "../../incs/utils.h"
 #include <errno.h>
 #include <stdlib.h>
+
+const static size_t	g_single_quote_mask = 2;
+const static size_t	g_double_quote_mask = 1;
 
 t_bool			lexer(char **line);
 static t_bool	expand_vars(char **line);
@@ -34,16 +37,16 @@ static t_bool	expand_vars(char **line)
 {
 	char	*res;
 	char	*tmp;
-	t_bool	double_quote;
+	size_t	quote;
 
 	res = NULL;
 	tmp = *line;
-	double_quote = FALSE;
+	quote = 0;
 	while (*tmp)
 	{
-		if (*tmp == '\"')
-			double_quote = !double_quote;
-		if (*tmp == '$' && double_quote == FALSE)
+		quote ^= (g_single_quote_mask * (*tmp == '\''));
+		quote ^= (g_double_quote_mask * (*tmp == '"'));
+		if (*tmp == '$' && quote == 0)
 		{
 			if (expand_var(&res, &tmp) == FALSE)
 				return (FALSE);
