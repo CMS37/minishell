@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:15 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 00:49:06 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 18:15:24 by min-cho          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ int	builtin_exit(t_list *token_list, int fd)
 	if (tmp == NULL)
 		exit(set_exit_status(0) >> 8);
 	token = tmp->content;
+	if (ft_atoll(token->value, &i) == FALSE || i < INT_MIN || INT_MAX < i)
+		exit(print_err(255, "exit", token->value, NUMERIC_ERR) >> 8);
 	if (is_num(token->value) == FALSE)
 		exit(print_err(255, "exit", token->value, NUMERIC_ERR) >> 8);
 	if (tmp->next != NULL)
 		return (print_err(1, "exit", NULL, ARG_ERR));
-	if (ft_atoll(token->value, &i) == FALSE || i < INT_MIN || INT_MAX < i)
-		exit(print_err(255, "exit", token->value, NUMERIC_ERR) >> 8);
 	if (i < 0)
 		i = (256 - ((i * -1) % 256));
 	i = (i % 256);
@@ -55,13 +55,19 @@ int	set_exit_status(int status)
 
 static t_bool	is_num(const char *str)
 {
-	if (*str == '+' || *str == '-')
+	int	i;
+
+	i = 0;
+	while (str[i] && ft_is_space(str[i]))
+		i++;
+	if (str[i] == '+' || str[i] == '-')
 		str++;
-	while (str && *str)
+	while (str[i])
 	{
-		if (('0' <= *str && *str <= '9') == FALSE)
+		if (('0' <= str[i] && str[i] <= '9') == FALSE && \
+			ft_is_space(str[i]) == FALSE)
 			return (FALSE);
-		str++;
+		i++;
 	}
 	return (TRUE);
 }
