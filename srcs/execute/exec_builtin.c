@@ -6,7 +6,7 @@
 /*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:29 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 18:36:18 by min-cho          ###   ########.fr       */
+/*   Updated: 2023/01/05 15:08:55 by min-cho          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_bool	execute_builtin(t_list *token_list)
 	t_token	*token;
 	size_t	i;
 
-	if (set_fd_in_redir(token_list) == FALSE)
+	if (set_fd_in_redir(&token_list) == FALSE)
 		return (TRUE);
 	token = (t_token *) token_list->content;
 	i = 0;

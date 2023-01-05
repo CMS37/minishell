@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:56:50 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/02 14:56:50 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 15:07:04 by min-cho          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_bool	execute_builtin(t_list *token_list);
 void	execute_extern(t_list *token_list);
 
 // redirections.c
-t_bool	set_fd_in_redir(t_list *token_list);
+t_bool	set_fd_in_redir(t_list **token_list);
 int		open_file(const char *file, t_open_flag flag);
 
 #endif

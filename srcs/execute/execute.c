@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:33 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 01:00:53 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 15:10:19 by min-cho          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static t_bool	child_process(t_list *cmd)
 	if (pid == 0)
 	{
 		set_fd_in_pipe(cmd, fd, TRUE);
-		if (set_fd_in_redir(cmd->content) == FALSE)
+		if (set_fd_in_redir((t_list **) &cmd->content) == FALSE)
 			exit(set_exit_status(errno));
 		if (is_builtin(cmd->content) && 0 <= execute_builtin(cmd->content))
 			exit(g_var->exit_status);
