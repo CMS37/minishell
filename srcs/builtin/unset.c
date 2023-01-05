@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:25 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 22:26:39 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/05 21:48:30 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,14 @@ static t_bool	unset(char *key)
 
 static t_bool	is_correct(t_list *env, char *key)
 {
+	size_t	env_key_len;
 	size_t	key_len;
 
-	key_len = ft_strlen(env->content);
+	env_key_len = ft_strlen(env->content);
 	if (ft_strchr(env->content, '=') != NULL)
-		key_len = ft_strchr(env->content, '=') - (char *) env->content;
-	return (ft_strncmp(env->content, key, key_len) == 0);
+		env_key_len = ft_strchr(env->content, '=') - (char *) env->content;
+	key_len = ft_strlen(key);
+	if (env_key_len != key_len)
+		return (FALSE);
+	return (ft_strncmp(env->content, key, env_key_len) == 0);
 }

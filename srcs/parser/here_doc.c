@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:00 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 14:04:09 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/06 00:47:10 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "../../incs/lexer.h"
 #include "../../incs/builtin.h"
 #include "../../incs/subsystem.h"
+#include "../../incs/utils.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -69,6 +70,7 @@ char	*generate_file_name(void)
 static char	*tmp_directory_path(void)
 {
 	t_list	*tmp;
+	char	*substitution;
 
 	tmp = g_var->env_list;
 	while (tmp)
@@ -77,7 +79,9 @@ static char	*tmp_directory_path(void)
 			return (ft_strdup(tmp->content + 7));
 		tmp = tmp->next;
 	}
-	return (ft_strdup("/"));
+	substitution = home_dir();
+	ft_strcat(&substitution, "/");
+	return (substitution);
 }
 
 static char	*generate_random_hexcode(void)
