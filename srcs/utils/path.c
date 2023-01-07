@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:24 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/04 22:35:02 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/08 00:12:43 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,10 @@
 #include "../../incs/builtin.h"
 #include "../../incs/structs.h"
 #include <unistd.h>
-#include <stdlib.h>
 
-char			*home_dir(void);
-char			*get_absolute_path(char *path);
-char			*calc_relative_path(char *path);
-static t_bool	build_list(t_list **lst, char *path);
-static t_bool	ft_dellast(t_list **lst);
+char	*home_dir(void);
+char	*ft_getcwd(void);
+char	*get_oldpwd(void);
 
 char	*home_dir(void)
 {
@@ -37,95 +34,37 @@ char	*home_dir(void)
 	return (ft_strdup("/Users/younhwan"));
 }
 
-char	*get_absolute_path(char *path)
+char	*ft_getcwd(void)
 {
 	char	*ret;
+	t_list	*env_tmp;
 
-	if (*path == '\0')
-		ret = ft_getcwd();
-	else if (ft_strcmp(path, "-") == 0)
-		ret = get_oldpwd();
-	else if (ft_strcmp(path, "~") == 0 || ft_strncmp(path, "~/", 2) == 0)
+	ret = getcwd(NULL, 0);
+	if (ret != NULL)
+		return (ret);
+	env_tmp = g_var->env_list;
+	while (env_tmp)
 	{
-		ret = home_dir();
-		ft_strcat(&ret, path + 1);
-	}
-	else if (*path != '/')
-	{
-		ret = ft_getcwd();
-		ft_strcat(&ret, "/");
-		ft_strcat(&ret, path);
-	}
-	else
-		ret = ft_strdup(path);
-	return (ret);
-}
-
-char	*calc_relative_path(char *path)
-{
-	char	*ret;
-	t_list	*lst;
-	t_list	*tmp;
-
-	ret = NULL;
-	lst = NULL;
-	build_list(&lst, path);
-	tmp = lst;
-	while (tmp->next)
-	{
-		ft_strcat(&ret, tmp->content);
-		tmp = tmp->next;
-	}
-	if (((char *) tmp->content)[ft_strlen(tmp->content) - 1] == '/')
-		ft_strncat(&ret, tmp->content, ft_strlen(tmp->content) - 1);
-	else
-		ft_strcat(&ret, tmp->content);
-	ft_lstclear(&lst, free);
-	return (ret);
-}
-
-static t_bool	build_list(t_list **lst, char *path)
-{
-	char	*token;
-
-	token = NULL;
-	while (*path)
-	{
-		ft_strncat(&token, path, 1);
-		if (*path == '/' || *(path + 1) == '\0')
+		if (ft_strncmp(env_tmp->content, "PWD=", 4) == 0)
 		{
-			if (ft_strcmp(token, ".") == 0 || ft_strcmp(token, "./") == 0)
-				free(token);
-			else if (!ft_strcmp(token, "..") || !ft_strcmp(token, "../"))
-			{
-				free(token);
-				ft_dellast(lst);
-			}
-			else
-				ft_lstadd_back(lst, ft_lstnew(token));
-			token = NULL;
+			ret = ft_strdup(env_tmp->content + 4);
+			break ;
 		}
-		path++;
+		env_tmp = env_tmp->next;
 	}
-	return (TRUE);
+	return (ret);
 }
 
-static t_bool	ft_dellast(t_list **lst)
+char	*get_oldpwd(void)
 {
-	t_list	*tmp;
+	t_list	*env_tmp;
 
-	tmp = *lst;
-	if (tmp->next == NULL)
+	env_tmp = g_var->env_list;
+	while (env_tmp)
 	{
-		free(tmp->content);
-		free(tmp);
-		*lst = NULL;
-		return (TRUE);
+		if (ft_strncmp(env_tmp->content, "OLDPWD=", 7) == 0)
+			return (ft_strdup(env_tmp->content + 7));
+		env_tmp = env_tmp->next;
 	}
-	while (tmp->next->next)
-		tmp = tmp->next;
-	free(tmp->next->content);
-	free(tmp->next);
-	tmp->next = NULL;
-	return (TRUE);
+	return (NULL);
 }

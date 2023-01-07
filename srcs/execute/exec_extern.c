@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:31 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/06 01:13:37 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/08 00:54:09 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 #include <stdio.h>
 
 void			execute_extern(t_list *token_list);
-static t_bool	convert_relative_to_absolute_path(char **path);
+static t_bool	convert_cmd_path(char **cmd);
 static char		**list_to_arr(t_list *token_list);
-static char		*find_path(const char *cmd);
+static char		*find_path_of_cmd(const char *cmd);
 static t_bool	free_paths(char **paths);
 
 void	execute_extern(t_list *token_list)
@@ -32,12 +32,12 @@ void	execute_extern(t_list *token_list)
 	char			*path;
 	DIR				*dir;
 
-	if (convert_relative_to_absolute_path(&cmd[0]) == FALSE)
+	if (convert_cmd_path(cmd) == FALSE)
 		exit(print_err(errno, cmd[0], NULL, strerror(errno)) >> 8);
 	if (*cmd[0] == '/')
 		path = ft_strdup(cmd[0]);
 	else
-		path = find_path(cmd[0]);
+		path = find_path_of_cmd(cmd[0]);
 	if (path == NULL)
 		exit(print_err(127, cmd[0], NULL, CMD_ERR) >> 8);
 	if (access(path, F_OK) != 0)
@@ -53,31 +53,22 @@ void	execute_extern(t_list *token_list)
 	ft_putendl_fd("This is easter egg!!", 2);
 }
 
-t_bool	convert_relative_to_absolute_path(char **path)
+static t_bool	convert_cmd_path(char **cmd)
 {
-	char	*ret;
+	size_t	i;
 
-	if (**path == '\0' || **path == '/')
-		return (TRUE);
-	if (ft_strcmp(*path, "~") == 0 || ft_strncmp(*path, "~/", 2) == 0)
-	{
-		ret = home_dir();
-		if (ret == NULL)
+	if (ft_strcmp(*cmd, "~") == 0 || ft_strncmp(*cmd, "~/", 2) == 0 || \
+		ft_strcmp(*cmd, ".") == 0 || ft_strcmp(*cmd, "..") == 0 || \
+		ft_strncmp(*cmd, "./", 2) == 0 || ft_strncmp(*cmd, "../", 3) == 0)
+		if (convert_path(&cmd[0]) == FALSE)
 			return (FALSE);
-		ft_strcat(&ret, *path + 1);
-		free(*path);
-		*path = ret;
-	}
-	if (ft_strcmp(*path, ".") == 0 || ft_strcmp(*path, "..") == 0 || \
-		ft_strncmp(*path, "./", 2) == 0 || ft_strncmp(*path, "../", 3) == 0)
+	i = 0;
+	while (cmd[++i])
 	{
-		ret = ft_getcwd();
-		if (ret == NULL)
+		if (cmd[i][0] != '~')
+			continue ;
+		if (convert_path(&cmd[i]) == FALSE)
 			return (FALSE);
-		ft_strcat(&ret, "/");
-		ft_strcat(&ret, *path);
-		free(*path);
-		*path = ret;
 	}
 	return (TRUE);
 }
@@ -98,7 +89,7 @@ static char	**list_to_arr(t_list *token_list)
 	return (ret);
 }
 
-static char	*find_path(const char *cmd)
+static char	*find_path_of_cmd(const char *cmd)
 {
 	char	*ret;
 	char	**paths;

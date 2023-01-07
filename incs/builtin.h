@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:56:46 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 01:01:37 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/08 00:35:30 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ t_bool	key_is_not_valid(const char *key);
 
 // pwd.c
 int		builtin_pwd(t_list *token_list, int fd);
-char	*ft_getcwd(void);
-char	*get_oldpwd(void);
 
 // unset.c
 int		builtin_unset(t_list *token_list, int fd);
