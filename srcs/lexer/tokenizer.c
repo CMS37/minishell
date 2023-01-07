@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:54 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/06 00:17:54 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/07 23:18:00 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,12 @@ static t_bool	handle_tokens(t_token **token, const char **line, t_bool *flag)
 static t_bool	handle_expand(t_token **token, char **line)
 {
 	char *const		exp = expand(line);
-	char **const	tokens = ft_split(exp, ' ');
+	char			**tokens;
 	char			**tmp;
 
+	if (exp == NULL)
+		return (TRUE);
+	tokens = ft_split(exp, ' ');
 	free(exp);
 	tmp = tokens;
 	while (*(tmp + 1))
