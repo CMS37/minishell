@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:07 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 00:26:54 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/08 00:51:03 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,30 @@
 
 int				builtin_cd(t_list *token_list, int fd);
 static int		chdir_to_home(char *cwd);
-static t_bool	convert_to_absolute_path(char **path);
+static int		chdir_to_arg(t_list *token_list, char *cwd);
 static t_bool	set_path_env(char *oldpwd, char *pwd);
 
 int	builtin_cd(t_list *token_list, int fd)
 {
-	char *const		cwd = ft_getcwd();
-	t_token			*arg;
-	char			*to_go;
+	char *const	cwd = ft_getcwd();
+	int			exit_status;
 
 	(void) fd;
 	if (cwd == NULL)
 		return (print_err(errno, "cd", NULL, strerror(errno)));
 	if (ft_lstsize(token_list) == 1)
-		return (chdir_to_home(cwd));
-	arg = token_list->next->content;
-	if (convert_to_absolute_path(&arg->value) == FALSE)
+		exit_status = chdir_to_home(cwd);
+	else
+		exit_status = chdir_to_arg(token_list, cwd);
+	free(cwd);
+	if (exit_status == 1 << 16)
 	{
-		free(cwd);
-		return (print_err(1, "cd", NULL, "OLDPWD not set"));
+		print_err(1, "cd", NULL, "OLDPWD not set");
+		exit_status = 1;
 	}
-	to_go = arg->value;
-	if (to_go == NULL || chdir(to_go) != 0)
-		print_err(errno, "cd", arg->value, strerror(errno));
-	set_path_env(cwd, to_go);
-	return (g_var->exit_status);
+	else if (exit_status != 0)
+		print_err(errno, "cd", NULL, strerror(errno));
+	return (set_exit_status(exit_status));
 }
 
 static int	chdir_to_home(char *cwd)
@@ -58,34 +57,24 @@ static int	chdir_to_home(char *cwd)
 	set_path_env(cwd, home);
 	if (home != NULL)
 		free(home);
-	if (ret != 0)
-		print_err(ret, "cd", NULL, strerror(ret));
-	return (set_exit_status(ret));
+	return (ret);
 }
 
-static t_bool	convert_to_absolute_path(char **path)
+static int	chdir_to_arg(t_list *token_list, char *cwd)
 {
-	char *const		before_calculated = get_absolute_path(*path);
-	const t_bool	chdir_to_oldpwd = ((**path) == '-');
-	char			*calculated;
+	int				ret;
+	t_token *const	arg = token_list->next->content;
+	const t_bool	chdir_to_oldpwd = (ft_strcmp(arg->value, "-") == 0);
 
-	if (ft_strcmp(*path, "-") == 0 && before_calculated == NULL)
-		return (FALSE);
-	calculated = calc_relative_path(before_calculated);
-	free(*path);
-	if (access(calculated, F_OK) == 0)
-	{
-		*path = calculated;
-		free(before_calculated);
-	}
-	else
-	{
-		*path = before_calculated;
-		free(calculated);
-	}
-	if (chdir_to_oldpwd)
-		ft_putendl_fd(*path, 1);
-	return (TRUE);
+	ret = 0;
+	if (convert_path(&arg->value) == FALSE)
+		ret = 1 << 16;
+	else if (arg->value == NULL || chdir(arg->value) != 0)
+		ret = errno;
+	else if (chdir_to_oldpwd)
+		ft_putendl_fd(arg->value, 1);
+	set_path_env(cwd, arg->value);
+	return (ret);
 }
 
 static t_bool	set_path_env(char *oldpwd, char *pwd)
@@ -95,7 +84,6 @@ static t_bool	set_path_env(char *oldpwd, char *pwd)
 
 	export(old_path);
 	export(cur_path);
-	free(oldpwd);
 	free(old_path);
 	free(cur_path);
 	return (TRUE);

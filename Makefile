@@ -48,6 +48,7 @@ SRCS = 	minishell.c \
 		subsystem/subsystem.c \
 		subsystem/signal.c \
 		subsystem/termios.c \
+		utils/convert_path.c \
 		utils/ft_getenv.c \
 		utils/path.c \
 		utils/print_err.c

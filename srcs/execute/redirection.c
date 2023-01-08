@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:36 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/06 00:30:31 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/07 23:26:00 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ t_bool	rm_token(t_list *token_list)
 		ft_lstdelone(token_list, del_token);
 		return (FALSE);
 	}
-	free(token_list->content);
+	del_token(token_list->content);
 	token_list->content = next_token->content;
 	token_list->next = next_token->next;
 	free(next_token);
