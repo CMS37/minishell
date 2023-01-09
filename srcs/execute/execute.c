@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:33 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/09 14:55:53 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/10 00:50:57 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	execute(void)
 	if (g_var->cmd_list == NULL)
 		return (0);
 	if (g_var->cmd_list->next == NULL && is_builtin(g_var->cmd_list->content))
-		return (execute_builtin(g_var->cmd_list->content));
+		return (execute_builtin(g_var->cmd_list->content, FALSE));
 	child_process(g_var->cmd_list);
 	set_underscore_env();
 	if (g_var->exit_status == 2 && g_var->exit_status < 256)
@@ -69,7 +69,7 @@ static t_bool	child_process(t_list *cmd)
 		set_fd_in_pipe(cmd, fd, TRUE);
 		if (set_fd_in_redir((t_list **) &cmd->content) == FALSE)
 			exit(g_var->exit_status >> 8);
-		if (is_builtin(cmd->content) && 0 <= execute_builtin(cmd->content))
+		if (is_builtin(cmd->content) && 0 <= execute_builtin(cmd->content, 1))
 			exit(g_var->exit_status >> 8);
 		else
 			execute_extern(cmd->content);

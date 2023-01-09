@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:15 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/09 20:00:39 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/10 00:42:18 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <stdio.h>
 
 int				builtin_exit(t_list *token_list, int fd);
 int				set_exit_status(int status);
 static t_bool	is_num(const char *str);
 static t_bool	ft_atoll(const char *str, long long *num);
 
-// isatty? SHLVL? (자식에서는 실행이 되지 않는다. (isatty == FALSE) return (0); )
 int	builtin_exit(t_list *token_list, int fd)
 {
 	t_list		*tmp;
@@ -31,7 +31,8 @@ int	builtin_exit(t_list *token_list, int fd)
 
 	i = 1;
 	tmp = token_list->next;
-	ft_putendl_fd("exit", fd);
+	if (fd == 2)
+		ft_putendl_fd("exit", fd);
 	if (tmp == NULL)
 		exit(set_exit_status(0) >> 8);
 	token = tmp->content;

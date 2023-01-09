@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:07 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/09 14:49:55 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/09 23:32:09 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 int				builtin_cd(t_list *token_list, int fd);
 static int		chdir_to_home(char *cwd);
-static int		chdir_to_arg(t_list *token_list, char *cwd);
+static int		chdir_to_arg(t_list *token_list, char *cwd, int fd);
 static t_bool	set_path_env(char *oldpwd, char *pwd);
 
 int	builtin_cd(t_list *token_list, int fd)
@@ -28,13 +28,12 @@ int	builtin_cd(t_list *token_list, int fd)
 	char *const	cwd = ft_getcwd();
 	int			exit_status;
 
-	(void) fd;
 	if (cwd == NULL)
 		return (print_err(errno, "cd", NULL, "PWD not set"));
 	if (ft_lstsize(token_list) == 1)
 		exit_status = chdir_to_home(cwd);
 	else
-		exit_status = chdir_to_arg(token_list, cwd);
+		exit_status = chdir_to_arg(token_list, cwd, fd);
 	free(cwd);
 	if (exit_status == 1 << 16)
 		exit_status = 1;
@@ -62,7 +61,7 @@ static int	chdir_to_home(char *cwd)
 	return (ret);
 }
 
-static int	chdir_to_arg(t_list *token_list, char *cwd)
+static int	chdir_to_arg(t_list *token_list, char *cwd, int fd)
 {
 	int				ret;
 	t_token *const	arg = token_list->next->content;
@@ -80,7 +79,7 @@ static int	chdir_to_arg(t_list *token_list, char *cwd)
 	else if (arg->value == NULL || chdir(arg->value) != 0)
 		ret = errno;
 	else if (chdir_to_oldpwd)
-		ft_putendl_fd(arg->value, 1);
+		ft_putendl_fd(arg->value, fd);
 	set_path_env(cwd, arg->value);
 	return (ret);
 }

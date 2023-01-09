@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:56:50 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/08 00:34:25 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/10 00:40:30 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_bool	set_underscore_env(void);
 
 // execute_builtin.c
 t_bool	is_builtin(t_list *token_list);
-t_bool	execute_builtin(t_list *token_list);
+t_bool	execute_builtin(t_list *token_list, t_bool child_process);
 
 // execute_extern.c
 void	execute_extern(t_list *token_list);

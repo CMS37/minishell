@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:29 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/06 00:58:34 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/10 00:42:35 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int static (*const	g_builtin_func[])(t_list *token_list, int fd) = {
 };
 
 t_bool	is_builtin(t_list *token_list);
-t_bool	execute_builtin(t_list *token_list);
+t_bool	execute_builtin(t_list *token_list, t_bool child_process);
 
 t_bool	is_builtin(t_list *token_list)
 {
@@ -41,21 +41,25 @@ t_bool	is_builtin(t_list *token_list)
 	return (FALSE);
 }
 
-t_bool	execute_builtin(t_list *token_list)
+t_bool	execute_builtin(t_list *token_list, t_bool child_process)
 {
-	t_token	*token;
-	size_t	i;
+	t_token *const	token = (t_token *) token_list->content;
+	int				fd;
+	size_t			i;
 
 	if (set_fd_in_redir(&token_list) == FALSE)
 		return (TRUE);
-	token = (t_token *) token_list->content;
+	if (child_process == TRUE)
+		fd = 1;
+	else if (ft_strcmp(token->value, "exit") == 0)
+		fd = 2;
 	i = 0;
 	set_exit_status(0);
 	set_underscore_env();
 	while (g_builtin_list[i] != NULL)
 	{
 		if (ft_strcmp(token->value, g_builtin_list[i]) == 0)
-			return (g_builtin_func[i](token_list, 1));
+			return (g_builtin_func[i](token_list, fd));
 		i++;
 	}
 	return (TRUE);
