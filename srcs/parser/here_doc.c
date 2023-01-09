@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:00 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/06 00:47:10 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/09 14:34:24 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ char	*generate_file_name(void)
 static char	*tmp_directory_path(void)
 {
 	t_list	*tmp;
-	char	*substitution;
 
 	tmp = g_var->env_list;
 	while (tmp)
@@ -79,9 +78,7 @@ static char	*tmp_directory_path(void)
 			return (ft_strdup(tmp->content + 7));
 		tmp = tmp->next;
 	}
-	substitution = home_dir();
-	ft_strcat(&substitution, "/");
-	return (substitution);
+	return (ft_strdup("/"));
 }
 
 static char	*generate_random_hexcode(void)

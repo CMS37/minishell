@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_extern.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:31 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/08 00:54:09 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/09 14:43:41 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	execute_extern(t_list *token_list)
 	DIR				*dir;
 
 	if (convert_cmd_path(cmd) == FALSE)
-		exit(print_err(errno, cmd[0], NULL, strerror(errno)) >> 8);
+		exit(print_err(1, cmd[0], NULL, strerror(2)) >> 8);
 	if (*cmd[0] == '/')
 		path = ft_strdup(cmd[0]);
 	else
