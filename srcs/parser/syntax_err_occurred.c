@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:08 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/10 01:02:41 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/10 01:10:31 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,7 @@ t_bool	syntax_err_occurred(void)
 		{
 			tmp = tmp->next;
 			if (child_process_to_heredoc(tmp->content) != 0)
-			{
-				if (g_var->exit_status == 2)
-					g_var->exit_status = 1;
 				return (TRUE);
-			}
 		}
 		tmp = tmp->next;
 	}

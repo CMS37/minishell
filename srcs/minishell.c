@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:28 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/10 00:22:11 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/10 01:31:54 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 static t_bool	init_minishell(int argc, char **argv, char **envp);
 static t_bool	set_var(void);
 static t_bool	execute_cmd_line(char **line);
-static void		exit_minishell(void);
+static t_bool	print_minishell(void);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -41,7 +41,12 @@ int	main(int argc, char **argv, char **envp)
 		set_var();
 		line = readline("minishell-1.0$ ");
 		if (line == NULL)
-			exit_minishell();
+		{
+			ft_putstr_fd("\033[1A", 1);
+			ft_putstr_fd("\033[14C", 1);
+			ft_putstr_fd(" exit\n", 1);
+			exit(0);
+		}
 		add_history(line);
 		execute_cmd_line(&line);
 		free(line);
@@ -51,9 +56,20 @@ int	main(int argc, char **argv, char **envp)
 
 static t_bool	init_minishell(int argc, char **argv, char **envp)
 {
+	char *const	tty_name = ttyname(STDOUT_FILENO);
+
 	g_var = ft_calloc(sizeof(t_var), 1, "");
 	if (1 < argc && access(argv[1], F_OK) == -1)
 		return (FALSE);
+	print_minishell();
+	if (tty_name != NULL)
+	{
+		ft_putstr_fd("   on ", STDOUT_FILENO);
+		ft_putendl_fd(tty_name, STDOUT_FILENO);
+		free(tty_name);
+	}
+	else
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	init_termios();
 	init_env_list(argc, argv, envp);
 	g_var->old_fd[0] = dup(STDIN_FILENO);
@@ -89,10 +105,19 @@ static t_bool	execute_cmd_line(char **line)
 	return (TRUE);
 }
 
-static void	exit_minishell(void)
+static t_bool	print_minishell(void)
 {
-	ft_putstr_fd("\033[1A", 1);
-	ft_putstr_fd("\033[14C", 1);
-	ft_putstr_fd(" exit\n", 1);
-	exit(0);
+	ft_putstr_fd("███╗   ███╗██╗███╗   ██╗██╗", 1);
+	ft_putendl_fd("███████╗██╗  ██╗███████╗██╗     ██╗     ", 1);
+	ft_putstr_fd("████╗ ████║██║████╗  ██║██", 1);
+	ft_putendl_fd("║██╔════╝██║  ██║██╔════╝██║     ██║     ", 1);
+	ft_putstr_fd("██╔████╔██║██║██╔██╗ ██║██║", 1);
+	ft_putendl_fd("███████╗███████║█████╗  ██║     ██║     ", 1);
+	ft_putstr_fd("██║╚██╔╝██║██║██║╚██╗██║██║", 1);
+	ft_putendl_fd("╚════██║██╔══██║██╔══╝  ██║     ██║     ", 1);
+	ft_putstr_fd("██║ ╚═╝ ██║██║██║ ╚████║██║", 1);
+	ft_putendl_fd("███████║██║  ██║███████╗███████╗███████╗", 1);
+	ft_putstr_fd("╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝", 1);
+	ft_putstr_fd("╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝", 1);
+	return (TRUE);
 }
