@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:00 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/09 14:34:24 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/10 01:00:48 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ t_bool	here_doc(char *file_name, char *end_flag)
 	char		*line;
 
 	if (fd == -1)
-	{
-		free(file_name);
 		return (set_exit_status(errno) == 0);
-	}
 	while (TRUE)
 	{
 		line = readline("heredoc> ");
