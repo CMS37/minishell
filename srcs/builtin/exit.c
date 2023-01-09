@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:15 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 18:15:24 by min-cho          ###   ########.fr       */
+/*   Updated: 2023/01/09 20:00:39 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int				set_exit_status(int status);
 static t_bool	is_num(const char *str);
 static t_bool	ft_atoll(const char *str, long long *num);
 
+// isatty? SHLVL? (자식에서는 실행이 되지 않는다. (isatty == FALSE) return (0); )
 int	builtin_exit(t_list *token_list, int fd)
 {
 	t_list		*tmp;
