@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:28 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/10 01:31:54 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/11 23:10:39 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,10 @@ int	main(int argc, char **argv, char **envp)
 
 static t_bool	init_minishell(int argc, char **argv, char **envp)
 {
-	char *const	tty_name = ttyname(STDOUT_FILENO);
-
 	g_var = ft_calloc(sizeof(t_var), 1, "");
 	if (1 < argc && access(argv[1], F_OK) == -1)
 		return (FALSE);
 	print_minishell();
-	if (tty_name != NULL)
-	{
-		ft_putstr_fd("   on ", STDOUT_FILENO);
-		ft_putendl_fd(tty_name, STDOUT_FILENO);
-		free(tty_name);
-	}
-	else
-		ft_putchar_fd('\n', STDOUT_FILENO);
 	init_termios();
 	init_env_list(argc, argv, envp);
 	g_var->old_fd[0] = dup(STDIN_FILENO);
@@ -107,6 +97,8 @@ static t_bool	execute_cmd_line(char **line)
 
 static t_bool	print_minishell(void)
 {
+	char *const	tty_name = ttyname(STDOUT_FILENO);
+
 	ft_putstr_fd("███╗   ███╗██╗███╗   ██╗██╗", 1);
 	ft_putendl_fd("███████╗██╗  ██╗███████╗██╗     ██╗     ", 1);
 	ft_putstr_fd("████╗ ████║██║████╗  ██║██", 1);
@@ -119,5 +111,12 @@ static t_bool	print_minishell(void)
 	ft_putendl_fd("███████║██║  ██║███████╗███████╗███████╗", 1);
 	ft_putstr_fd("╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝", 1);
 	ft_putstr_fd("╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝", 1);
+	if (tty_name != NULL)
+	{
+		ft_putstr_fd("   on ", STDOUT_FILENO);
+		ft_putstr_fd(tty_name, STDOUT_FILENO);
+		free(tty_name);
+	}
+	ft_putchar_fd('\n', STDOUT_FILENO);
 	return (TRUE);
 }
