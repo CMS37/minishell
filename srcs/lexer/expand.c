@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:39 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/12 23:20:47 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/13 01:22:27 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*expand(char **line)
 	char *const	key = get_key(line);
 	char		*ret;
 
-	if (key == NULL && *(*line + 1) == '\0')
+	if (key == NULL && (*(*line + 1) == '\0' || *(*line + 1) == '$'))
 		ret = ft_strdup("$");
 	else if (key == NULL || key_is_not_valid(key))
 		ret = NULL;
