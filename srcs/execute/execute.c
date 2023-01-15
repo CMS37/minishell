@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:33 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/10 00:50:57 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:25:48 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static t_bool	child_process(t_list *cmd)
 		set_fd_in_pipe(cmd, fd, TRUE);
 		if (set_fd_in_redir((t_list **) &cmd->content) == FALSE)
 			exit(g_var->exit_status >> 8);
-		if (is_builtin(cmd->content) && 0 <= execute_builtin(cmd->content, 1))
+		if (is_builtin(cmd->content) && 0 <= execute_builtin(cmd->content, TRUE))
 			exit(g_var->exit_status >> 8);
 		else
 			execute_extern(cmd->content);

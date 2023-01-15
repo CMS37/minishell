@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:29 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/10 00:42:35 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:26:23 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,8 @@ t_bool	execute_builtin(t_list *token_list, t_bool child_process)
 
 	if (set_fd_in_redir(&token_list) == FALSE)
 		return (TRUE);
-	if (child_process == TRUE)
-		fd = 1;
-	else if (ft_strcmp(token->value, "exit") == 0)
+	fd = 1;
+	if (child_process == FALSE && ft_strcmp(token->value, "exit") == 0)
 		fd = 2;
 	i = 0;
 	set_exit_status(0);
