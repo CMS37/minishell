@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:00 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/10 01:00:48 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:01:35 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <readline/readline.h>
+#include "../../libs/libreadline/include/readline/readline.h"
 
 t_bool			here_doc(char *file_name, char *end_flag);
 char			*generate_file_name(void);

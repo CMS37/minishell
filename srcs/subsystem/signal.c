@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:12 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/10 00:55:45 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:01:39 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <signal.h>
-#include <readline/readline.h>
+#include "../../libs/libreadline/include/readline/readline.h"
 
 t_bool			set_signal(void);
 t_bool			unset_signal(int pid);

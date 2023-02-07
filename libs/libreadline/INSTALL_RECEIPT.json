@@ -1,0 +1,47 @@
+{
+  "homebrew_version": "3.6.6-34-gfaa9950",
+  "used_options": [
+
+  ],
+  "unused_options": [
+
+  ],
+  "built_as_bottle": true,
+  "poured_from_bottle": true,
+  "loaded_from_api": null,
+  "installed_as_dependency": false,
+  "installed_on_request": true,
+  "changed_files": [
+    "lib/pkgconfig/history.pc",
+    "lib/pkgconfig/readline.pc"
+  ],
+  "time": 1671462333,
+  "source_modified_time": 1663941156,
+  "compiler": "clang",
+  "aliases": [
+
+  ],
+  "runtime_dependencies": [
+
+  ],
+  "source": {
+    "spec": "stable",
+    "versions": {
+      "stable": "8.2.1",
+      "head": null,
+      "version_scheme": 0
+    },
+    "path": "/Users/hwang-youngseo/.brew/Library/Taps/homebrew/homebrew-core/Formula/readline.rb",
+    "tap_git_head": "1d983f9435151568db8c30021bc5e11cd617be12",
+    "tap": "homebrew/core"
+  },
+  "arch": "arm64",
+  "built_on": {
+    "os": "Macintosh",
+    "os_version": "macOS 13",
+    "cpu_family": "dunno",
+    "xcode": "14.1",
+    "clt": "14.1.0.0.1.1665256668",
+    "preferred_perl": "5.30"
+  }
+}
