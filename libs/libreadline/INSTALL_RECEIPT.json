@@ -15,7 +15,7 @@
     "lib/pkgconfig/history.pc",
     "lib/pkgconfig/readline.pc"
   ],
-  "time": 1671462333,
+  "time": 1675743488,
   "source_modified_time": 1663941156,
   "compiler": "clang",
   "aliases": [
@@ -31,8 +31,8 @@
       "head": null,
       "version_scheme": 0
     },
-    "path": "/Users/hwang-youngseo/.brew/Library/Taps/homebrew/homebrew-core/Formula/readline.rb",
-    "tap_git_head": "1d983f9435151568db8c30021bc5e11cd617be12",
+    "path": "/opt/homebrew/Library/Taps/homebrew/homebrew-core/Formula/readline.rb",
+    "tap_git_head": "5a2bc0f10ddbe1a32843652e9532fa367f2c3a46",
     "tap": "homebrew/core"
   },
   "arch": "arm64",

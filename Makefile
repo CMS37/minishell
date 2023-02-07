@@ -65,7 +65,6 @@ ${NAME}: ${OBJS}
 	@printf "\bdone\n"
 	${eval IDX = 0}
 	@${CC} ${LDFLAGS} -g -o ${NAME} ${OBJS}
-	@install_name_tool -change /Users/hwang-youngseo/.brew/opt/readline/lib/libreadline.8.dylib @executable_path/${LIBREADLINE_DIR}/lib/libreadline.8.dylib ${NAME}
 	@echo "Build ${NAME}: done"
 
 

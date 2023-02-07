@@ -26,15 +26,9 @@
 extern "C" {
 #endif
 
-#if defined (READLINE_LIBRARY)
-#  include "rlstdc.h"
-#  include "chardefs.h"
-#  include "rltypedefs.h"
-#else
-#  include "rlstdc.h"
-#  include "chardefs.h"
-#  include "rltypedefs.h"
-#endif
+#include "rlstdc.h"
+#include "chardefs.h"
+#include "rltypedefs.h"
 
 /* A keymap contains one entry for each key in the ASCII set.
    Each entry consists of a type and a pointer.
