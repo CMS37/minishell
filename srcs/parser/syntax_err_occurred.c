@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_err_occurred.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:08 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 14:52:25 by min-cho          ###   ########.fr       */
+/*   Updated: 2023/01/10 01:10:31 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,7 @@ t_bool	syntax_err_occurred(void)
 		{
 			tmp = tmp->next;
 			if (child_process_to_heredoc(tmp->content) != 0)
-			{
-				if (g_var->exit_status == 2)
-					g_var->exit_status = 1;
 				return (TRUE);
-			}
 		}
 		tmp = tmp->next;
 	}
@@ -72,24 +68,27 @@ static t_bool	is_err(t_list *cur)
 static int	child_process_to_heredoc(t_token *token)
 {
 	char *const	file_name = generate_file_name();
+	char *const	end_flag = ft_strdup(token->value);
 	pid_t		pid;
+	int			exit_status;
 
+	free(token->value);
+	token->value = file_name;
 	pid = fork();
 	if (pid == -1)
 	{
-		free(file_name);
+		free(end_flag);
 		return (errno);
 	}
 	set_signal_while_heredoc(pid);
 	if (pid == 0)
 	{
-		if (here_doc(file_name, token->value) == FALSE)
-			exit(errno);
-		else
-			exit(0);
+		exit_status = 0;
+		if (here_doc(token->value, end_flag) == FALSE)
+			exit_status = errno;
+		exit(exit_status);
 	}
+	free(end_flag);
 	waitpid(pid, &g_var->exit_status, 0);
-	free(token->value);
-	token->value = file_name;
 	return (g_var->exit_status);
 }

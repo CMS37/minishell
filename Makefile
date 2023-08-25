@@ -4,21 +4,21 @@ IDX		= 0
 
 NAME	= minishell
 
-READLINE_DIR		= ${HOME}/.brew/opt/readline
-READLINE_INCS_DIR	= ${READLINE_DIR}/include
-
-LIBS_DIR		= ./libs
-LIBFT_DIR		:= ${LIBS_DIR}/libft
-LIBFT_INCS_DIR	:= ${LIBFT_DIR}/incs
-LIBFT			:= ${LIBFT_DIR}/libft.a
+LIBS_DIR				:= ./libs
+LIBFT_DIR				:= ${LIBS_DIR}/libft
+LIBFT_INCS_DIR			:= ${LIBFT_DIR}/incs
+LIBFT					:= ${LIBFT_DIR}/libft.a
+LIBREADLINE_DIR			:= ${LIBS_DIR}/libreadline
+LIBREADLINE_INCS_DIR	:= ${LIBREADLINE_DIR}/include/readline
+LIBREADLINE				:= ${LIBREADLINE_DIR}/lib/libreadline.8.dylib
 
 INCS_DIR	= ./incs
 SRCS_DIR	= ./srcs
 OBJS_DIR	= ./objs
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -I${INCS_DIR} -I${LIBFT_INCS_DIR} -I${READLINE_INCS_DIR} -MD
-LDFLAGS	= -L${READLINE_DIR}/lib -lreadline -L${LIBFT_DIR} -lft
+CFLAGS	= -Wall -Wextra -Werror -I${INCS_DIR} -I${LIBFT_INCS_DIR} -I${LIBREADLINE_INCS_DIR} -MD
+LDFLAGS	= -L${LIBREADLINE_DIR}/lib -lreadline -L${LIBFT_DIR} -lft
 AR		= ar rcs
 RM		= rm -f
 
@@ -57,29 +57,22 @@ SRCS := ${addprefix ${SRCS_DIR}/, ${SRCS}}
 OBJS := ${SRCS:${SRCS_DIR}/%.c=${OBJS_DIR}/%.o}
 DEPS := ${OBJS:.o=.d}
 
+
 all: ${NAME}
 
 
-${OBJS_DIR}:
-	@echo "Build ${NAME}"
-	@mkdir -p ${OBJS_DIR}
-	@mkdir -p ${OBJS_DIR}/builtin
-	@mkdir -p ${OBJS_DIR}/execute
-	@mkdir -p ${OBJS_DIR}/lexer
-	@mkdir -p ${OBJS_DIR}/parser
-	@mkdir -p ${OBJS_DIR}/subsystem
-	@mkdir -p ${OBJS_DIR}/utils
-
-
-${LIBFT}:
-	@make -C ${LIBFT_DIR}
-
-
-${NAME}: ${LIBFT} ${OBJS}
+${NAME}: ${OBJS}
 	@printf "\bdone\n"
 	${eval IDX = 0}
 	@${CC} ${LDFLAGS} -g -o ${NAME} ${OBJS}
 	@echo "Build ${NAME}: done"
+
+
+${OBJS}: ${LIBFT}
+
+
+${LIBFT}:
+	@make -C ${LIBFT_DIR}
 
 
 ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
@@ -92,6 +85,17 @@ ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
 	fi
 	@printf "\b${CHR}"
 	@${CC} ${CFLAGS} -g -c $< -o $@
+
+
+${OBJS_DIR}:
+	@echo "Build ${NAME}"
+	@mkdir -p ${OBJS_DIR}
+	@mkdir -p ${OBJS_DIR}/builtin
+	@mkdir -p ${OBJS_DIR}/execute
+	@mkdir -p ${OBJS_DIR}/lexer
+	@mkdir -p ${OBJS_DIR}/parser
+	@mkdir -p ${OBJS_DIR}/subsystem
+	@mkdir -p ${OBJS_DIR}/utils
 
 
 clean:
@@ -115,5 +119,6 @@ re:
 
 
 .PHONY: all clean fclean re bonus
+
 
 -include ${DEPS}

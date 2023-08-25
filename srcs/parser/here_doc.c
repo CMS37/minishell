@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:58:00 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/06 00:47:10 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:01:35 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <readline/readline.h>
+#include "../../libs/libreadline/include/readline/readline.h"
 
 t_bool			here_doc(char *file_name, char *end_flag);
 char			*generate_file_name(void);
@@ -35,10 +35,7 @@ t_bool	here_doc(char *file_name, char *end_flag)
 	char		*line;
 
 	if (fd == -1)
-	{
-		free(file_name);
 		return (set_exit_status(errno) == 0);
-	}
 	while (TRUE)
 	{
 		line = readline("heredoc> ");
@@ -70,7 +67,6 @@ char	*generate_file_name(void)
 static char	*tmp_directory_path(void)
 {
 	t_list	*tmp;
-	char	*substitution;
 
 	tmp = g_var->env_list;
 	while (tmp)
@@ -79,9 +75,7 @@ static char	*tmp_directory_path(void)
 			return (ft_strdup(tmp->content + 7));
 		tmp = tmp->next;
 	}
-	substitution = home_dir();
-	ft_strcat(&substitution, "/");
-	return (substitution);
+	return (ft_strdup("/"));
 }
 
 static char	*generate_random_hexcode(void)

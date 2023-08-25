@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: min-cho <min-cho@student.42.fr>            +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:15 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/05 18:15:24 by min-cho          ###   ########.fr       */
+/*   Updated: 2023/01/10 00:42:18 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <stdio.h>
 
 int				builtin_exit(t_list *token_list, int fd);
 int				set_exit_status(int status);
@@ -30,7 +31,8 @@ int	builtin_exit(t_list *token_list, int fd)
 
 	i = 1;
 	tmp = token_list->next;
-	ft_putendl_fd("exit", fd);
+	if (fd == 2)
+		ft_putendl_fd("exit", fd);
 	if (tmp == NULL)
 		exit(set_exit_status(0) >> 8);
 	token = tmp->content;

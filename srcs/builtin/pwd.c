@@ -6,7 +6,7 @@
 /*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:57:23 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/08 00:12:39 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/10 00:33:41 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	builtin_pwd(t_list *token_list, int fd)
 
 	pwd = ft_getcwd();
 	if (pwd == NULL)
-		return (print_err(errno, "pwd", NULL, strerror(errno)));
+		return (print_err(errno, "pwd", NULL, "PWD not set"));
 	ft_putendl_fd(pwd, fd);
 	free(pwd);
 	(void) token_list;

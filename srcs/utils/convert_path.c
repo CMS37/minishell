@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   convert_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: younhwan <younhwan@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: younhwan <younhwan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 00:51:45 by younhwan          #+#    #+#             */
-/*   Updated: 2023/01/08 00:51:45 by younhwan         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:00:40 by younhwan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_bool	convert_path(char **path)
 	char *const		before_calculated = get_absolute_path(*path);
 	char			*calculated;
 
-	if (ft_strcmp(*path, "-") == 0 && before_calculated == NULL)
+	if (before_calculated == NULL)
 		return (FALSE);
 	calculated = calc_relative_path(before_calculated);
 	if (calculated == NULL)
@@ -53,18 +53,20 @@ char	*get_absolute_path(char *path)
 	else if (ft_strcmp(path, "-") == 0)
 		ret = get_oldpwd();
 	else if (ft_strcmp(path, "~") == 0 || ft_strncmp(path, "~/", 2) == 0)
-	{
 		ret = home_dir();
-		ft_strcat(&ret, path + 1);
-	}
 	else if (*path != '/')
-	{
 		ret = ft_getcwd();
+	else
+		ret = ft_strdup(path);
+	if (ret == NULL)
+		return (NULL);
+	if (ft_strcmp(path, "~") == 0 || ft_strncmp(path, "~/", 2) == 0)
+		ft_strcat(&ret, path + 1);
+	else if (*path != '\0' && *path != '-' && *path != '/')
+	{
 		ft_strcat(&ret, "/");
 		ft_strcat(&ret, path);
 	}
-	else
-		ret = ft_strdup(path);
 	return (ret);
 }
 
